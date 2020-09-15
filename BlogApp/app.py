@@ -10,10 +10,15 @@ app = Flask(__name__)
 # and add decorators to define the appropriate resource locators for them.
 
 @app.route('/')
-@app.route('/hello')
-def hello():
+@app.route('/home')
+def home():
     # Render the page
     return render_template('index.html')
+
+
+@app.route('/about')
+def about():
+    return "About page"
 
 
 if __name__ == '__main__':
