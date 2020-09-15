@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 
 # Create an instance of the Flask class that is the WSGI application.
 # The first argument is the name of the application module or package,
@@ -13,7 +13,8 @@ app = Flask(__name__)
 @app.route('/hello')
 def hello():
     # Render the page
-    return "Hello Python!"
+    return render_template('index.html')
+
 
 if __name__ == '__main__':
     # Run the app server on localhost:4449
