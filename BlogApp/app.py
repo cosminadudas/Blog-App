@@ -49,6 +49,7 @@ def add_post():
         return redirect(url_for('home'))
     return render_template('create_post.html')
 
+
 @app.route('/edit/<int:post_id>', methods = ["GET","POST"])
 def edit(post_id):
     post_to_edit ={}
@@ -64,6 +65,18 @@ def edit(post_id):
         
     return render_template('edit_post.html', post_to_edit = post_to_edit)
 
+
+@app.route('/delete/<int:post_id>')
+def delete(post_id):
+    post_to_delete ={}
+    for post in posts:
+        if post['id'] == post_id:
+            post_to_delete = post
+
+    posts.remove(post_to_delete)
+    return redirect(url_for('home'))
+
+
 if __name__ == '__main__':
-    # Run the app server on localhost:4449
+# Run the app server on localhost:4449
     app.run('localhost', 4449)
