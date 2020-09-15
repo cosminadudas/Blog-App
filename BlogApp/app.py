@@ -1,4 +1,5 @@
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, request, redirect
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -31,6 +32,22 @@ def home():
 @app.route('/about')
 def about():
     return "About page"
+
+
+@app.route('/create', methods = ["GET", "POST"])
+def add_post():
+    if request.method == "POST":
+        new_post = {
+        'id': len(posts) + 1,
+        'title': request.form['title'],
+        'content':request.form['content'],
+        'owner' : request.form['owner'],
+        'created_at': datetime.now(),
+        'modified_at':''
+        }
+        posts.append(new_post)
+        return redirect(url_for('home'))
+    return render_template('create_post.html')
 
 
 if __name__ == '__main__':

@@ -37,8 +37,10 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="static\css\index.css" />
     <Content Include="static\css\main.css" />
     <Content Include="templates\base.html" />
+    <Content Include="templates\create_post.html" />
     <Content Include="templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />

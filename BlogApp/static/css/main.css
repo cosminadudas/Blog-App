@@ -12,6 +12,7 @@ body {
 }
 
 .topnav {
+    margin-top: -20px;
     display: inline-block;
     text-align: center;
     height: 60px;
