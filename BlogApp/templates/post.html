@@ -1,0 +1,20 @@
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>{{post.name}}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %}
+
+
+{% block body %}
+
+<h1>{{ post.title }}</h1>
+<p>
+    By {{ post.owner }} on {{ post.created_at }}
+</p>
+<p>{{ post.content }}</p>
+<a href="{{ url_for('edit', post_id = post.id) }}" class="button">Edit</a>
+<a href="{{ url_for('delete', post_id = post.id) }}" class="button">Delete</a>
+<hr>
+
+{%  endblock %}

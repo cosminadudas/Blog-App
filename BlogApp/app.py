@@ -24,6 +24,7 @@ posts = [
 
 @app.route('/')
 @app.route('/home')
+@app.route('/posts')
 def home():
     # Render the page
     return render_template('index.html', posts=posts)
@@ -34,7 +35,7 @@ def about():
     return "About page"
 
 
-@app.route('/create', methods = ["GET", "POST"])
+@app.route('/add', methods = ["GET", "POST"])
 def add_post():
     if request.method == "POST":
         new_post = {
@@ -50,7 +51,7 @@ def add_post():
     return render_template('create_post.html')
 
 
-@app.route('/edit/<int:post_id>', methods = ["GET","POST"])
+@app.route('/post/<int:post_id>/edit', methods = ["GET","POST"])
 def edit(post_id):
     post_to_edit ={}
     for post in posts:
@@ -66,7 +67,7 @@ def edit(post_id):
     return render_template('edit_post.html', post_to_edit = post_to_edit)
 
 
-@app.route('/delete/<int:post_id>')
+@app.route('/post/delete/<int:post_id>')
 def delete(post_id):
     post_to_delete ={}
     for post in posts:
@@ -75,6 +76,15 @@ def delete(post_id):
 
     posts.remove(post_to_delete)
     return redirect(url_for('home'))
+
+
+@app.route('/post/<int:post_id>')
+def post(post_id):
+    post_to_view ={}
+    for post in posts:
+        if post['id'] == post_id:
+            post_to_view = post
+    return render_template('post.html', post = post_to_view)
 
 
 if __name__ == '__main__':

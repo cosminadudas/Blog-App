@@ -18,8 +18,7 @@
             By {{ post.owner }} on {{ post.created_at }}
         </p>
         <p>{{ post.content }}</p>
-        <a href="{{ url_for('edit', post_id = post.id) }}" class="button">Edit</a>
-        <a href="{{ url_for('delete', post_id = post.id) }}" class="button">Delete</a>
+        <a href="{{ url_for('post', post_id = post.id) }}" class="button">Continue reading</a>
         <hr>
     </div>
     {%  endfor %}
