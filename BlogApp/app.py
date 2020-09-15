@@ -49,6 +49,9 @@ def add_post():
         return redirect(url_for('home'))
     return render_template('create_post.html')
 
+@app.route('/edit', methods = ["GET","POST"])
+def edit():
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     # Run the app server on localhost:4449
