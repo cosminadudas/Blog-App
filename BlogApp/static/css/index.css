@@ -1,11 +1,26 @@
 .button {
-    font: bold 11px Arial;
+    font-family: Brush Script MT;
+    font: bold 20px Brush Script MT;
     text-decoration: none;
-    background-color: #EEEEEE;
+    background-color: #FFC0CB;
     color: #333333;
-    padding: 2px 6px 2px 6px;
-    border-top: 1px solid #CCCCCC;
+    padding: 4px 10px 4px 10px;
+    border-top: 1px solid black;
     border-right: 1px solid #333333;
     border-bottom: 1px solid #333333;
-    border-left: 1px solid #CCCCCC;
+    border-left: 1px solid black;
+    margin: 20px;
+}
+
+.article {
+    padding: 50px;
+    max-width: 100%;
+}
+
+.article p {
+    margin: 20px;
+}
+
+.bigger {
+    padding: 6px 12px 6px 12px;
 }
