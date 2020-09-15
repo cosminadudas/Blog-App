@@ -1,19 +1,31 @@
 from flask import Flask, render_template, url_for
 
-# Create an instance of the Flask class that is the WSGI application.
-# The first argument is the name of the application module or package,
-# typically __name__ when using a single module.
 app = Flask(__name__)
 
-# Flask route decorators map / and /hello to the hello function.
-# To add other resources, create functions that generate the page contents
-# and add decorators to define the appropriate resource locators for them.
+posts = [
+    {
+        'id': 1,
+        'title': 'post 1',
+        'content':'This is the first blog post.',
+        'owner' : 'Cosmina',
+        'created_at':'September, 15, 2020',
+        'modified_at':''
+    },
+    {
+        'id': 2,
+        'title': 'post 2',
+        'content':'This is the second blog post.',
+        'owner' : 'Larisa',
+        'created_at':'September, 15, 2020',
+        'modified_at':''
+    }
+]
 
 @app.route('/')
 @app.route('/home')
 def home():
     # Render the page
-    return render_template('index.html')
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/about')
