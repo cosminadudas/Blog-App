@@ -1,5 +1,42 @@
-body
-{
+* {
+    box-sizing: border-box;
     margin: 0;
+    border: 0;
+    padding: 0;
+}
+
+body {
+    /* margin: 0 !important;
+    padding: 0 !important;*/
     font-family: verdana;
 }
+
+.topnav {
+    display: inline-block;
+    text-align: center;
+    height: 60px;
+    width: 100%;
+    font-family: Brush Script MT;
+    color: #F08080;
+    overflow: hidden;
+}
+
+    .topnav a {
+        color: #F08080;
+        text-align: center;
+        padding: 5px 16px;
+        text-decoration: none;
+        font-size: 30px;
+    }
+
+/* Change the color of links on hover */
+        .topnav a:hover {
+            background-color: #F08080;
+            color: whitesmoke;
+        }
+
+/* Add a color to the active/current link */
+        .topnav a.active {
+            background-color: #F08080;
+            color: white;
+        }
