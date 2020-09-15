@@ -49,9 +49,20 @@ def add_post():
         return redirect(url_for('home'))
     return render_template('create_post.html')
 
-@app.route('/edit', methods = ["GET","POST"])
-def edit():
-    return redirect(url_for('home'))
+@app.route('/edit/<int:post_id>', methods = ["GET","POST"])
+def edit(post_id):
+    post_to_edit ={}
+    for post in posts:
+        if post['id'] == post_id:
+            post_to_edit = post
+
+    if request.method == "POST":
+        post_to_edit['title'] = request.form['title']
+        post_to_edit['content'] = request.form['content']
+        post_to_edit['modified_at'] = datetime.now()
+        return redirect(url_for('home'))
+        
+    return render_template('edit_post.html', post_to_edit = post_to_edit)
 
 if __name__ == '__main__':
     # Run the app server on localhost:4449
