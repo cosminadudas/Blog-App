@@ -1,13 +1,25 @@
 from flask import render_template, url_for, request, redirect
 from datetime import datetime
-from BlogApp.models import BlogPost
+from models import BlogPost
 
 class Posts(object):
-    def __init__(self, posts: list):
+    posts: list
+    def __init__(self, posts):
         self.posts = posts
+        self.index = 0
+
+    def __iter__(self):
+        return iter(self.posts)
 
 
-    def add_post(self, new_post : BlogPost, method):
+    def __next__(self):
+        if self.index < len(posts):
+            result = self.posts[self.index]
+        self.index += 1
+        return result
+        raise StopIteration
+
+    def add(self, new_post : BlogPost, method):
         if (method == "POST"):
             new_post.id = len(self) + 1
             new_post.title = request.form['title']

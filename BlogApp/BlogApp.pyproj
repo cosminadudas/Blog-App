@@ -33,7 +33,13 @@
     <Compile Include="models\BlogPost.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\Posts.py">
+    <Compile Include="repository\in_memory_data.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\index.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\posts.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
