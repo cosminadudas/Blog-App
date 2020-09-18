@@ -1,7 +1,7 @@
 from datetime import datetime
 from models.BlogPost import BlogPost
 
-class Posts(object):
+class Posts:
     posts: list
 
     def __init__(self, posts):
@@ -37,6 +37,3 @@ class Posts(object):
 
     def delete(self, post_to_delete):
         self.posts.remove(post_to_delete)
-
-
-

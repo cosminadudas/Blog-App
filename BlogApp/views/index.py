@@ -14,6 +14,3 @@ index_blueprint = Blueprint('index_blueprint', __name__)
 @index_blueprint.route('/posts')
 def index():
     return render_template('index.html', posts=blog_posts)
-
-
-
