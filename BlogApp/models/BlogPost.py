@@ -6,3 +6,7 @@ class BlogPost:
         self.content = content
         self.created_at = created_at
         self.modified_at = modified_at
+
+    
+    def preview_content(self):
+        return self.content[:15] + '...'

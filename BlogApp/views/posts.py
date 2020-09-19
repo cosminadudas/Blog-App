@@ -4,12 +4,10 @@ from views.index import blog_posts
 from models.BlogPost import BlogPost
 
 
-add_blueprint = Blueprint('add_blueprint', __name__)
-edit_blueprint = Blueprint('edit_blueprint', __name__)
-delete_blueprint = Blueprint('delete_blueprint', __name__)
-post_blueprint = Blueprint('post_blueprint', __name__)
+blog_blueprint = Blueprint('blog_blueprint', __name__)
 
-@add_blueprint.route('/add', methods=["GET", "POST"])
+
+@blog_blueprint.route('/add', methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
         new_post = BlogPost(0, '', '', '', '', '')
@@ -23,7 +21,7 @@ def add_post():
     return render_template('create_post.html')
 
 
-@edit_blueprint.route('/post/<int:post_id>/edit', methods=["GET", "POST"])
+@blog_blueprint.route('/post/<int:post_id>/edit', methods=["GET", "POST"])
 def edit_post(post_id):
     post_to_edit = BlogPost(0, '', '', '', '', '')
     for blog_post in blog_posts:
@@ -37,7 +35,7 @@ def edit_post(post_id):
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
-@delete_blueprint.route('/post/delete/<int:post_id>', methods=["GET", "POST"])
+@blog_blueprint.route('/post/delete/<int:post_id>', methods=["GET", "POST"])
 def delete_post(post_id):
     post_to_delete = BlogPost(0, '', '', '', '', '')
     for blog_post in blog_posts:
@@ -47,10 +45,10 @@ def delete_post(post_id):
     return redirect(url_for('index_blueprint.index'))
 
 
-@post_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
+@blog_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
 def post(post_id):
     post_to_view = BlogPost(0, '', '', '', '', '')
     for blog_post in blog_posts:
         if blog_post.id == post_id:
             post_to_view = blog_post
-    return render_template('post.html', post=post_to_view)
+    return render_template('view_post.html', post=post_to_view)
