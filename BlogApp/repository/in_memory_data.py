@@ -1,10 +1,11 @@
 from datetime import datetime
 from models.BlogPost import BlogPost
+from repository.test_posts import posts
 
 class Posts:
     posts: list
 
-    def __init__(self, posts):
+    def __init__(self):
         self.posts = posts
         self.index = 0
 

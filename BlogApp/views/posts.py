@@ -1,10 +1,17 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
-from views.index import blog_posts
 from models.BlogPost import BlogPost
+from repository.in_memory_data import Posts
 
-
+blog_posts = Posts()
 blog_blueprint = Blueprint('blog_blueprint', __name__)
+
+
+@blog_blueprint.route('/')
+@blog_blueprint.route('/home')
+@blog_blueprint.route('/posts')
+def index():
+    return render_template('list_posts.html', posts=blog_posts)
 
 
 @blog_blueprint.route('/add', methods=["GET", "POST"])
@@ -17,7 +24,7 @@ def add_post():
         new_post.owner = request.form['owner']
         new_post.created_at = datetime.now()
         blog_posts.add(new_post)
-        return redirect(url_for('index_blueprint.index'))
+        return redirect(url_for('blog_blueprint.index'))
     return render_template('create_post.html')
 
 
@@ -31,7 +38,7 @@ def edit_post(post_id):
                 new_title = request.form['title']
                 new_content = request.form['content']
                 blog_posts.edit(post_to_edit, new_title, new_content)
-                return redirect(url_for('index_blueprint.index'))
+                return redirect(url_for('blog_blueprint.index'))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
@@ -42,7 +49,7 @@ def delete_post(post_id):
         if blog_post.id == post_id:
             post_to_delete = blog_post
             blog_posts.delete(post_to_delete)
-    return redirect(url_for('index_blueprint.index'))
+    return redirect(url_for('blog_blueprint.index'))
 
 
 @blog_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
