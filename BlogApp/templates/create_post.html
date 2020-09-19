@@ -8,11 +8,11 @@
 
 {% block body %}
 <form action="{{ url_for('blog_blueprint.add_post') }}" method="POST">
-    <label for="title">Title:</label>
+    <label for="title">Title:</label><br />
     <input type="text" id="title" name="title" maxlength="30" value=" {{ request.form.title }}"><br><br>
-    <label for="owner">Author:</label>
+    <label for="owner">Author:</label><br />
     <input type="text" id="owner" name="owner" value=" {{ request.form.owner }} "><br><br>
-    <label for="content">Content:</label>
+    <label for="content">Content:</label><br />
     <textarea id="content" name="content" rows="4" cols="50">{{ request.form.content }}</textarea><br><br>
     <input type="submit" value="Submit" class="button">
 </form>

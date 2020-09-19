@@ -1,3 +1,8 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+# pylint: disable=no-self-use
+
 from datetime import datetime
 from models.BlogPost import BlogPost
 from repository.test_posts import posts

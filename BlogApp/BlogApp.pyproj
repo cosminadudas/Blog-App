@@ -45,9 +45,6 @@
     <Compile Include="repository\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\index.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="views\posts.py">
       <SubType>Code</SubType>
     </Compile>

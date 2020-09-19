@@ -1,3 +1,8 @@
+# pylint: disable=missing-module-docstring
+# pylint: disable=missing-function-docstring
+# pylint: disable=missing-class-docstring
+
+
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.BlogPost import BlogPost
@@ -17,7 +22,7 @@ def index():
 @blog_blueprint.route('/add', methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
-        new_post = BlogPost(0, '', '', '', '', '')
+        new_post = BlogPost(0, '', '', '')
         new_post.id = blog_posts.count() + 1
         new_post.title = request.form['title']
         new_post.content = request.form['content']
@@ -30,7 +35,7 @@ def add_post():
 
 @blog_blueprint.route('/post/<int:post_id>/edit', methods=["GET", "POST"])
 def edit_post(post_id):
-    post_to_edit = BlogPost(0, '', '', '', '', '')
+    post_to_edit = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
         if blog_post.id == post_id:
             post_to_edit = blog_post
@@ -44,7 +49,7 @@ def edit_post(post_id):
 
 @blog_blueprint.route('/post/delete/<int:post_id>', methods=["GET", "POST"])
 def delete_post(post_id):
-    post_to_delete = BlogPost(0, '', '', '', '', '')
+    post_to_delete = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
         if blog_post.id == post_id:
             post_to_delete = blog_post
@@ -54,7 +59,7 @@ def delete_post(post_id):
 
 @blog_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
 def post(post_id):
-    post_to_view = BlogPost(0, '', '', '', '', '')
+    post_to_view = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
         if blog_post.id == post_id:
             post_to_view = blog_post
