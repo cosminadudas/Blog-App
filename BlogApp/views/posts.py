@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.BlogPost import BlogPost
-from repository.in_memory_data import Posts
+from repository.blog_posts_in_memory_data import Posts
 
 blog_posts = Posts()
 blog_blueprint = Blueprint('blog_blueprint', __name__)
