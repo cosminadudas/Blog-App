@@ -18,13 +18,13 @@ def index():
 def add_post():
     if request.method == "POST":
         new_post = BlogPost(0, '', '', '')
-        new_post.id = blog_posts.count() + 1
+        new_post.post_id = blog_posts.count() + 1
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.owner = request.form['owner']
         new_post.created_at = datetime.now()
         blog_posts.add(new_post)
-        return redirect(url_for('blog_blueprint.post', post_id= new_post.id))
+        return redirect(url_for('blog_blueprint.post', post_id= new_post.post_id))
     return render_template('create_post.html')
 
 
@@ -32,13 +32,13 @@ def add_post():
 def edit_post(post_id):
     post_to_edit = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
-        if blog_post.id == post_id:
+        if blog_post.post_id == post_id:
             post_to_edit = blog_post
             if request.method == "POST":
                 new_title = request.form['title']
                 new_content = request.form['content']
                 blog_posts.edit(post_to_edit, new_title, new_content)
-                return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.id))
+                return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
@@ -46,7 +46,7 @@ def edit_post(post_id):
 def delete_post(post_id):
     post_to_delete = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
-        if blog_post.id == post_id:
+        if blog_post.post_id == post_id:
             post_to_delete = blog_post
             blog_posts.delete(post_to_delete)
     return redirect(url_for('blog_blueprint.index'))
@@ -56,6 +56,6 @@ def delete_post(post_id):
 def post(post_id):
     post_to_view = BlogPost(0, '', '', '')
     for blog_post in blog_posts:
-        if blog_post.id == post_id:
+        if blog_post.post_id == post_id:
             post_to_view = blog_post
     return render_template('view_post.html', post=post_to_view)

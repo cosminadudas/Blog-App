@@ -3,7 +3,7 @@ from datetime import datetime
 
 class BlogPost:
     def __init__(self, post_id, owner, title, content):
-        self.id = post_id
+        self.post_id = post_id
         self.owner = owner
         self.title = title
         self.content = content

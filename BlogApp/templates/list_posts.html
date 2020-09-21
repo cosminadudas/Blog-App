@@ -18,7 +18,7 @@
             By {{ post.owner }} on {{ post.created_at }}
         </p>
         <p>{{ post.preview_content() }}</p>
-        <a href="{{ url_for('blog_blueprint.post', post_id = post.id) }}" class="button">Continue reading</a>
+        <a href="{{ url_for('blog_blueprint.post', post_id = post.post_id) }}" class="button">Continue reading</a>
         <hr>
     </div>
     {%  endfor %}
