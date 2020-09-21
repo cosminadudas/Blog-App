@@ -29,7 +29,7 @@ def add_post():
         new_post.owner = request.form['owner']
         new_post.created_at = datetime.now()
         blog_posts.add(new_post)
-        return redirect(url_for('blog_blueprint.index'))
+        return redirect(url_for('blog_blueprint.post', post_id= new_post.id))
     return render_template('create_post.html')
 
 
@@ -43,7 +43,7 @@ def edit_post(post_id):
                 new_title = request.form['title']
                 new_content = request.form['content']
                 blog_posts.edit(post_to_edit, new_title, new_content)
-                return redirect(url_for('blog_blueprint.index'))
+                return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
