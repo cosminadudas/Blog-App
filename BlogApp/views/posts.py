@@ -30,32 +30,22 @@ def add_post():
 
 @blog_blueprint.route('/post/<int:post_id>/edit', methods=["GET", "POST"])
 def edit_post(post_id):
-    post_to_edit = BlogPost(0, '', '', '')
-    for blog_post in blog_posts:
-        if blog_post.post_id == post_id:
-            post_to_edit = blog_post
-            if request.method == "POST":
-                new_title = request.form['title']
-                new_content = request.form['content']
-                blog_posts.edit(post_to_edit, new_title, new_content)
-                return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.post_id))
+    post_to_edit = blog_posts.get_post_by_id(post_id)
+    if request.method == "POST":
+        new_title = request.form['title']
+        new_content = request.form['content']
+        blog_posts.edit(post_id, new_title, new_content)
+        return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
 @blog_blueprint.route('/post/delete/<int:post_id>', methods=["GET", "POST"])
 def delete_post(post_id):
-    post_to_delete = BlogPost(0, '', '', '')
-    for blog_post in blog_posts:
-        if blog_post.post_id == post_id:
-            post_to_delete = blog_post
-            blog_posts.delete(post_to_delete)
+    blog_posts.delete(post_id)
     return redirect(url_for('blog_blueprint.index'))
 
 
 @blog_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
 def post(post_id):
-    post_to_view = BlogPost(0, '', '', '')
-    for blog_post in blog_posts:
-        if blog_post.post_id == post_id:
-            post_to_view = blog_post
+    post_to_view = blog_posts.get_post_by_id(post_id)
     return render_template('view_post.html', post=post_to_view)

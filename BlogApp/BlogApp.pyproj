@@ -39,7 +39,7 @@
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\blog_posts_in_memory_data.py">
+    <Compile Include="repository\blog_posts_in_memory_repository.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\demo_posts.py">

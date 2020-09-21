@@ -21,6 +21,16 @@ class Posts:
             return result
         raise StopIteration
 
+    def get_all_posts(self):
+        return self.posts
+
+
+    def get_post_by_id(self, post_id):
+        for post in self.posts:
+            if post.post_id == post_id:
+                return post
+
+
 
     def count(self):
         return len(self.posts)
@@ -30,11 +40,14 @@ class Posts:
         self.posts.insert(0, new_post)
 
 
-    def edit(self, post_to_edit, new_title, new_content):
-        post_to_edit.title = new_title
-        post_to_edit.content = new_content
-        post_to_edit.modified_at = datetime.now()
+    def edit(self, post_id, new_title, new_content):
+        post_to_edit = self.get_post_by_id(post_id)
+        if post_to_edit != None:
+            post_to_edit.title = new_title
+            post_to_edit.content = new_content
+            post_to_edit.modified_at = datetime.now()
 
 
-    def delete(self, post_to_delete):
+    def delete(self, post_id):
+        post_to_delete = self.get_post_by_id(post_id)
         self.posts.remove(post_to_delete)
