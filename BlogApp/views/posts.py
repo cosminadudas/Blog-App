@@ -1,8 +1,3 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-function-docstring
-# pylint: disable=missing-class-docstring
-
-
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.BlogPost import BlogPost

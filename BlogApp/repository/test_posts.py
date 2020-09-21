@@ -1,8 +1,3 @@
-# pylint: disable=missing-module-docstring
-# pylint: disable=missing-function-docstring
-# pylint: disable=missing-class-docstring
-
-
 from models.BlogPost import BlogPost
 
 post_one = BlogPost(1, 'Cosmina', 'post 1', 'This is the first post')
