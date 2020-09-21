@@ -28,7 +28,7 @@ def add_post():
     return render_template('create_post.html')
 
 
-@blog_blueprint.route('/post/<int:post_id>/edit', methods=["GET", "POST"])
+@blog_blueprint.route('/edit/<int:post_id>', methods=["GET", "POST"])
 def edit_post(post_id):
     post_to_edit = blog_posts.get_post_by_id(post_id)
     if request.method == "POST":
@@ -39,13 +39,13 @@ def edit_post(post_id):
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
-@blog_blueprint.route('/post/delete/<int:post_id>', methods=["GET", "POST"])
+@blog_blueprint.route('/delete/<int:post_id>', methods=["GET", "POST"])
 def delete_post(post_id):
     blog_posts.delete(post_id)
     return redirect(url_for('blog_blueprint.index'))
 
 
-@blog_blueprint.route('/post/<int:post_id>', methods=["GET", "POST"])
+@blog_blueprint.route('/view/<int:post_id>', methods=["GET", "POST"])
 def post(post_id):
     post_to_view = blog_posts.get_post_by_id(post_id)
     return render_template('view_post.html', post=post_to_view)
