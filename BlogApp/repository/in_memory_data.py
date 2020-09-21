@@ -1,6 +1,6 @@
 from datetime import datetime
 from models.BlogPost import BlogPost
-from repository.test_posts import posts
+from repository.demo_posts import posts
 
 class Posts:
     posts: list

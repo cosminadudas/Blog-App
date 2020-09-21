@@ -42,7 +42,7 @@
     <Compile Include="repository\in_memory_data.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\test_posts.py">
+    <Compile Include="repository\demo_posts.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">
