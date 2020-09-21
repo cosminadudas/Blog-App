@@ -13,7 +13,7 @@
     <label for="owner">Author:</label><br />
     <input type="text" id="owner" name="owner" value=" {{ request.form.owner }} "><br><br>
     <label for="content">Content:</label><br />
-    <textarea id="content" name="content" rows="40" cols="90">{{ request.form.content }}</textarea><br><br>
+    <textarea id="content" name="content" rows="25" cols="90">{{ request.form.content }}</textarea><br><br>
     <input type="submit" value="Submit" class="button">
 </form>
 {% endblock %}

@@ -10,17 +10,6 @@ class Posts:
         self.index = 0
 
 
-    def __iter__(self):
-        return iter(self.posts)
-
-
-    def __next__(self):
-        if self.index < len(self.posts):
-            result = self.posts[self.index]
-            self.index += 1
-            return result
-        raise StopIteration
-
     def get_all_posts(self):
         return self.posts
 
@@ -29,7 +18,6 @@ class Posts:
         for post in self.posts:
             if post.post_id == post_id:
                 return post
-
 
 
     def count(self):

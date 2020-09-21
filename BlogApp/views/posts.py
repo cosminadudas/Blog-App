@@ -11,7 +11,7 @@ blog_blueprint = Blueprint('blog_blueprint', __name__)
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
 def index():
-    return render_template('list_posts.html', posts=blog_posts)
+    return render_template('list_posts.html', posts=blog_posts.get_all_posts())
 
 
 @blog_blueprint.route('/add', methods=["GET", "POST"])
