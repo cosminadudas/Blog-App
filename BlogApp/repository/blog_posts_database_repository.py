@@ -22,7 +22,7 @@ class Posts:
         """
         )
 
-    def add_post(self, new_post:BlogPost):
+    def add(self, new_post:BlogPost):
         self.cur.execute("INSERT INTO posts (ID, OWNER, TITLE, CONTENT) VALUES(new_post.id, new_post.owner, new_post.title, new_post.content)")
         self.conn.commit()
         self.conn.close()
