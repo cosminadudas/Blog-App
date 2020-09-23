@@ -25,6 +25,7 @@ class Posts:
 
 
     def add(self, new_post: BlogPost):
+        new_post.post_id = self.count() + 1
         self.posts.insert(0, new_post)
 
 

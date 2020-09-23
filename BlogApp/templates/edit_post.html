@@ -6,6 +6,7 @@
 {% endblock %}
 
 
+
 {% block body %}
 <form action="{{ url_for('blog_blueprint.edit_post', post_id = post_to_edit['post_id']) }}" method="POST">
     <label for="title">Title:</label><br />

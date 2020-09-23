@@ -18,7 +18,6 @@ def index():
 def add_post():
     if request.method == "POST":
         new_post = BlogPost(0, '', '', '')
-        new_post.post_id = blog_posts.count() + 1
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.owner = request.form['owner']
