@@ -48,6 +48,9 @@
     <Compile Include="repository\demo_posts.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\formal_posts_interface.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\__init__.py">
       <SubType>Code</SubType>
     </Compile>

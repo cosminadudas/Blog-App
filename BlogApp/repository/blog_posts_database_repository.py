@@ -1,8 +1,8 @@
 import psycopg2
 from models.BlogPost import BlogPost
+from repository.formal_posts_interface import FormalPostsInterface
 
-
-class Posts:
+class Posts(FormalPostsInterface):
 
     def __init__(self):
         self.conn = psycopg2.connect(
