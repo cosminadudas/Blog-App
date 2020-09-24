@@ -18,7 +18,7 @@ def index():
 @blog_blueprint.route('/add', methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
-        new_post = BlogPost(blog_posts.count(), '', '', ''),
+        new_post = BlogPost(blog_posts.count() + 1, '', '', '')
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.owner = request.form['owner']

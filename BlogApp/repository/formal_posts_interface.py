@@ -14,6 +14,19 @@ class FormalPostsInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
+    def get_all_posts(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_post_by_id(self, post_id):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def count(self):
+        raise NotImplementedError
+
+
+    @abc.abstractmethod
     def add(self, new_post : BlogPost):
         raise NotImplementedError
 

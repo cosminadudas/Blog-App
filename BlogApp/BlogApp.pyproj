@@ -77,9 +77,6 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="repository\database.ini">
-      <SubType>Code</SubType>
-    </Content>
     <Content Include="static\css\index.css" />
     <Content Include="static\css\main.css" />
     <Content Include="templates\base.html" />
