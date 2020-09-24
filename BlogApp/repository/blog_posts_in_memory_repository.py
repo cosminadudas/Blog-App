@@ -3,7 +3,7 @@ from models.BlogPost import BlogPost
 from repository.demo_posts import posts
 from repository.formal_posts_interface import FormalPostsInterface
 
-class Posts(FormalPostsInterface):
+class InMemoryPosts(FormalPostsInterface):
     posts: list
 
     def __init__(self):

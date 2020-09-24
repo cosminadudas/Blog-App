@@ -1,9 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.BlogPost import BlogPost
-from repository.blog_posts_in_memory_repository import Posts
+from repository.blog_posts_factory import factory
 
-blog_posts = Posts()
+type = "production"
+blog_posts = factory(type)
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
 
@@ -17,7 +18,7 @@ def index():
 @blog_blueprint.route('/add', methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
-        new_post = BlogPost(0, '', '', '')
+        new_post = BlogPost(blog_posts.count(), '', '', ''),
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.owner = request.form['owner']

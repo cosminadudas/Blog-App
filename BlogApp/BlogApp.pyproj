@@ -42,6 +42,9 @@
     <Compile Include="repository\blog_posts_database_repository.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="repository\blog_posts_factory.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\blog_posts_in_memory_repository.py">
       <SubType>Code</SubType>
     </Compile>
@@ -54,6 +57,9 @@
     <Compile Include="repository\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_posts.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\posts.py">
       <SubType>Code</SubType>
     </Compile>
@@ -63,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="tests\" />
     <Folder Include="repository\" />
     <Folder Include="views\" />
     <Folder Include="static\css\" />
@@ -70,6 +77,9 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="repository\database.ini">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\css\index.css" />
     <Content Include="static\css\main.css" />
     <Content Include="templates\base.html" />
