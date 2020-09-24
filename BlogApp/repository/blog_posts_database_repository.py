@@ -37,6 +37,7 @@ class DatabasePosts(FormalPostsInterface):
 
 
     def add(self, new_post:BlogPost):
+        new_post.created_at = datetime.now()
         self.cur.execute("""INSERT INTO posts (OWNER, TITLE, CONTENT) 
         VALUES (%s, %s, %s)""", (
             new_post.owner, new_post.title, new_post.content))
