@@ -1,9 +1,9 @@
 from datetime import datetime
 from models.BlogPost import BlogPost
 from repository.demo_posts import posts
-from repository.formal_posts_interface import FormalPostsInterface
+from repository.blog_posts_interface import BlogPostsInterface
 
-class InMemoryPosts(FormalPostsInterface):
+class BlogPostsInMemoryRepository(BlogPostsInterface):
     posts: list
 
     def __init__(self):

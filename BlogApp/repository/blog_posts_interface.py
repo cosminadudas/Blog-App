@@ -1,7 +1,7 @@
 import abc
 from models.BlogPost import BlogPost
 
-class FormalPostsInterface(metaclass=abc.ABCMeta):
+class BlogPostsInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (hasattr(subclass, 'add') and 

@@ -1,16 +1,16 @@
 from datetime import datetime
 import psycopg2
 from models.BlogPost import BlogPost
-from repository.formal_posts_interface import FormalPostsInterface
+from repository.blog_posts_interface import BlogPostsInterface
 
 conn = psycopg2.connect(
-            host="localhost",
-            database="blog",
-            user="postgres",
-            password="postgres")
+    host="localhost",
+    database="blog",
+    user="postgres",
+    password="postgres")
 cur = conn.cursor()
 
-class DatabasePosts(FormalPostsInterface):
+class BlogPostsDatabaseRepository(BlogPostsInterface):
 
     def __init__(self):
         self.conn = conn
