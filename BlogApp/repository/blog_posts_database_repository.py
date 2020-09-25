@@ -1,6 +1,6 @@
 from datetime import datetime
 import psycopg2
-from models.BlogPost import BlogPost
+from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
 
 conn = psycopg2.connect(
@@ -15,7 +15,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
     def __init__(self):
         self.conn = conn
         self.cur = cur
-        
+
 
     def get_all_posts(self):
         self.cur.execute("SELECT * FROM posts")
@@ -36,25 +36,24 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         return int(len(self.get_all_posts()))
 
 
-    def add(self, new_post:BlogPost):
+    def add(self, new_post: BlogPost):
         new_post.created_at = datetime.now()
-        self.cur.execute("""INSERT INTO posts (OWNER, TITLE, CONTENT) 
+        new_post.post_id = self.count() + 1
+        self.cur.execute("""INSERT INTO posts (OWNER, TITLE, CONTENT)
         VALUES (%s, %s, %s)""", (
             new_post.owner, new_post.title, new_post.content))
         self.conn.commit()
-        
+
 
     def edit(self, post_id, new_title, new_content):
-        self.cur.execute("""UPDATE posts
-       SET TITLE = %s, CONTENT = %s 
-       WHERE ID = %s""", (
-           new_title, new_content, post_id ))
+        self.cur.execute("""UPDATE posts SET TITLE = %s, CONTENT = %s WHERE ID = %s""", (
+            new_title, new_content, post_id))
         self.conn.commit()
 
     def delete(self, post_id):
         self.cur.execute("DELETE FROM posts WHERE ID = %s", ((post_id,)))
         number = self.cur.execute("SELECT MAX(ID) FROM posts")
-        if type(number) != int:
+        if isinstance(number) != int:
             self.cur.execute("ALTER SEQUENCE posts_id_seq RESTART WITH 1")
         else:
             self.cur.execute("ALTER SEQUENCE posts_id_seq RESTART WITH %s", ((number,)))

@@ -1,15 +1,15 @@
 import abc
-from models.BlogPost import BlogPost
+from models.blog_post import BlogPost
 
 class BlogPostsInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
-        return (hasattr(subclass, 'add') and 
-                callable(subclass.add) and 
-                hasattr(subclass, 'edit') and 
+        return (hasattr(subclass, 'add') and
+                callable(subclass.add) and
+                hasattr(subclass, 'edit') and
                 callable(subclass.edit) and
-                hasattr(subclass, 'delete') and 
-                callable(subclass.delete) or 
+                hasattr(subclass, 'delete') and
+                callable(subclass.delete) or
                 NotImplemented)
 
 
@@ -27,7 +27,7 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def add(self, new_post : BlogPost):
+    def add(self, new_post: BlogPost):
         raise NotImplementedError
 
 
@@ -38,4 +38,3 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def delete(self, post_id):
         raise NotImplementedError
-

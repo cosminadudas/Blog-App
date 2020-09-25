@@ -1,5 +1,5 @@
 from datetime import datetime
-from models.BlogPost import BlogPost
+from models.blog_post import BlogPost
 from repository.demo_posts import posts
 from repository.blog_posts_interface import BlogPostsInterface
 
@@ -19,6 +19,7 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
         for post in self.posts:
             if post.post_id == post_id:
                 return post
+        return None
 
 
     def count(self):
@@ -32,7 +33,7 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
 
     def edit(self, post_id, new_title, new_content):
         post_to_edit = self.get_post_by_id(post_id)
-        if post_to_edit != None:
+        if post_to_edit is not None:
             post_to_edit.title = new_title
             post_to_edit.content = new_content
             post_to_edit.modified_at = datetime.now()

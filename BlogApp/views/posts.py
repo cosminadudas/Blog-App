@@ -1,10 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
-from models.BlogPost import BlogPost
+from models.blog_post import BlogPost
 from repository.blog_posts_factory import factory
 
-type = "production"
-blog_posts = factory(type)
+ACTION_TYPE = "production"
+blog_posts = factory(ACTION_TYPE)
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
 
@@ -18,13 +18,13 @@ def index():
 @blog_blueprint.route('/add', methods=["GET", "POST"])
 def add_post():
     if request.method == "POST":
-        new_post = BlogPost(blog_posts.count() + 1, '', '', '')
+        new_post = BlogPost(0, '', '', '')
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.owner = request.form['owner']
         new_post.created_at = datetime.now()
         blog_posts.add(new_post)
-        return redirect(url_for('blog_blueprint.post', post_id= new_post.post_id))
+        return redirect(url_for('blog_blueprint.post', post_id=new_post.post_id))
     return render_template('create_post.html')
 
 
@@ -35,7 +35,7 @@ def edit_post(post_id):
         new_title = request.form['title']
         new_content = request.form['content']
         blog_posts.edit(post_id, new_title, new_content)
-        return redirect(url_for('blog_blueprint.post', post_id= post_to_edit.post_id))
+        return redirect(url_for('blog_blueprint.post', post_id=post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
