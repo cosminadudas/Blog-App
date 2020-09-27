@@ -1,8 +1,8 @@
 import pytest
+from flask import request
 from app import app
 from views import posts
 from repository.blog_posts_factory import factory
-from flask import request
 
 ACTION_TYPE = "testing"
 posts.blog_posts = factory(ACTION_TYPE)
@@ -28,7 +28,11 @@ def test_index_route(client):
 
 
 def test_add_post_route(client):
-    response = client.post('/add', data=dict(title="Post 3", owner="Cosmina", content="This is the third post"), follow_redirects=True)
+    response = client.post('/add', data=dict(
+        title="Post 3", 
+        owner="Cosmina", 
+        content="This is the third post"), 
+        follow_redirects=True)
     
     assert b'Cosmina' in response.data
     assert b'Post 3' in response.data
