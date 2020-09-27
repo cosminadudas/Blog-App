@@ -15,7 +15,7 @@ def client():
     with app.test_client() as client:
         yield client
 
-def test_index_route(client):
+def test_index_route(client_fixture):
     result_one = client.get('/')
     assert b'post 1' in result_one.data
     assert b'post 2' in result_one.data
@@ -42,7 +42,7 @@ def test_edit_post_route(client):
     assert client.get('/edit/2', follow_redirects=True).status_code == 200
     response = client.post('/edit/2', data=dict(title='updated', content='This is the second post'), follow_redirects=True)
     with app.test_client() as client:
-        rv = client.get('/?post_id=2', follow_redirects=True)
+        client.get('/?post_id=2', follow_redirects=True)
         assert request.args['post_id'] == '2'
     assert b'updated' in response.data
 
