@@ -7,6 +7,7 @@ from flask import request
 ACTION_TYPE = "testing"
 posts.blog_posts = factory(ACTION_TYPE)
 
+
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
@@ -27,11 +28,16 @@ def test_index_route(client):
 
 
 def test_add_post_route(client):
-    global rv
-    client.post('/add', data=dict(Title="Post 3", Author="Cosmina", Content="This is the third post"))
+    response = client.post('/add', data=dict(title="Post 3", owner="Cosmina", content="This is the third post"), follow_redirects=True)
+    
+    assert b'Cosmina' in response.data
+    assert b'Post 3' in response.data
+
+
+def test_edit_post_route(client):
+    assert client.get('/edit/2', follow_redirects=True).status_code == 200
+    response = client.post('/edit/2', data=dict(title='updated', content='This is the second post'), follow_redirects=True)
     with app.test_client() as client:
-        rv = client.get('/?post_id=3')
-        assert request.args['post_id'] == '3'
-    assert b'Cosmina' in rv.data
-
-
+        rv = client.get('/?post_id=2', follow_redirects=True)
+        assert request.args['post_id'] == '2'
+    assert b'updated' in response.data

@@ -6,7 +6,7 @@ __pycache__/
 *.pyproj.user
 # C extensions
 *.so
-
+TestResults/
 # Distribution / packaging
 .Python
 build/
