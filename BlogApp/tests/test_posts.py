@@ -41,3 +41,8 @@ def test_edit_post_route(client):
         rv = client.get('/?post_id=2', follow_redirects=True)
         assert request.args['post_id'] == '2'
     assert b'updated' in response.data
+
+
+def test_delete_post_route(client):
+    response = client.post('/delete/1', follow_redirects=True)
+    assert b'post 1' not in response.data
