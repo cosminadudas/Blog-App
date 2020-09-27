@@ -17,6 +17,9 @@
     <Name>BlogApp</Name>
     <RootNamespace>BlogApp</RootNamespace>
     <WebBrowserPort>4449</WebBrowserPort>
+    <TestFramework>pytest</TestFramework>
+    <UnitTestPattern>test*.py</UnitTestPattern>
+    <UnitTestRootDirectory>.</UnitTestRootDirectory>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,9 +31,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="app.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="db.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\blog_post.py">
@@ -63,13 +63,13 @@
     <Compile Include="tests\test_posts.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\posts.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\__init__.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="__init__.py">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
