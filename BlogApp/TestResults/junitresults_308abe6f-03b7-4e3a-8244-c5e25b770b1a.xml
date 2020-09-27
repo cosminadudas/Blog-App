@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="DESKTOP-N8A8A7H" name="pytest" skipped="0" tests="2" time="1.087" timestamp="2020-09-27T21:45:05.674559"><testcase classname="tests.test_posts" file="tests\test_posts.py" line="28" name="test_add_post_route" time="0.031"><failure message="assert b&apos;Post 3&apos; in b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    &lt;meta ...href=&quot;/view/2&quot; class=&quot;button&quot;&gt;Continue reading&lt;/a&gt;\n        &lt;hr&gt;\n    &lt;/div&gt;\n    \n    \n&lt;/div&gt;\n\n\n&lt;/body&gt;\n&lt;/html&gt;&apos;
+ +  where b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    &lt;meta ...href=&quot;/view/2&quot; class=&quot;button&quot;&gt;Continue reading&lt;/a&gt;\n        &lt;hr&gt;\n    &lt;/div&gt;\n    \n    \n&lt;/div&gt;\n\n\n&lt;/body&gt;\n&lt;/html&gt;&apos; = rv.data">client = &lt;FlaskClient &lt;Flask &apos;app&apos;&gt;&gt;
+
+    def test_add_post_route(client):
+        global rv
+        client.post(&apos;/add&apos;, data=dict(Title=&quot;Post 3&quot;, Author=&quot;Cosmina&quot;, Content=&quot;This is the third post&quot;))
+        with app.test_client() as client:
+            rv = client.get(&apos;/?post_id=3&apos;)
+            assert request.args[&apos;post_id&apos;] == &apos;3&apos;
+        assert b&apos;Cosmina&apos; in rv.data
+&gt;       assert b&apos;Post 3&apos; in rv.data
+E       assert b&apos;Post 3&apos; in b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    &lt;meta ...href=&quot;/view/2&quot; class=&quot;button&quot;&gt;Continue reading&lt;/a&gt;\n        &lt;hr&gt;\n    &lt;/div&gt;\n    \n    \n&lt;/div&gt;\n\n\n&lt;/body&gt;\n&lt;/html&gt;&apos;
+E        +  where b&apos;\xef\xbb\xbf\xef\xbb\xbf&lt;!DOCTYPE html&gt;\n\n&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;\n&lt;head&gt;\n    &lt;meta ...href=&quot;/view/2&quot; class=&quot;button&quot;&gt;Continue reading&lt;/a&gt;\n        &lt;hr&gt;\n    &lt;/div&gt;\n    \n    \n&lt;/div&gt;\n\n\n&lt;/body&gt;\n&lt;/html&gt;&apos; = rv.data
+
+tests\test_posts.py:36: AssertionError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase><testcase classname="tests.test_posts" file="tests\test_posts.py" line="16" name="test_index_route" time="0.006"><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase></testsuite></testsuites>

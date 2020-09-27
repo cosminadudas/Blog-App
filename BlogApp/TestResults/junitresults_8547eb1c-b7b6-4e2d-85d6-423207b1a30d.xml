@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite errors="0" failures="1" hostname="DESKTOP-N8A8A7H" name="pytest" skipped="0" tests="2" time="0.805" timestamp="2020-09-27T21:34:27.185836"><testcase classname="tests.test_posts" file="tests\test_posts.py" line="15" name="test_index_route" time="0.045"><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase><testcase classname="tests.test_posts" file="tests\test_posts.py" line="27" name="test_add_post_route" time="0.003"><failure message="NameError: name &apos;request&apos; is not defined">client = &lt;FlaskClient &lt;Flask &apos;app&apos;&gt;&gt;
+
+    def test_add_post_route(client):
+        client.post(&apos;/add&apos;, data=dict(Title=&quot;Post 3&quot;, Author=&quot;Cosmina&quot;, Content=&quot;This is the third post&quot;))
+        with app.test_client() as client:
+            rv = client.get(&apos;/?post_id=3&apos;)
+&gt;           assert request.args[&apos;post_id&apos;] == &apos;3&apos;
+E           NameError: name &apos;request&apos; is not defined
+
+tests\test_posts.py:32: NameError</failure><system-out>--------------------------------- Captured Log ---------------------------------
+
+--------------------------------- Captured Out ---------------------------------
+
+</system-out><system-err>--------------------------------- Captured Err ---------------------------------
+
+</system-err></testcase></testsuite></testsuites>

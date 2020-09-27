@@ -2,6 +2,7 @@ import pytest
 from app import app
 from views import posts
 from repository.blog_posts_factory import factory
+from flask import request
 
 ACTION_TYPE = "testing"
 posts.blog_posts = factory(ACTION_TYPE)
@@ -23,5 +24,14 @@ def test_index_route(client):
     result_three = client.get('/posts')
     assert b'post 1' in result_three.data
     assert b'post 2' in result_three.data
+
+
+def test_add_post_route(client):
+    global rv
+    client.post('/add', data=dict(Title="Post 3", Author="Cosmina", Content="This is the third post"))
+    with app.test_client() as client:
+        rv = client.get('/?post_id=3')
+        assert request.args['post_id'] == '3'
+    assert b'Cosmina' in rv.data
 
 
