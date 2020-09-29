@@ -69,6 +69,5 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         self.database.connect()
         cur = self.database.conn.cursor()
         cur.execute("DELETE FROM posts WHERE ID = %s", ((post_id,)))
-        number = cur.execute("SELECT MAX(ID) FROM posts")
         cur.execute("ALTER SEQUENCE posts_id_seq RESTART WITH %s", ((post_id,)))
         self.database.close()
