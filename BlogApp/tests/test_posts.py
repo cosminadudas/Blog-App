@@ -15,16 +15,13 @@ def client():
     with app.test_client() as client:
         yield client
 
-def test_index_route(client_fixture):
+def test_index_route(client):
     result_one = client.get('/')
     assert b'post 1' in result_one.data
-    assert b'post 2' in result_one.data
     result_two = client.get('/home')
     assert b'post 1' in result_two.data
-    assert b'post 2' in result_two.data
     result_three = client.get('/posts')
     assert b'post 1' in result_three.data
-    assert b'post 2' in result_three.data
 
 
 def test_add_post_route(client):
@@ -48,5 +45,5 @@ def test_edit_post_route(client):
 
 
 def test_delete_post_route(client):
-    response = client.post('/delete/1', follow_redirects=True)
-    assert b'post 1' not in response.data
+    response = client.post('/delete/3', follow_redirects=True)
+    assert b'post 3' not in response.data
