@@ -10,7 +10,7 @@
 
 <h1>{{ post.title }}</h1>
 <p>
-    By {{ post.owner }} on {{ post.created_at }}
+    By {{ post.owner }} on {{ post.created_at.day }}/{{post.created_at.month}}/{{post.created_at.year}}
 </p>
 <pre>{{ post.content }}</pre>
 <a href="{{ url_for('blog_blueprint.edit_post', post_id = post.post_id) }}" class="button">Edit</a>

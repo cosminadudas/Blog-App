@@ -16,7 +16,7 @@
 
         <h1>{{ post.title }}</h1>
         <p>
-            By {{ post.owner }} on {{ post.created_at }}
+            By {{ post.owner }} on {{ post.created_at.day }}/{{post.created_at.month}}/{{post.created_at.year}}
         </p>
         <p>{{ post.preview_content() }}</p>
         <a href="{{ url_for('blog_blueprint.view_post', post_id = post.post_id) }}" class="button">Continue reading</a>

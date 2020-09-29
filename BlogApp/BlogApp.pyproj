@@ -33,6 +33,12 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="database_setup\config.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="database_setup\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\blog_post.py">
       <SubType>Code</SubType>
     </Compile>
@@ -75,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="database_setup\" />
     <Folder Include="tests\" />
     <Folder Include="repository\" />
     <Folder Include="views\" />
@@ -83,6 +90,9 @@
     <Folder Include="static\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="database_setup\database.ini">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="static\css\index.css" />
     <Content Include="static\css\main.css" />
     <Content Include="templates\base.html" />

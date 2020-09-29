@@ -26,11 +26,9 @@ def test_index_route(client):
 
 def test_add_post_route(client):
     response = client.post('/add', data=dict(
-        title="Post 3", 
-        owner="Cosmina", 
-        content="This is the third post"), 
-        follow_redirects=True)
-    
+        title="Post 3",
+        owner="Cosmina",
+        content="This is the third post"),follow_redirects=True)
     assert b'Cosmina' in response.data
     assert b'Post 3' in response.data
 
@@ -51,7 +49,7 @@ def test_delete_post_route(client):
 
 def test_view_post_route(client):
     assert client.get('/edit/1', follow_redirects=True).status_code == 200
-    response = client.post('/edit/1', data=dict(content='This is the first post updated'), follow_redirects=True)
+    client.post('/edit/1', data=dict(content='This is the first post updated'), follow_redirects=True)
     with app.test_client() as client:
         client.get('/?post_id=1', follow_redirects=True)
         assert request.args['post_id'] == '1'
