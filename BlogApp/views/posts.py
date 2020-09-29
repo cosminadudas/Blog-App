@@ -24,7 +24,7 @@ def add_post():
         new_post.owner = request.form['owner']
         new_post.created_at = datetime.now()
         blog_posts.add(new_post)
-        return redirect(url_for('blog_blueprint.post', post_id=new_post.post_id))
+        return redirect(url_for('blog_blueprint.view_post', post_id=new_post.post_id))
     return render_template('create_post.html')
 
 
@@ -35,7 +35,7 @@ def edit_post(post_id):
         new_title = request.form['title']
         new_content = request.form['content']
         blog_posts.edit(post_id, new_title, new_content)
-        return redirect(url_for('blog_blueprint.post', post_id=post_to_edit.post_id))
+        return redirect(url_for('blog_blueprint.view_post', post_id=post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
 
@@ -46,6 +46,6 @@ def delete_post(post_id):
 
 
 @blog_blueprint.route('/view/<int:post_id>', methods=["GET", "POST"])
-def post(post_id):
+def view_post(post_id):
     post_to_view = blog_posts.get_post_by_id(post_id)
     return render_template('view_post.html', post=post_to_view)
