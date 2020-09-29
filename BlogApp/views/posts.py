@@ -1,10 +1,10 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.blog_post import BlogPost
-from repository.blog_posts_factory import factory
+from repository.blog_posts_factory import blog_posts_factory
 
 ACTION_TYPE = "production"
-blog_posts = factory(ACTION_TYPE)
+blog_posts = blog_posts_factory(ACTION_TYPE)
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
 
