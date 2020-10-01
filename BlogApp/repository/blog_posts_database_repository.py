@@ -1,7 +1,7 @@
 from datetime import datetime
 from models.blog_post import BlogPost
+from models.database import Database
 from repository.blog_posts_interface import BlogPostsInterface
-from database_setup.config import Database
 
 COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
                 id SERIAL PRIMARY KEY,
