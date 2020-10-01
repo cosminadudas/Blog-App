@@ -5,11 +5,11 @@ class Database():
 
     def __init__(self):
         self.conn = None
-        self.database = Config()
+        self.credentials = Config()
 
 
     def connect(self):
-        self.conn = psycopg2.connect(**self.database.get_credentials())
+        self.conn = psycopg2.connect(**self.credentials.get_credentials())
 
 
     def close(self):
@@ -23,3 +23,11 @@ class Database():
         if self.conn is not None:
             cur = self.conn.cursor()
             cur.execute(command)
+
+
+    def create_database(self, db_name):
+        self.connect()
+        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cur = conn.cursor()
+        cur.execute("CREATE DATABASE " + db_name)
+        self.close()
