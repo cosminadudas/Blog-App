@@ -9,11 +9,13 @@ class Database():
 
 
     def connect(self):
-        self.conn = psycopg2.connect(**self.credentials.get_credentials())
-        
-    
+        self.conn = psycopg2.connect(
+            **self.credentials.get_credentials(
+                'database_setup/database.ini'))
+
+
     def is_set_up(self):
-        return self.credentials.is_config()
+        return self.credentials.is_configured
 
 
     def close(self):

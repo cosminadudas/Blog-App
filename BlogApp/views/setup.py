@@ -1,5 +1,4 @@
-from flask import Blueprint, request, redirect, url_for, render_template
-from database_setup.config import Config
+from flask import Blueprint, request, redirect, render_template
 from database_setup.database import Database
 
 setup_blueprint = Blueprint('setup_blueprint', __name__)

@@ -1,13 +1,12 @@
-from os import path
 from configparser import ConfigParser
 
 class Config():
 
     def __init__(self):
         self.parser = ConfigParser()
+        self.is_configured = False
 
-    def get_credentials(self):
-        filename = self.get_filename()
+    def get_credentials(self, filename):
         self.parser.read(filename)
         database = {}
         section = 'postgresql'
@@ -18,11 +17,10 @@ class Config():
         else:
             raise Exception('Section {0} not found in the {1} file'.format(section, filename))
         return database
-        
+
 
     def save_credentials(self, user, password, database):
-        filename = open('database_setup/database.ini',"w+").close()
-        
+        open('database_setup/database.ini', "w+").close()
         self.parser.add_section('postgresql')
 
         self.parser['postgresql']['host'] = 'localhost'
@@ -32,12 +30,4 @@ class Config():
 
         with open('database_setup/database.ini', 'w') as configfile:
             self.parser.write(configfile)
-
-
-    def is_config(self):
-        return path.exists('database_setup/database.ini')
-
-    def get_filename(self):
-        if not self.is_config():
-            self.save_credentials()
-        return ('database_setup/database.ini')
+        self.is_configured = True

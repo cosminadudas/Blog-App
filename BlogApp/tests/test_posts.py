@@ -5,7 +5,7 @@ from views import posts
 from repository.blog_posts_factory import blog_posts_factory
 
 ACTION_TYPE = "testing"
-posts.blog_posts = blog_posts_factory(ACTION_TYPE)
+posts.blog_posts = blog_posts_factory(ACTION_TYPE, '')
 
 
 @pytest.fixture
