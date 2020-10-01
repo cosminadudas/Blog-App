@@ -4,7 +4,6 @@ class Config():
 
     def __init__(self):
         self.parser = ConfigParser()
-        self.is_configured = False
 
     def get_credentials(self, filename):
         self.parser.read(filename)
@@ -30,4 +29,3 @@ class Config():
 
         with open('database_setup/database.ini', 'w') as configfile:
             self.parser.write(configfile)
-        self.is_configured = True
