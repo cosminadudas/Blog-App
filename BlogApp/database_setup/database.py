@@ -10,6 +10,10 @@ class Database():
 
     def connect(self):
         self.conn = psycopg2.connect(**self.credentials.get_credentials())
+        
+    
+    def is_set_up(self):
+        return self.credentials.is_config()
 
 
     def close(self):
@@ -25,9 +29,8 @@ class Database():
             cur.execute(command)
 
 
-    def create_database(self, db_name):
+    def create_database(self):
         self.connect()
-        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur = conn.cursor()
-        cur.execute("CREATE DATABASE " + db_name)
+        cur = self.conn.cursor()
+        cur.execute("CREATE DATABASE blog")
         self.close()

@@ -18,18 +18,19 @@ class Config():
         else:
             raise Exception('Section {0} not found in the {1} file'.format(section, filename))
         return database
+        
 
-
-    def save_credentials(self):
+    def save_credentials(self, user, password, database):
         filename = open('database_setup/database.ini',"w+").close()
+        
         self.parser.add_section('postgresql')
 
         self.parser['postgresql']['host'] = 'localhost'
-        self.parser['postgresql']['user'] = 'postgres'
-        self.parser['postgresql']['password'] = 'postgres'
-        self.parser['postgresql']['database'] = 'blog'
+        self.parser['postgresql']['user'] = user
+        self.parser['postgresql']['password'] = password
+        self.parser['postgresql']['database'] = database
 
-        with open('database.ini', 'w') as configfile:
+        with open('database_setup/database.ini', 'w') as configfile:
             self.parser.write(configfile)
 
 
@@ -39,4 +40,4 @@ class Config():
     def get_filename(self):
         if not self.is_config():
             self.save_credentials()
-        return ('database.ini')
+        return ('database_setup/database.ini')

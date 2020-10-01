@@ -45,7 +45,7 @@
     <Compile Include=".pylintrc">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\database.py">
+    <Compile Include="database_setup\database.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\__init__.py">
@@ -78,6 +78,9 @@
     <Compile Include="views\posts.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\setup.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -99,6 +102,7 @@
     <Content Include="templates\create_post.html" />
     <Content Include="templates\edit_post.html" />
     <Content Include="templates\list_posts.html" />
+    <Content Include="templates\setup_db.html" />
     <Content Include="templates\view_post.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Web.targets" />

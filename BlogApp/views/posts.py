@@ -2,13 +2,18 @@ from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template
 from models.blog_post import BlogPost
 from repository.blog_posts_factory import blog_posts_factory
+from views.setup import database_setup
 
 ACTION_TYPE = "production"
-blog_posts = blog_posts_factory(ACTION_TYPE)
+blog_posts = blog_posts_factory(ACTION_TYPE, database_setup)
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
 
 @blog_blueprint.route('/')
+def setup():
+    return redirect('/setup')
+
+
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
 def index():

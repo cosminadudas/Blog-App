@@ -1,7 +1,9 @@
 from flask import Flask
 from views.posts import blog_blueprint
+from views.setup import setup_blueprint
 
 app = Flask(__name__)
+app.register_blueprint(setup_blueprint)
 app.register_blueprint(blog_blueprint)
 
 
