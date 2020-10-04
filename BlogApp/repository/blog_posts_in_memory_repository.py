@@ -4,7 +4,6 @@ from repository.demo_posts import posts
 from repository.blog_posts_interface import BlogPostsInterface
 
 class BlogPostsInMemoryRepository(BlogPostsInterface):
-    posts: list
 
     def __init__(self):
         self.posts = posts

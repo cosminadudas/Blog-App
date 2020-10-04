@@ -1,6 +1,6 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from database_setup.config import Config
+from setup.database_config import Config
 
 class Database():
 
@@ -12,14 +12,13 @@ class Database():
     def connect(self):
         self.conn = psycopg2.connect(
             **self.credentials.get_credentials(
-                'database_setup/database.ini'))
+                'setup/database.ini'))
 
     def close(self):
         if self.conn is not None:
             self.conn.commit()
             self.conn.close()
-        else:
-            print("cosmina")
+
 
     def create_table(self, command):
         if self.conn is not None:

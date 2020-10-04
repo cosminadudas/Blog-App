@@ -1,6 +1,7 @@
 from datetime import datetime
 from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
+from setup.database_setup import Database
 
 COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
                 id SERIAL PRIMARY KEY,
@@ -14,8 +15,8 @@ COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
 
 class BlogPostsDatabaseRepository(BlogPostsInterface):
 
-    def __init__(self, database):
-        self.database = database
+    def __init__(self):
+        self.database = Database()
 
     def get_all_posts(self):
         self.database.connect()

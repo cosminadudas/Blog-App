@@ -33,10 +33,22 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database_setup\config.py">
+    <Compile Include="services\blog_posts_repository_service.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database_setup\__init__.py">
+    <Compile Include="services\production_dependencies.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\testing_dependencies.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup\database_config.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\blog_post.py">
@@ -45,16 +57,13 @@
     <Compile Include=".pylintrc">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="database_setup\database.py">
+    <Compile Include="setup\database_setup.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\blog_posts_database_repository.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="repository\blog_posts_factory.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\blog_posts_in_memory_repository.py">
@@ -87,7 +96,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
-    <Folder Include="database_setup\" />
+    <Folder Include="services\" />
+    <Folder Include="setup\" />
     <Folder Include="tests\" />
     <Folder Include="repository\" />
     <Folder Include="views\" />

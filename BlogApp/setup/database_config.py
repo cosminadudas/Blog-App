@@ -19,7 +19,7 @@ class Config():
 
 
     def save_credentials(self, user, password, database):
-        open('database_setup/database.ini', "w+").close()
+        open('setup/database.ini', "w+").close()
         self.parser.add_section('postgresql')
 
         self.parser['postgresql']['host'] = 'localhost'
@@ -27,5 +27,5 @@ class Config():
         self.parser['postgresql']['password'] = password
         self.parser['postgresql']['database'] = database
 
-        with open('database_setup/database.ini', 'w') as configfile:
+        with open('setup/database.ini', 'w') as configfile:
             self.parser.write(configfile)
