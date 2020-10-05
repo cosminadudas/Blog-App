@@ -36,13 +36,19 @@
     <Compile Include="services\blog_posts_repository_service.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\production_dependencies.py">
+    <Compile Include="services\config_database_service.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\testing_dependencies.py">
+    <Compile Include="services\dependencies_for_production.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\dependencies_for_testing.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup\config.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\database_config.py">
@@ -79,6 +85,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_posts.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_setup.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\__init__.py">

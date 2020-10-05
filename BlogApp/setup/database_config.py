@@ -1,14 +1,14 @@
-from configparser import ConfigParser
+import os
+from setup.config import Config
 
-class Config():
+class DatabaseConfig(Config):
 
-    def __init__(self):
-        self.parser = ConfigParser()
+    def is_configured(self):
+        return  os.path.exists('setup/database.ini')
 
-    def get_credentials(self, filename):
+    def get_credentials(self, filename, section):
         self.parser.read(filename)
         database = {}
-        section = 'postgresql'
         if self.parser.has_section(section):
             params = self.parser.items(section)
             for param in params:
@@ -18,14 +18,14 @@ class Config():
         return database
 
 
-    def save_credentials(self, user, password, database):
+    def save_credentials(self, section, user, password, database):
         open('setup/database.ini', "w+").close()
-        self.parser.add_section('postgresql')
+        self.parser.add_section(section)
 
-        self.parser['postgresql']['host'] = 'localhost'
-        self.parser['postgresql']['user'] = user
-        self.parser['postgresql']['password'] = password
-        self.parser['postgresql']['database'] = database
+        self.parser[section]['host'] = 'localhost'
+        self.parser[section]['user'] = user
+        self.parser[section]['password'] = password
+        self.parser[section]['database'] = database
 
         with open('setup/database.ini', 'w') as configfile:
             self.parser.write(configfile)

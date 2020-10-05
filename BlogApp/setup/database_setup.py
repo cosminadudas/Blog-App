@@ -1,18 +1,19 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
-from setup.database_config import Config
+from setup.database_config import DatabaseConfig
 
-class Database():
+
+class DatabaseSetup():
 
     def __init__(self):
         self.conn = None
-        self.credentials = Config()
+        self.credentials = DatabaseConfig()
 
 
     def connect(self):
         self.conn = psycopg2.connect(
             **self.credentials.get_credentials(
-                'setup/database.ini'))
+                'setup/database.ini', 'postgresql'))
 
     def close(self):
         if self.conn is not None:
