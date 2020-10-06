@@ -20,6 +20,18 @@
     border: 1px solid black;
 }
 
+#user {
+    border: 1px solid black;
+}
+
+#password {
+    border: 1px solid black;
+}
+
+#database {
+    border: 1px solid black;
+}
+
 #content {
     border: 1px solid black;
 }

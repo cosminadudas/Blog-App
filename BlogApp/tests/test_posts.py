@@ -1,14 +1,14 @@
 import pytest
 from flask_injector import FlaskInjector
 from app import app
-from services.dependencies import checking_repository_configure
+from services.dependencies import configure_testing_repository
 
 
 @pytest.fixture
 def client():
     app.config['TESTING'] = True
     app.testing = True
-    FlaskInjector(app=app, modules=[checking_repository_configure])
+    FlaskInjector(app=app, modules=[configure_testing_repository])
     with app.test_client() as client:
         yield client
 

@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %}
+
+
+{% block body %}
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -10,10 +18,12 @@
         <label for="user">User:</label><br />
         <input type="text" id="user" name="user" maxlength="30" value=" {{ request.form.user }}"><br><br>
         <label for="password">Password:</label><br />
-        <input type="text" id="password" name="password" value=" {{ request.form.password }} "><br><br>
+        <input type="password" id="password" name="password" value=" {{ request.form.password }} "><br><br>
         <label for="database">Database name:</label><br />
         <input type="text" id="database" name="database" value=" {{ request.form.database }} "><br><br>
-        <input type="submit" value="Submit" class="button">
+        <input type="submit" value="Connect" class="button">
     </form>
 </body>
 </html>
+
+{% endblock %}

@@ -5,6 +5,18 @@
     padding: 0;
 }
 
+#user {
+    border: 1px solid black;
+}
+
+#password {
+    border: 1px solid black;
+}
+
+#database {
+    border: 1px solid black;
+}
+
 body {
     font-family: verdana;
     text-align: center;
