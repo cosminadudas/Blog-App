@@ -30,5 +30,9 @@ class DatabaseSetup():
         self.conn = psycopg2.connect("user={} password={}".format(user, password))
         self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = self.conn.cursor()
-        cur.execute("CREATE DATABASE {}".format(database_name))
-        self.conn.close()
+        try:
+            cur.execute("CREATE DATABASE {}".format(database_name))
+            self.conn.close()
+        except psycopg2.DatabaseError:
+            pass
+        self.close()

@@ -20,7 +20,6 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
 
     def get_all_posts(self):
         self.database.connect()
-        self.database.create_table(COMMAND)
         cur = self.database.conn.cursor()
         cur.execute("SELECT * FROM posts ORDER BY id DESC")
         entries = cur.fetchall()
