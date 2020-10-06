@@ -2,8 +2,8 @@ from flask import Flask
 from flask_injector import FlaskInjector
 from views.posts import blog_blueprint
 from views.setup import setup_blueprint
-from services.dependencies_for_production import production_database_configure
-from services.dependencies_for_production import production_repository_configure
+from services.dependencies import production_database_configure
+from services.dependencies import production_repository_configure
 
 app = Flask(__name__)
 app.register_blueprint(setup_blueprint)

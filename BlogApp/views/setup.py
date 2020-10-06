@@ -1,14 +1,14 @@
 from flask import Blueprint, request, redirect, render_template
 from injector import inject
-from services.config_database_service import ConfigDatabaseService
+from setup.config_interface import ConfigInterface
 from setup.database_setup import DatabaseSetup
 
 setup_blueprint = Blueprint('setup_blueprint', __name__)
-database_config: ConfigDatabaseService
+database_config: ConfigInterface
 
 @inject
 @setup_blueprint.route('/setup', methods=["GET", "POST"])
-def db_setup(database_config: ConfigDatabaseService):
+def db_setup(database_config: ConfigInterface):
     if database_config.is_configured():
         return redirect('/home')
     if request.method == "POST":

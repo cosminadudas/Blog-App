@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from configparser import ConfigParser
 
-class Config(ABC):
+class ConfigInterface(ABC):
     def __init__(self):
         self.parser = ConfigParser()
 

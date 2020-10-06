@@ -1,7 +1,7 @@
 import pytest
 from flask_injector import FlaskInjector
 from app import app
-from services.dependencies_for_testing import checking_repository_configure
+from services.dependencies import checking_repository_configure
 
 
 @pytest.fixture

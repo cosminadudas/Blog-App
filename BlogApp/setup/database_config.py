@@ -1,7 +1,7 @@
 import os
-from setup.config import Config
+from setup.config_interface import ConfigInterface
 
-class DatabaseConfig(Config):
+class DatabaseConfig(ConfigInterface):
 
     def is_configured(self):
         return  os.path.exists('setup/database.ini')
