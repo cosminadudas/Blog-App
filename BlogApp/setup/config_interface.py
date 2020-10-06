@@ -1,20 +1,15 @@
-from abc import ABC, abstractmethod
-from configparser import ConfigParser
+import abc
+from models.database_setup_model import DatabaseSetupModel
 
-class ConfigInterface(ABC):
-    def __init__(self):
-        self.parser = ConfigParser()
+class ConfigInterface(metaclass=abc.ABCMeta):
+    @classmethod
+    def __subclasshook__(cls, subclass):
+        return (hasattr(subclass, 'get_credentials') and
+                callable(subclass.get_credentials) and
+                hasattr(subclass, 'save_credentials') and
+                callable(subclass.save_credentials) or
+                NotImplemented)
 
-
-    @abstractmethod
-    def is_configured(self):
-        pass
-
-
-    @abstractmethod
-    def get_credentials(self, filename, section):
-        pass
-
-    @abstractmethod
-    def save_credentials(self, section, user, password, database):
-        pass
+    @abc.abstractmethod
+    def save_credentials(self, database_setup: DatabaseSetupModel):
+        raise NotImplementedError

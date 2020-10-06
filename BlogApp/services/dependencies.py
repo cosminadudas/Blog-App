@@ -17,5 +17,12 @@ def configure_production_database(binder):
 def configure_testing_repository(binder):
     binder.bind(BlogPostsInterface, to=BlogPostsInMemoryRepository, scope=request)
 
-def configure_testing_database(binder):
-    binder.bind(ConfigInterface, to=Mock(DatabaseConfig), scope=request)
+def configure_testing_isconfigured(binder):
+    config = Mock(DatabaseConfig)
+    config.is_configured = True
+    binder.bind(ConfigInterface, to=config, scope=request)
+
+def configure_testing_notconfigured(binder):
+    config = Mock(DatabaseConfig)
+    config.is_configured = False
+    binder.bind(ConfigInterface, to=config, scope=request)

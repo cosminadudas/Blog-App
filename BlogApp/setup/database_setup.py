@@ -12,8 +12,7 @@ class DatabaseSetup():
 
     def connect(self):
         self.conn = psycopg2.connect(
-            **self.credentials.get_credentials(
-                'setup/database.ini', 'postgresql'))
+            **self.credentials.load('postgresql'))
 
     def close(self):
         if self.conn is not None:
