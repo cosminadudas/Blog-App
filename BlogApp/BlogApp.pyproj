@@ -33,7 +33,7 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\database_setup_model.py">
+    <Compile Include="models\database_credentials.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\dependencies.py">
@@ -43,9 +43,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\config.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="setup\config_interface.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\database_config.py">
@@ -79,6 +76,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\conftest.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_posts.py">

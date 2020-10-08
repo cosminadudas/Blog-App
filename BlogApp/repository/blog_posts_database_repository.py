@@ -3,16 +3,6 @@ from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
 from setup.database_setup import DatabaseSetup
 
-COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
-                id SERIAL PRIMARY KEY,
-                owner TEXT NOT NULL,
-                title TEXT NOT NULL,
-                content TEXT NOT NULL,
-                created_at TIMESTAMP,
-                modified_at TIMESTAMP
-                )
-        """
-
 class BlogPostsDatabaseRepository(BlogPostsInterface):
 
     def __init__(self):
@@ -27,7 +17,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         for post_data in entries:
             post = BlogPost(int(post_data[0]), post_data[1], post_data[2], post_data[3])
             posts.append(post)
-        self.database.close()
+            self.database.close()
         return posts
 
     def get_post_by_id(self, post_id):

@@ -3,20 +3,23 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from injector import inject
 from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
+from setup.database_config import DatabaseConfig
 
 
-
-blog_posts: BlogPostsInterface
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
+@inject
+@blog_blueprint.before_request
+def get_setup_status(database_config: DatabaseConfig):
+    if not database_config.is_configured:
+        return redirect('/setup')
+    return None
 
-@blog_blueprint.route('/')
-def setup():
-    return redirect('/setup')
 
 @inject
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
+@blog_blueprint.route('/')
 def index(blog_posts: BlogPostsInterface):
     return render_template('list_posts.html', posts=blog_posts.get_all_posts())
 

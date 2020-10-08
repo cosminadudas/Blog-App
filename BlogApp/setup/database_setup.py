@@ -2,6 +2,15 @@ import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from setup.database_config import DatabaseConfig
 
+COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
+                id SERIAL PRIMARY KEY,
+                owner TEXT NOT NULL,
+                title TEXT NOT NULL,
+                content TEXT NOT NULL,
+                created_at TIMESTAMP,
+                modified_at TIMESTAMP
+                )
+        """
 
 class DatabaseSetup():
 
@@ -11,8 +20,9 @@ class DatabaseSetup():
 
 
     def connect(self):
-        self.conn = psycopg2.connect(
-            **self.credentials.load('postgresql'))
+        database_credentials = self.credentials.load_credentials()
+        self.conn = psycopg2.connect("user={} password={}".format(database_credentials.user,
+                                                                  database_credentials.password))
 
     def close(self):
         if self.conn is not None:
@@ -21,13 +31,13 @@ class DatabaseSetup():
 
 
     def create_table(self, command):
-        if self.conn is not None:
-            cur = self.conn.cursor()
-            cur.execute(command)
+        self.connect()
+        cursor = self.conn.cursor()
+        cursor.execute(command)
+        self.close()
 
-
-    def create_database(self, database_name, user, password):
-        self.conn = psycopg2.connect("user={} password={}".format(user, password))
+    def create_database(self, database_name):
+        self.connect()
         self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = self.conn.cursor()
         try:
@@ -35,4 +45,4 @@ class DatabaseSetup():
             self.conn.close()
         except psycopg2.DatabaseError:
             pass
-        self.close()
+        self.create_table(COMMAND)

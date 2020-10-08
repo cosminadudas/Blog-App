@@ -1,17 +1,22 @@
-from setup.config_interface import ConfigInterface
 from setup.config import Config
-from models.database_setup_model import DatabaseSetupModel
+from models.database_credentials import DatabaseCredentials
 
-class DatabaseConfig(ConfigInterface, Config):
+class DatabaseConfig(Config):
 
     def __init__(self):
-        self.filename = 'config.ini'
         self.section = 'postgresql'
-        super().__init__(self.filename)
+        super().__init__()
 
 
-    def save_credentials(self, database_setup: DatabaseSetupModel):
-        """Saves data into a specified file"""
+    def load_credentials(self):
+        data = super().load(self.section)
+        database_credentials = DatabaseCredentials(data['user'],
+                                                   data['password'],
+                                                   data['database'])
+        return database_credentials
+
+
+    def save_credentials(self, database_setup: DatabaseCredentials):
         credentials = {
             "host": database_setup.host,
             "user": database_setup.user,
@@ -19,4 +24,4 @@ class DatabaseConfig(ConfigInterface, Config):
             "database": database_setup.database_name
         }
 
-        super().save(database_setup.section, credentials)
+        super().save(self.section, credentials)
