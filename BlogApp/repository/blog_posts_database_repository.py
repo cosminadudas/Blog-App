@@ -17,7 +17,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         for post_data in entries:
             post = BlogPost(int(post_data[0]), post_data[1], post_data[2], post_data[3])
             posts.append(post)
-            self.database.close()
+        self.database.close()
         return posts
 
     def get_post_by_id(self, post_id):
@@ -34,13 +34,14 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
 
 
     def add(self, new_post: BlogPost):
-        new_post.created_at = datetime.now()
-        new_post.post_id = self.count() + 1
         self.database.connect()
         cur = self.database.conn.cursor()
         cur.execute("""INSERT INTO posts (OWNER, TITLE, CONTENT)
         VALUES (%s, %s, %s)""", (
             new_post.owner, new_post.title, new_post.content))
+        new_post.created_at = datetime.now()
+        cur.execute("SELECT ID FROM posts WHERE content=%s", (new_post.content,))
+        new_post.post_id = int(cur.fetchone()[0])
         self.database.close()
 
     def edit(self, post_id, new_title, new_content):
@@ -55,5 +56,4 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         self.database.connect()
         cur = self.database.conn.cursor()
         cur.execute("DELETE FROM posts WHERE ID = %s", ((post_id,)))
-        cur.execute("ALTER SEQUENCE posts_id_seq RESTART WITH %s", ((post_id,)))
         self.database.close()

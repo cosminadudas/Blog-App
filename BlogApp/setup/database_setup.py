@@ -3,7 +3,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from setup.database_config import DatabaseConfig
 
 COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
-                id SERIAL PRIMARY KEY,
+                id SERIAL PRIMARY KEY UNIQUE NOT NULL,
                 owner TEXT NOT NULL,
                 title TEXT NOT NULL,
                 content TEXT NOT NULL,
@@ -21,8 +21,11 @@ class DatabaseSetup():
 
     def connect(self):
         database_credentials = self.credentials.load_credentials()
-        self.conn = psycopg2.connect("user={} password={}".format(database_credentials.user,
-                                                                  database_credentials.password))
+        self.conn = psycopg2.connect(
+            user=database_credentials.user,
+            password=database_credentials.password,
+            database=database_credentials.database_name
+            )
 
     def close(self):
         if self.conn is not None:
@@ -36,13 +39,14 @@ class DatabaseSetup():
         cursor.execute(command)
         self.close()
 
-    def create_database(self, database_name):
-        self.connect()
-        self.conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur = self.conn.cursor()
+    def create_database(self):
+        db_credentials = self.credentials.load_credentials()
+        conn = psycopg2.connect(user=db_credentials.user, password=db_credentials.password)
+        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+        cur = conn.cursor()
         try:
-            cur.execute("CREATE DATABASE {}".format(database_name))
-            self.conn.close()
+            cur.execute("CREATE DATABASE {}".format(db_credentials.database_name))
+            conn.close()
         except psycopg2.DatabaseError:
             pass
         self.create_table(COMMAND)
