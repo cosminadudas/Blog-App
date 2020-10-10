@@ -16,11 +16,11 @@
 <body>
     <form action="{{ url_for('setup_blueprint.db_setup') }}" method="POST">
         <label for="user">User:</label><br />
-        <input type="text" id="user" name="user" maxlength="30" value=" {{ request.form.user }}"><br><br>
+        <input type="text" id="user" name="user" class="form" maxlength="30"><br><br>
         <label for="password">Password:</label><br />
-        <input type="password" id="password" name="password" value=" {{ request.form.password }} "><br><br>
+        <input type="password" id="password" class="form" name="password"><br><br>
         <label for="database">Database name:</label><br />
-        <input type="text" id="database" name="database" value=" {{ request.form.database }} "><br><br>
+        <input type="text" id="database" class="form" name="database"><br><br>
         <input type="submit" value="Connect" class="button">
     </form>
 </body>

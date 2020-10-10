@@ -1,0 +1,17 @@
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>Sign in</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %}
+
+
+{% block body %}
+<form action="{{ url_for('login_blueprint.user_login') }}" method="POST">
+    <label for="username_or_email">Username/Email:</label><br />
+    <input type="text" id="username_or_email" class="form" name="username_or_email" maxlength="30"><br><br>
+    <label for="password">Password:</label><br />
+    <input type="password" id="password" class="form" name="password"><br><br>
+    <input type="submit" value="Sign in" class="button">
+</form>
+{% endblock %}

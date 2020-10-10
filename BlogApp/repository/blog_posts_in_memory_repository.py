@@ -7,7 +7,6 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
 
     def __init__(self):
         self.posts = posts
-        self.index = 0
 
 
     def get_all_posts(self):

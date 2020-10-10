@@ -1,6 +1,7 @@
 import abc
+from models.user import User
 
-class UserInterface(metaclass=abc.ABCMeta):
+class UsersInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         return (hasattr(subclass, 'add') and
@@ -12,22 +13,24 @@ class UserInterface(metaclass=abc.ABCMeta):
                 hasattr(subclass, 'get_all_users') and
                 callable(subclass.get_all_users) and
                 hasattr(subclass, 'get_user_by_id') and
-                callable(subclass.get_user_by_id) or
+                callable(subclass.get_user_by_id) and
+                hasattr(subclass, 'get_user_by_name_or_email') and
+                callable(subclass.get_user_by_name_or_email) or
                 NotImplemented)
 
 
     @abc.abstractmethod
-    def add(self):
+    def add(self, new_user: User):
         raise NotImplementedError
 
 
     @abc.abstractmethod
-    def edit(self):
+    def edit(self, user_id, new_name, new_email, new_password):
         raise NotImplementedError
 
 
     @abc.abstractmethod
-    def delete(self):
+    def delete(self, user_id):
         raise NotImplementedError
 
 
@@ -37,5 +40,10 @@ class UserInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def get_user_by_id(self):
+    def get_user_by_id(self, user_id):
+        raise NotImplementedError
+
+
+    @abc.abstractmethod
+    def get_user_by_name_or_email(self, name_or_email):
         raise NotImplementedError

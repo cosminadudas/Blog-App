@@ -6,7 +6,7 @@ def test_index_route_when_config_file_exists(is_config):
     assert b'post 1' in result_two.data
 
 def test_add_post_route_when_config_file_exists(is_config):
-    response = is_config.post('/add', data=dict(
+    response = is_config.post('/add/post', data=dict(
         title="Post 3",
         owner="Cosmina",
         content="This is the third post"), follow_redirects=True)
@@ -15,7 +15,7 @@ def test_add_post_route_when_config_file_exists(is_config):
 
 
 def test_edit_post_route_when_config_file_exists(is_config):
-    response = is_config.post('/edit/2',
+    response = is_config.post('/edit/post/2',
                               data=dict(title='updated',
                                         content='This is the second post'),
                               follow_redirects=True)
@@ -23,12 +23,12 @@ def test_edit_post_route_when_config_file_exists(is_config):
 
 
 def test_delete_post_route_when_config_file_exists(is_config):
-    response = is_config.post('/delete/3', follow_redirects=True)
+    response = is_config.post('/delete/post/3', follow_redirects=True)
     assert b'post 3' not in response.data
 
 
 def test_view_post_route_when_config_file_exists(is_config):
-    response = is_config.get('/view/2')
+    response = is_config.get('/view/post/2')
     assert b'updated' in response.data
 
 def test_index_route_when_config_file_not_exist(is_not_config):
@@ -39,19 +39,19 @@ def test_index_route_when_config_file_not_exist(is_not_config):
 
 
 def test_add_route_when_config_file_not_exist(is_not_config):
-    result = is_not_config.get('/add', follow_redirects=True)
+    result = is_not_config.get('/add/post', follow_redirects=True)
     assert b'User' in result.data
 
 
 def test_edit_route_when_config_file_not_exist(is_not_config):
-    result = is_not_config.get('/edit/1', follow_redirects=True)
+    result = is_not_config.get('/edit/post/1', follow_redirects=True)
     assert b'User' in result.data
 
 def test_delete_route_when_config_file_not_exist(is_not_config):
-    result = is_not_config.get('/delete/1', follow_redirects=True)
+    result = is_not_config.get('/delete/post/1', follow_redirects=True)
     assert b'User' in result.data
 
 
 def test_view_post_route_when_config_file_not_exist(is_not_config):
-    response = is_not_config.get('/view/2', follow_redirects=True)
+    response = is_not_config.get('/view/post/2', follow_redirects=True)
     assert b'User' in response.data

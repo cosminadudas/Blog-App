@@ -4,13 +4,18 @@ from repository.blog_posts_interface import BlogPostsInterface
 from repository.blog_posts_database_repository import BlogPostsDatabaseRepository
 from repository.blog_posts_in_memory_repository import BlogPostsInMemoryRepository
 from setup.database_config import DatabaseConfig
-
+from repository.users_interface import UsersInterface
+from repository.users_database_repository import UsersDatabaseRepository
+from repository.users_in_memory_repository import UsersInMemoryRepository
 
 def configure_production(binder):
+    binder.bind(UsersInterface, to=UsersDatabaseRepository, scope=request)
     binder.bind(BlogPostsInterface, to=BlogPostsDatabaseRepository, scope=request)
     binder.bind(DatabaseConfig, to=DatabaseConfig, scope=request)
 
 
 def configure_testing(binder):
+    binder.bind(UsersInterface, to=UsersInMemoryRepository, scope=request)
     binder.bind(BlogPostsInterface, to=BlogPostsInMemoryRepository, scope=request)
     binder.bind(DatabaseConfig, to=Mock(DatabaseConfig), scope=request)
+    

@@ -1,0 +1,22 @@
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>Edit Post</title>
+<link rel="stylesheet" href="{{ url_for('static', filename = 'css/index.css') }}" />
+{% endblock %}
+
+
+
+{% block body %}
+<form action="{{ url_for('users_blueprint.edit_user', user_id = user_to_edit['user_id']) }}" method="POST">
+    <label for="name">Name:</label><br />
+    <input type="text" id="name" class="form" name="name" maxlength="30" value=" {{user_to_edit.name}}"><br><br />
+    <label for="email">Email:</label><br />
+    <input type="text" id="email" class="form" name="email" value=" {{ user_to_edit.email }}"><br><br />
+    <label for="new_password">New password:</label><br />
+    <input type="password" id="new_password" class="form" name="new_password"><br><br>
+    <label for="confirm_password">Confirm password:</label><br />
+    <input type="password" id="confirm_password" class="form" name="confirm_password"><br><br>
+    <input type="submit" value="Submit" class="button">
+</form>
+{% endblock %}

@@ -12,29 +12,10 @@
     margin: 20px;
 }
 
-#title {
-    border : 1px solid black;
-}
-
-#owner {
+.form {
     border: 1px solid black;
 }
 
-#user {
-    border: 1px solid black;
-}
-
-#password {
-    border: 1px solid black;
-}
-
-#database {
-    border: 1px solid black;
-}
-
-#content {
-    border: 1px solid black;
-}
 .article {
     padding: 50px;
     max-width: 100%;

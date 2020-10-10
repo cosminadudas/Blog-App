@@ -10,9 +10,9 @@
 {% block body %}
 <form action="{{ url_for('blog_blueprint.edit_post', post_id = post_to_edit['post_id']) }}" method="POST">
     <label for="title">Title:</label><br />
-    <input type="text" id="title" name="title" maxlength="30" value=" {{post_to_edit.title}}"><br><br />
+    <input type="text" id="title" class="form" name="title" maxlength="30" value=" {{post_to_edit.title}}"><br><br />
     <label for="content">Content:</label><br />
-    <textarea id="content" name="content" rows="25" cols="90">{{ post_to_edit.content }}</textarea><br>
+    <textarea id="content" class="form" name="content" rows="25" cols="90">{{ post_to_edit.content }}</textarea><br>
     <input type="submit" value="Submit" class="button">
 </form>
 {% endblock %}
