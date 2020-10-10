@@ -1,4 +1,4 @@
-from flask import Blueprint, request, redirect, render_template, session, url_for
+from flask import Blueprint, request, redirect, render_template, session
 from injector import inject
 from repository.users_interface import UsersInterface
 from services.password_manager import PasswordManager
@@ -16,6 +16,7 @@ def user_login(users: UsersInterface):
             hashed_password = PasswordManager.convert_to_hashed_password(password)
             if hashed_password == user.password:
                 session['user'] = user.name
+                session['id'] = user.user_id
                 return redirect('/home')
             return render_template('login.html', error='Wrong password!Try again!')
         return render_template('login.html', error='Wrong email or username!Try again!')
