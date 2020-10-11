@@ -7,6 +7,7 @@
 
 
 {% block body %}
+<h3 class="error">{{error}}</h3>
 <form action="{{ url_for('login_blueprint.user_login') }}" method="POST">
     <label for="username_or_email">Username/Email:</label><br />
     <input type="text" id="username_or_email" class="form" name="username_or_email" maxlength="30"><br><br>

@@ -59,4 +59,13 @@ class UsersDatabaseRepository(UsersInterface):
         return user
 
     def get_user_by_name_or_email(self, name_or_email):
-        pass
+        self.database.connect()
+        cur = self.database.conn.cursor()
+        cur.execute("SELECT * FROM users WHERE NAME = %s OR EMAIL = %s",
+                    ((name_or_email, name_or_email)))
+        entry = cur.fetchone()
+        user = None
+        if entry is not None:
+            user = User(int(entry[0]), entry[1], entry[2], entry[3])
+        self.database.close()
+        return user

@@ -4,7 +4,7 @@ from app import app
 from services.dependencies import configure_testing
 from setup.database_config import DatabaseConfig
 
-@pytest.fixture
+@pytest.fixture()
 def is_config():
     app.config['TESTING'] = True
     app.testing = True

@@ -1,11 +1,25 @@
-<!DOCTYPE html>
+﻿{% extends 'base.html' %}
 
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
+{% block head %}
+<title>Home</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %}
 
-</body>
-</html>
+
+{% block body %}
+
+<a href="{{ url_for('users_blueprint.add_user') }}" class="bigger button">Add user</a>
+<div id="users">
+    {% if users != None %}
+    {% for user in users %}
+    <div class="user">
+        <p>{{ user.name }}
+        <a href="{{ url_for('users_blueprint.view_user', user_id = user.user_id) }}" class="button">View details</a>
+        <hr />
+        </p>
+    </div>
+    {%  endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}

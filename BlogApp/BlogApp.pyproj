@@ -99,16 +99,28 @@
     <Compile Include="tests\conftest.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_login.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_posts.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\test_setup.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_users.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\login.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\my_decorators\login_required.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\my_decorators\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\posts.py">
@@ -134,6 +146,7 @@
     <Folder Include="static\css\" />
     <Folder Include="templates\" />
     <Folder Include="static\" />
+    <Folder Include="views\my_decorators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="static\css\index.css" />

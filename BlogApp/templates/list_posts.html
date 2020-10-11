@@ -8,7 +8,7 @@
 
 {% block body %}
 
-{% if 'user' in session: %}
+{% if 'username' in session: %}
 <a href="{{ url_for('blog_blueprint.add_post') }}" class="bigger button">Add post</a>
 {% endif %}
 <div id="posts">

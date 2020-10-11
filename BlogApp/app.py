@@ -3,15 +3,16 @@ from flask_injector import FlaskInjector
 from views.posts import blog_blueprint
 from views.setup import setup_blueprint
 from views.login import login_blueprint
+from views.users import users_blueprint
 from services.dependencies import configure_production
 
 app = Flask(__name__)
 
-
+app.secret_key = 'randomstring'
 app.register_blueprint(setup_blueprint)
 app.register_blueprint(login_blueprint)
 app.register_blueprint(blog_blueprint)
-app.secret_key = 'randomstring'
+app.register_blueprint(users_blueprint)
 
 FlaskInjector(app=app, modules=[configure_production])
 

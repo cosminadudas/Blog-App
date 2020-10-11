@@ -25,7 +25,10 @@ class UsersInMemoryRepository(UsersInterface):
         if user_to_edit is not None:
             user_to_edit.name = new_name
             user_to_edit.email = new_email
-            user_to_edit.password = PasswordManager.convert_to_hashed_password(new_password)
+            if new_password is None:
+                pass
+            else:
+                user_to_edit.password = PasswordManager.convert_to_hashed_password(new_password)
             user_to_edit.modified_at = datetime.now()
 
 
@@ -44,5 +47,9 @@ class UsersInMemoryRepository(UsersInterface):
                 return user
         return None
 
+
     def get_user_by_name_or_email(self, name_or_email):
-        pass
+        for user in self.users:
+            if name_or_email in (user.name, user.email):
+                return user
+        return None
