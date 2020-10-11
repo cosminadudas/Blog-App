@@ -13,8 +13,6 @@ def get_setup_status(database_config: DatabaseConfig):
         return redirect('/setup')
     return None
 
-
-
 @users_blueprint.before_request
 def is_admin_logged_in():
     if 'username' not in session:

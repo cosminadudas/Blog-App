@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Blueprint, request, redirect, url_for, render_template, session
+from flask import Blueprint, request, redirect, url_for, render_template, session, abort
 from injector import inject
 from views.my_decorators.login_required import login_required
 from models.blog_post import BlogPost
@@ -45,7 +45,7 @@ def add_post(blog_posts: BlogPostsInterface):
 def edit_post(blog_posts: BlogPostsInterface, post_id):
     post_to_edit = blog_posts.get_post_by_id(post_id)
     if post_to_edit.owner != session['id'] and session['username'] != 'admin':
-        return redirect('/home')
+        return abort(403)
     if request.method == "POST":
         new_title = request.form['title']
         new_content = request.form['content']
@@ -60,7 +60,7 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
 def delete_post(blog_posts: BlogPostsInterface, post_id):
     post_to_delete = blog_posts.get_post_by_id(post_id)
     if post_to_delete.owner != session['id'] and session['username'] != 'admin':
-        return redirect('/home')
+        return abort(403)
     blog_posts.delete(post_id)
     return redirect(url_for('blog_blueprint.index'))
 

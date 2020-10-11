@@ -39,6 +39,16 @@ def test_edit_post_route_when_config_file_exists_and_user_not_exist(is_config):
     response = is_config.get('/edit/post/2', follow_redirects=True)
     assert is_config.get('/login').data in response.data
 
+def test_edit_post_route_when_config_file_exists_and_user_is_not_admin_or_owner(is_config):
+    is_config.post('/login', data=dict(
+        username_or_email='larisa',
+        password='larisa'), follow_redirects=True)
+    response = is_config.post('/edit/post/2',
+                              data=dict(title='updated',
+                                        content='This is the second post'),
+                              follow_redirects=True)
+    assert b'403' in response.data
+
 
 def test_delete_post_route_when_config_file_and_admin_or_owner_exist(is_config):
     is_config.post('/login', data=dict(username_or_email='cosmina',
@@ -46,6 +56,14 @@ def test_delete_post_route_when_config_file_and_admin_or_owner_exist(is_config):
     response = is_config.post('/delete/post/3', follow_redirects=True)
     assert b'post 3' not in response.data
 
+
+def test_delete_post_route_when_config_file_exists_and_user_is_not_admin_or_owner(is_config):
+    is_config.post('/login', data=dict(
+        username_or_email='larisa',
+        password='larisa'), follow_redirects=True)
+    response = is_config.get('/delete/post/2',
+                             follow_redirects=True)
+    assert b'403' in response.data
 
 def test_delete_post_route_when_config_file_exists_and_user_not_exist(is_config):
     is_config.get('/logout')
