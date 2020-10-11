@@ -1,8 +1,9 @@
-from flask import Blueprint, request, redirect, url_for, render_template, session
+from flask import Blueprint, request, redirect, url_for, render_template, session, abort
 from injector import inject
 from repository.users_interface import UsersInterface
 from models.user import User
 from setup.database_config import DatabaseConfig
+from views.my_decorators.login_required import login_required
 
 users_blueprint = Blueprint('users_blueprint', __name__)
 
@@ -18,12 +19,13 @@ def is_admin_logged_in():
     if 'username' not in session:
         return redirect('/login')
     if session['username'] != 'admin':
-        return redirect('/login')
+        return abort(403)
     return None
 
 
 @inject
 @users_blueprint.route('/add/user', methods=["GET", "POST"])
+@login_required
 def add_user(users: UsersInterface):
     if request.method == "POST":
         new_user = User(0, '', '', '')
@@ -37,6 +39,7 @@ def add_user(users: UsersInterface):
 
 @inject
 @users_blueprint.route('/edit/user/<int:user_id>', methods=["GET", "POST"])
+@login_required
 def edit_user(users: UsersInterface, user_id):
     user_to_edit = users.get_user_by_id(user_id)
     if request.method == "POST":
@@ -52,6 +55,7 @@ def edit_user(users: UsersInterface, user_id):
 
 @inject
 @users_blueprint.route('/delete/user/<int:user_id>')
+@login_required
 def delete_user(users: UsersInterface, user_id):
     users.delete(user_id)
     return render_template('/list_users.html', users=users.get_all_users())
@@ -59,12 +63,14 @@ def delete_user(users: UsersInterface, user_id):
 
 @inject
 @users_blueprint.route('/view/users')
+@login_required
 def view_all_users(users: UsersInterface):
     return render_template('list_users.html', users=users.get_all_users())
 
 
 @inject
 @users_blueprint.route('/view/user/<int:user_id>')
+@login_required
 def view_user(users: UsersInterface, user_id):
     user_to_view = users.get_user_by_id(user_id)
     return render_template('view_user.html', user=user_to_view)

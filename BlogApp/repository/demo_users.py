@@ -24,4 +24,10 @@ user_four = User(4,
                  'D39814833B65AAD1B71047DED63D4EEC9EC628CDC6C7F4B5F8C41762EE811698')
 
 
-users = [user_one, user_two, user_three, user_four]
+user_five = User(5,
+                 'ana',
+                 'ana@yahoo.com',
+                 'D39814833B65AAD1B71047DED63D4EEC9EC628CDC6C7F4B5F8C41762EE811698')
+
+
+users = [user_one, user_two, user_three, user_four, user_five]

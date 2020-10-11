@@ -17,7 +17,7 @@ def test_add_user_route_when_config_file_exists_and_user_not_admin(is_config):
                                                      email='david@yahoo.com',
                                                      password=the_password),
                               follow_redirects=True)
-    assert b'Email' in response.data
+    assert b'403' in response.data
 
 
 def test_add_user_route_when_config_file_not_exist(is_not_config):
@@ -44,15 +44,15 @@ def test_edit_user_route_when_config_file_and_admin_exists(is_config):
 
 
 def test_edit_user_route_when_config_file_exist_and_user_not_admin(is_config):
-    is_config.post('/login', data=dict(username_or_email='david',
-                                       password='david'), follow_redirects=True)
+    is_config.post('/login', data=dict(username_or_email='maria',
+                                       password='larisa'), follow_redirects=True)
     the_password = 'D259039D17A64F94A3B3BB7F00C4A3C99208B8809254A6766AD6400D8393B5A7'
     response = is_config.post('/edit/user/3', data=dict(name='dudas',
                                                         email='dudas@yahoo.com',
                                                         new_password=the_password,
                                                         confirm_password=the_password),
                               follow_redirects=True)
-    assert b'Email' in response.data
+    assert b'403' in response.data
 
 
 def test_edit_user_route_when_config_file_not_exist(is_not_config):
@@ -69,17 +69,17 @@ def test_edit_user_route_when_config_file_not_exist(is_not_config):
 def test_delete_user_route_when_config_file_and_admin_exists(is_config):
     is_config.post('/login', data=dict(username_or_email='admin',
                                        password='admin'), follow_redirects=True)
-    response = is_config.get('/delete/user/4',
+    response = is_config.get('/delete/user/5',
                              follow_redirects=True)
     assert b'david' in response.data
 
 
 def test_delete_user_route_when_config_file_exist_and_user_not_admin(is_config):
-    is_config.post('/login', data=dict(username_or_email='david',
-                                       password='david'), follow_redirects=True)
+    is_config.post('/login', data=dict(username_or_email='maria',
+                                       password='larisa'), follow_redirects=True)
     response = is_config.get('/delete/user/3',
                              follow_redirects=True)
-    assert b'Email' in response.data
+    assert b'403' in response.data
 
 
 def test_delete_user_route_when_config_file_not_exist(is_not_config):
