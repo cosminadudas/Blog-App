@@ -30,4 +30,16 @@ user_five = User(5,
                  'D39814833B65AAD1B71047DED63D4EEC9EC628CDC6C7F4B5F8C41762EE811698')
 
 
-users = [user_one, user_two, user_three, user_four, user_five]
+user_six = User(6,
+                'mihai',
+                'mihai@yahoo.com',
+                '63882F335C4129769C7821EE0B1831E3B49EFBD5D954F9FE35845F29341FC64F')
+
+
+user_seven = User(7,
+                  'alex',
+                  'alex@yahoo.com',
+                  '63882F335C4129769C7821EE0B1831E3B49EFBD5D954F9FE35845F29341FC64F')
+
+
+users = [user_one, user_two, user_three, user_four, user_five, user_six, user_seven]

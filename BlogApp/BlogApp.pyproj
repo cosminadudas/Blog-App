@@ -54,7 +54,10 @@
     <Compile Include="services\dependencies.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\password_manager.py">
+    <Compile Include="services\auth_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\setup_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\__init__.py">
@@ -114,13 +117,16 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\decorators\setup_required.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\login.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\my_decorators\login_required.py">
+    <Compile Include="views\decorators\login_required.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="views\my_decorators\__init__.py">
+    <Compile Include="views\decorators\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\posts.py">
@@ -146,7 +152,7 @@
     <Folder Include="static\css\" />
     <Folder Include="templates\" />
     <Folder Include="static\" />
-    <Folder Include="views\my_decorators\" />
+    <Folder Include="views\decorators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="static\css\index.css" />

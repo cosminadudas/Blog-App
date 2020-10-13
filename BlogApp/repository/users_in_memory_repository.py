@@ -2,7 +2,7 @@ from datetime import datetime
 from repository.users_interface import UsersInterface
 from repository.demo_users import users
 from models.user import User
-from services.password_manager import PasswordManager
+from services.auth_manager import AuthManager
 
 class UsersInMemoryRepository(UsersInterface):
 
@@ -16,7 +16,7 @@ class UsersInMemoryRepository(UsersInterface):
 
     def add(self, new_user: User):
         new_user.user_id = self.count() + 1
-        new_user.password = PasswordManager.convert_to_hashed_password(new_user.password)
+        new_user.password = AuthManager.convert_to_hashed_password(new_user.password)
         self.users.insert(0, new_user)
 
 
@@ -28,7 +28,7 @@ class UsersInMemoryRepository(UsersInterface):
             if new_password is None:
                 pass
             else:
-                user_to_edit.password = PasswordManager.convert_to_hashed_password(new_password)
+                user_to_edit.password = AuthManager.convert_to_hashed_password(new_password)
             user_to_edit.modified_at = datetime.now()
 
 
