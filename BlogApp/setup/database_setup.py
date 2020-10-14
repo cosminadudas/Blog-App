@@ -17,6 +17,16 @@ class DatabaseSetup():
     def __init__(self):
         self.conn = None
         self.credentials = DatabaseConfig()
+        self.version = self.get_credentials_version()
+
+
+    def get_credentials_version(self):
+        return self.credentials.get_version()
+
+
+
+    def update(self):
+        self.credentials.update_version()
 
 
     def connect(self):

@@ -130,3 +130,38 @@ def test_view_all_users_route_when_config_file_not_exist(is_not_config):
     response = is_not_config.get('users/view',
                                  follow_redirects=True)
     assert b'Database' in response.data
+
+
+def test_add_user_route_when_config_file_exists_and_no_user_is_registered(is_config):
+    response = is_config.post('users/add', data=dict(name='david',
+                                                     email='david@yahoo.com',
+                                                     password='david'),
+                              follow_redirects=True)
+    assert b'Email' in response.data
+
+
+def test_edit_user_route_when_config_file_and_no_user_is_registered(is_config):
+    response = is_config.post('users/edit/7', data=dict(name='dudas',
+                                                        email='dudas@yahoo.com',
+                                                        new_password='dudas',
+                                                        confirm_password='dudas'),
+                              follow_redirects=True)
+    assert b'Email' in response.data
+
+
+def test_delete_user_route_when_config_file_and_no_user_is_registered(is_config):
+    response = is_config.get('users/delete/5',
+                             follow_redirects=True)
+    assert b'Email' in response.data
+
+
+def test_view_user_route_when_config_file_and_no_user_is_registered(is_config):
+    response = is_config.get('users/view/7',
+                             follow_redirects=True)
+    assert b'Email' in response.data
+
+
+def test_view_all_users_route_when_config_file_and_no_user_is_registered(is_config):
+    response = is_config.get('users/view',
+                             follow_redirects=True)
+    assert b'Email' in response.data

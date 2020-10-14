@@ -20,6 +20,7 @@ class Config:
             raise Exception('Section {0} not found in the {1} file'.format(section, self.filename))
         return data
 
+
     def save(self, section, data):
         if not self.is_configured:
             open(self.filename, 'w+').close()
@@ -31,3 +32,10 @@ class Config:
             self.parser.write(config)
 
         self.is_configured = True
+
+
+    def update(self, section, key, value):
+        self.parser[section][key] = str(value)
+
+        with open(self.filename, 'w+') as config:
+            self.parser.write(config)

@@ -25,9 +25,9 @@ class AuthManager:
         session.pop('username', None)
         session.pop('id', None)
 
-
     @staticmethod
-    def admin_required():
-        if 'username' in session and session['username'] != 'admin':
-            return abort(403)
+    def admin_or_owner_required(user_id):
+        if 'username' in session:
+            if session['username'] != 'admin' and session['id'] != user_id:
+                return abort(403)
         return None

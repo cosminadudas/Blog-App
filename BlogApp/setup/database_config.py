@@ -8,6 +8,22 @@ class DatabaseConfig(Config):
         super().__init__()
 
 
+    def get_version(self):
+        data = super().load(self.section)
+        if 'version' not in data:
+            super().update(self.section, 'version', '1')
+            data_updated = super().load(self.section)
+            return int(data_updated['version'])
+
+        return int(data['version'])
+
+
+    def update_version(self):
+        data = super().load(self.section)
+        updated_version = int(data['version']) + 1
+        super().update(self.section, 'version', updated_version)
+
+
     def load_credentials(self):
         data = super().load(self.section)
         database_credentials = DatabaseCredentials(data['user'],

@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template, session, abort
 from injector import inject
-from views.decorators.login_required import login_required
+from views.decorators.authorization import login_required
 from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
 from setup.database_config import DatabaseConfig

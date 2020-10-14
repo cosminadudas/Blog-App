@@ -69,6 +69,12 @@
     <Compile Include="setup\database_config.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="setup\database_update.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="setup\database_updates_for_version_2.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="setup\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -117,13 +123,13 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\decorators\authorization.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\decorators\setup_required.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\login.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="views\decorators\login_required.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\decorators\__init__.py">
