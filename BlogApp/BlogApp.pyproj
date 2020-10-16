@@ -33,6 +33,9 @@
     <Compile Include="app.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="exceptions.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\database_credentials.py">
       <SubType>Code</SubType>
     </Compile>
@@ -54,7 +57,10 @@
     <Compile Include="services\dependencies.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\auth_manager.py">
+    <Compile Include="services\authentication_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\password_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\setup_manager.py">
@@ -69,10 +75,7 @@
     <Compile Include="setup\database_config.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="setup\database_update.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="setup\database_updates_for_version_2.py">
+    <Compile Include="setup\database_updates.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup\__init__.py">

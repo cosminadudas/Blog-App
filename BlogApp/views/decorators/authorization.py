@@ -1,6 +1,7 @@
 from functools import wraps
 from flask import redirect, session, abort
 
+
 def admin_required(func):
     @wraps(func)
     def wrapped(**kwargs):

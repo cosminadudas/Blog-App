@@ -11,11 +11,13 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
     def get_all_posts(self):
         self.database.connect()
         cur = self.database.conn.cursor()
-        cur.execute("SELECT * FROM posts ORDER BY id DESC")
+        cur.execute("""SELECT posts.id, posts.title, posts.content,
+        users.name
+        FROM posts INNER JOIN users ON posts.owner=users.id ORDER BY posts.id DESC""")
         entries = cur.fetchall()
         posts = []
         for post_data in entries:
-            post = BlogPost(int(post_data[0]), post_data[1], post_data[2], post_data[3])
+            post = BlogPost(int(post_data[0]), post_data[3], post_data[1], post_data[2])
             posts.append(post)
         self.database.close()
         return posts
@@ -23,9 +25,11 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
     def get_post_by_id(self, post_id):
         self.database.connect()
         cur = self.database.conn.cursor()
-        cur.execute("SELECT * FROM posts WHERE ID = %s", ((post_id,)))
+        cur.execute("""SELECT posts.id, posts.title, posts.content,
+        users.name
+        FROM posts INNER JOIN users ON posts.owner=users.id WHERE posts.id = %s""", ((post_id,)))
         entry = cur.fetchone()
-        post = BlogPost(int(entry[0]), entry[1], entry[2], entry[3])
+        post = BlogPost(int(entry[0]), entry[3], entry[1], entry[2])
         self.database.close()
         return post
 

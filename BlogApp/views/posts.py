@@ -1,33 +1,35 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, url_for, render_template, session, abort
 from injector import inject
+from views.decorators.setup_required import setup_required
 from views.decorators.authorization import login_required
 from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
-from setup.database_config import DatabaseConfig
-from services.setup_manager import SetupManager
 
 
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
-@inject
-@blog_blueprint.before_request
-def get_setup_status(database_config: DatabaseConfig):
-    return SetupManager.get_setup_status(database_config)
+
+@blog_blueprint.route('/')
+def index():
+    return redirect('/setup')
+
 
 @inject
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
-@blog_blueprint.route('/')
-def index(blog_posts: BlogPostsInterface):
+@setup_required
+def home(blog_posts: BlogPostsInterface):
     return render_template('list_posts.html', posts=blog_posts.get_all_posts())
 
 @inject
 @blog_blueprint.route('/add', methods=["GET", "POST"])
+@setup_required
 @login_required
 def add_post(blog_posts: BlogPostsInterface):
     if request.method == "POST":
         new_post = BlogPost(0, '', '', '')
+        new_post.owner = session['id']
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.created_at = datetime.now()
@@ -39,6 +41,7 @@ def add_post(blog_posts: BlogPostsInterface):
 
 @inject
 @blog_blueprint.route('/edit/<int:post_id>', methods=["GET", "POST"])
+@setup_required
 @login_required
 def edit_post(blog_posts: BlogPostsInterface, post_id):
     post_to_edit = blog_posts.get_post_by_id(post_id)
@@ -54,6 +57,7 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
 
 @inject
 @blog_blueprint.route('/delete/<int:post_id>', methods=["GET", "POST"])
+@setup_required
 @login_required
 def delete_post(blog_posts: BlogPostsInterface, post_id):
     post_to_delete = blog_posts.get_post_by_id(post_id)
@@ -65,6 +69,7 @@ def delete_post(blog_posts: BlogPostsInterface, post_id):
 
 @inject
 @blog_blueprint.route('/view/<int:post_id>')
+@setup_required
 def view_post(blog_posts: BlogPostsInterface, post_id):
     post_to_view = blog_posts.get_post_by_id(post_id)
     return render_template('view_post.html',

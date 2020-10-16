@@ -2,7 +2,7 @@ from datetime import datetime
 from repository.users_interface import UsersInterface
 from models.user import User
 from setup.database_setup import DatabaseSetup
-from services.auth_manager import AuthManager
+from services.password_manager import PasswordManager
 
 class UsersDatabaseRepository(UsersInterface):
 
@@ -13,7 +13,7 @@ class UsersDatabaseRepository(UsersInterface):
     def add(self, new_user: User):
         self.database.connect()
         cur = self.database.conn.cursor()
-        hashed_password = AuthManager.convert_to_hashed_password(new_user.password)
+        hashed_password = PasswordManager.hash(new_user.password)
         cur.execute("""INSERT INTO users (NAME, EMAIL, PASSWORD)
         VALUES (%s, %s, %s)""", (
             new_user.name, new_user.email, hashed_password))
@@ -24,10 +24,21 @@ class UsersDatabaseRepository(UsersInterface):
 
 
     def edit(self, user_id, new_name, new_email, new_password):
+        user = self.get_user_by_id(user_id)
+        if new_name is None:
+            new_name = user.name
+
+        if new_email is None:
+            new_email = user.email
+
+        hashed_new_password = ''
+        if new_password is None:
+            hashed_new_password = user.password
+        else:
+            hashed_new_password = PasswordManager.hash(new_password)
         self.database.connect()
         cur = self.database.conn.cursor()
-        hashed_new_password = AuthManager.convert_to_hashed_password(new_password)
-        cur.execute("""UPDATE users SET NAME = %s, EMAIL = %s, PASSWORD = %S WHERE ID = %s""", (
+        cur.execute("""UPDATE users SET NAME = %s, EMAIL = %s, PASSWORD = %s WHERE ID = %s""", (
             new_name, new_email, hashed_new_password, user_id))
         self.database.close()
 

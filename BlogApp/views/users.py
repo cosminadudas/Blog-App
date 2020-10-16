@@ -2,22 +2,16 @@ from flask import Blueprint, request, redirect, url_for, render_template
 from injector import inject
 from repository.users_interface import UsersInterface
 from models.user import User
-from setup.database_config import DatabaseConfig
 from views.decorators.authorization import admin_required
 from views.decorators.authorization import admin_or_owner_required
-from services.setup_manager import SetupManager
+from views.decorators.setup_required import setup_required
+
 
 users_blueprint = Blueprint('users_blueprint', __name__, url_prefix='/users')
 
-
-@inject
-@users_blueprint.before_request
-def get_setup_status(database_config: DatabaseConfig):
-    return SetupManager.get_setup_status(database_config)
-
-
 @inject
 @users_blueprint.route('/add', methods=["GET", "POST"])
+@setup_required
 @admin_required
 def add_user(users: UsersInterface):
     if request.method == "POST":
@@ -32,6 +26,7 @@ def add_user(users: UsersInterface):
 
 @inject
 @users_blueprint.route('/edit/<int:user_id>', methods=["GET", "POST"])
+@setup_required
 @admin_or_owner_required
 def edit_user(users: UsersInterface, user_id):
     user_to_edit = users.get_user_by_id(user_id)
@@ -48,6 +43,7 @@ def edit_user(users: UsersInterface, user_id):
 
 @inject
 @users_blueprint.route('/delete/<int:user_id>')
+@setup_required
 @admin_required
 def delete_user(users: UsersInterface, user_id):
     users.delete(user_id)
@@ -56,6 +52,7 @@ def delete_user(users: UsersInterface, user_id):
 
 @inject
 @users_blueprint.route('/view')
+@setup_required
 @admin_required
 def view_all_users(users: UsersInterface):
     return render_template('list_users.html', users=users.get_all_users())
@@ -63,6 +60,7 @@ def view_all_users(users: UsersInterface):
 
 @inject
 @users_blueprint.route('/view/<int:user_id>')
+@setup_required
 @admin_or_owner_required
 def view_user(users: UsersInterface, user_id):
     user_to_view = users.get_user_by_id(user_id)

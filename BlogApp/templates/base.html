@@ -9,18 +9,20 @@
 </head>
 <body>
     <div class="topnav">
-        <a class="active" href="{{ url_for('blog_blueprint.index') }}">Home</a>
+        <a class="active" href="{{ url_for('blog_blueprint.home') }}">Home</a>
         {% if session['username'] == 'admin' %}
         <a href="{{ url_for('users_blueprint.view_all_users') }}">Users</a>
         {% endif %}
-        <a href="{{ url_for('blog_blueprint.index') }}">Posts</a>
+        <a href="{{ url_for('blog_blueprint.home') }}">Posts</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         {% if 'username' not in session: %}
         <a href="{{ url_for('login_blueprint.user_login')}}">Login</a>
         {% endif %}
         {% if session['username']: %}
+        <a href="{{ url_for('users_blueprint.view_user', user_id = session['id']) }}">View Profile</a>
         <a href="{{ url_for('login_blueprint.user_logout')}}">Logout</a>
+        <a href="#">| Hi,{{ session['username'] }}</a>
         {% endif %}
     </div>
     {% block body %}{% endblock %}

@@ -1,28 +1,16 @@
 import psycopg2
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 from setup.database_config import DatabaseConfig
+from setup.database_updates import queries
 
-COMMAND = """ CREATE TABLE IF NOT EXISTS posts (
-                id SERIAL PRIMARY KEY UNIQUE NOT NULL,
-                owner TEXT NOT NULL,
-                title TEXT NOT NULL,
-                content TEXT NOT NULL,
-                created_at TIMESTAMP,
-                modified_at TIMESTAMP
-                )
-        """
 
 class DatabaseSetup():
 
     def __init__(self):
         self.conn = None
         self.credentials = DatabaseConfig()
-        self.version = self.get_credentials_version()
-
-
-    def get_credentials_version(self):
-        return self.credentials.get_version()
-
+        self.version = self.credentials.get_version()
+        self.latest_version = 2
 
 
     def update(self):
@@ -43,12 +31,6 @@ class DatabaseSetup():
             self.conn.close()
 
 
-    def create_table(self, command):
-        self.connect()
-        cursor = self.conn.cursor()
-        cursor.execute(command)
-        self.close()
-
     def create_database(self):
         db_credentials = self.credentials.load_credentials()
         conn = psycopg2.connect(user=db_credentials.user, password=db_credentials.password)
@@ -56,7 +38,18 @@ class DatabaseSetup():
         cur = conn.cursor()
         try:
             cur.execute("CREATE DATABASE {}".format(db_credentials.database_name))
-            conn.close()
         except psycopg2.DatabaseError:
             pass
-        self.create_table(COMMAND)
+
+        if self.version == self.latest_version:
+            conn.close()
+            return
+
+        for query in queries:
+            try:
+                cur.execute(query)
+            except psycopg2.DatabaseError:
+                pass
+            conn.commit()
+        self.update()
+        conn.close()

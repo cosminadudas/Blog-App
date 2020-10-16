@@ -10,7 +10,7 @@
 
 <h1>{{ post.title }}</h1>
 <p>
-    By {{ user }} on {{ post.created_at.day }}/{{post.created_at.month}}/{{post.created_at.year}}
+    By {{ post.owner }} on {{ post.created_at.day }}/{{post.created_at.month}}/{{post.created_at.year}}
 </p>
 <pre>{{ post.content }}</pre>
 {% if session['username'] == 'admin' or session['id'] == post.owner %}
