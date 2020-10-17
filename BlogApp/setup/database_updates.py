@@ -17,9 +17,10 @@ created_at TIMESTAMP,
 modified_at TIMESTAMP)"""
 
 
-ADMIN_USER = """INSERT INTO users (name,created_at,modified_at)
+ADMIN_USER = """INSERT INTO users (name,email,created_at,modified_at)
 VALUES 
 ('admin',
+'user@yahoo.com',
 current_timestamp,
 current_timestamp)"""
 
@@ -38,12 +39,6 @@ created_at=now()::timestamp(0), modified_at=now()::timestamp(0)
 WHERE password is null'''
 
 queries.append(USERS_UPDATE)
-
-SET_NOT_NULL = '''ALTER TABLE users
-ALTER COLUMN email SET NOT NULL,
-ALTER COLUMN password SET NOT NULL'''
-
-queries.append(SET_NOT_NULL)
 
 
 OWNERS = '''UPDATE posts

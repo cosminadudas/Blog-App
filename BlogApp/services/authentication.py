@@ -1,13 +1,20 @@
 from exceptions import LoginError
+from injector import inject
 from flask import session
 from services.password_manager import PasswordManager
 from repository.users_interface import UsersInterface
 
 
-class AuthenticationManager:
+class Authentication:
 
-    @staticmethod
-    def login(user, password):
+    @inject
+    def __init__(self, users: UsersInterface):
+        self.users = users
+        self.session = None
+
+
+    def login(self, name_or_email, password):
+        user = self.users.get_user_by_name_or_email(name_or_email)
         hashed_password = PasswordManager.hash(password)
         if hashed_password == user.password:
             session['username'] = user.name
@@ -16,15 +23,7 @@ class AuthenticationManager:
             raise LoginError
 
 
-    @staticmethod
-    def logout():
+    def logout(self):
         session.pop('username', None)
         session.pop('id', None)
-
-
-    @staticmethod
-    def set_password(users: UsersInterface, user, password):
-        if user is not None:
-            if user.password != '':
-                return
-            users.edit(user.user_id, user.name, user.email, password)
+        self.session = session

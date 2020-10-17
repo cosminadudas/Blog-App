@@ -9,12 +9,24 @@ class DatabaseSetup():
     def __init__(self):
         self.conn = None
         self.credentials = DatabaseConfig()
-        self.version = self.credentials.get_version()
         self.latest_version = 2
 
 
+    def is_updated(self):
+        return self.credentials.get_version() == self.latest_version
+
+
     def update(self):
+        db_credentials = self.credentials.load_credentials()
+        conn = psycopg2.connect(user=db_credentials.user,
+                                password=db_credentials.password,
+                                database=db_credentials.database_name)
+        cur = conn.cursor()
+        for query in queries:
+            cur.execute(query)
+        conn.commit()
         self.credentials.update_version()
+        conn.close()
 
 
     def connect(self):
@@ -40,16 +52,4 @@ class DatabaseSetup():
             cur.execute("CREATE DATABASE {}".format(db_credentials.database_name))
         except psycopg2.DatabaseError:
             pass
-
-        if self.version == self.latest_version:
-            conn.close()
-            return
-
-        for query in queries:
-            try:
-                cur.execute(query)
-            except psycopg2.DatabaseError:
-                pass
-            conn.commit()
-        self.update()
         conn.close()

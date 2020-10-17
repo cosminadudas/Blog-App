@@ -57,13 +57,10 @@
     <Compile Include="services\dependencies.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\authentication_manager.py">
+    <Compile Include="services\authentication.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\password_manager.py">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="services\setup_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\__init__.py">

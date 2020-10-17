@@ -10,16 +10,12 @@ from repository.blog_posts_interface import BlogPostsInterface
 blog_blueprint = Blueprint('blog_blueprint', __name__)
 
 
-@blog_blueprint.route('/')
-def index():
-    return redirect('/setup')
-
-
 @inject
+@blog_blueprint.route('/')
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
 @setup_required
-def home(blog_posts: BlogPostsInterface):
+def index(blog_posts: BlogPostsInterface):
     return render_template('list_posts.html', posts=blog_posts.get_all_posts())
 
 @inject

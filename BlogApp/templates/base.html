@@ -9,11 +9,11 @@
 </head>
 <body>
     <div class="topnav">
-        <a class="active" href="{{ url_for('blog_blueprint.home') }}">Home</a>
+        <a class="active" href="{{ url_for('blog_blueprint.index') }}">Home</a>
         {% if session['username'] == 'admin' %}
         <a href="{{ url_for('users_blueprint.view_all_users') }}">Users</a>
         {% endif %}
-        <a href="{{ url_for('blog_blueprint.home') }}">Posts</a>
+        <a href="{{ url_for('blog_blueprint.index') }}">Posts</a>
         <a href="#contact">Contact</a>
         <a href="#about">About</a>
         {% if 'username' not in session: %}
