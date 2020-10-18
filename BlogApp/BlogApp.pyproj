@@ -168,6 +168,7 @@
     <Content Include="templates\create_user.html" />
     <Content Include="templates\edit_post.html" />
     <Content Include="templates\edit_user.html" />
+    <Content Include="templates\first_login_form.html" />
     <Content Include="templates\list_posts.html" />
     <Content Include="templates\list_users.html" />
     <Content Include="templates\login.html" />

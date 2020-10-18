@@ -14,38 +14,27 @@ class UsersDatabaseRepository(UsersInterface):
         self.database.connect()
         cur = self.database.conn.cursor()
         hashed_password = PasswordManager.hash(new_user.password)
-        cur.execute("""INSERT INTO users (NAME, EMAIL, PASSWORD)
+        cur.execute("""INSERT INTO users (name, email, password)
         VALUES (%s, %s, %s)""", (
             new_user.name, new_user.email, hashed_password))
         new_user.created_at = datetime.now()
-        cur.execute("SELECT ID FROM users WHERE name=%s", (new_user.name,))
+        cur.execute("SELECT id FROM users WHERE name=%s", (new_user.name,))
         new_user.user_id = int(cur.fetchone()[0])
         self.database.close()
 
 
-    def edit(self, user_id, new_name, new_email, new_password):
-        user = self.get_user_by_id(user_id)
-        if new_name is None:
-            new_name = user.name
-
-        if new_email is None:
-            new_email = user.email
-
-        hashed_new_password = ''
-        if new_password is None:
-            hashed_new_password = user.password
-        else:
-            hashed_new_password = PasswordManager.hash(new_password)
+    def edit(self, user_to_edit, new_name, new_email, new_password):
+        hashed_new_password = PasswordManager.hash(new_password)
         self.database.connect()
         cur = self.database.conn.cursor()
-        cur.execute("""UPDATE users SET NAME = %s, EMAIL = %s, PASSWORD = %s WHERE ID = %s""", (
-            new_name, new_email, hashed_new_password, user_id))
+        cur.execute("""UPDATE users SET name = %s, email = %s, password = %s WHERE id = %s""", (
+            new_name, new_email, hashed_new_password, user_to_edit.user_id))
         self.database.close()
 
     def delete(self, user_id):
         self.database.connect()
         cur = self.database.conn.cursor()
-        cur.execute("DELETE FROM users WHERE ID = %s", ((user_id,)))
+        cur.execute("DELETE FROM users WHERE id = %s", ((user_id,)))
         self.database.close()
 
     def get_all_users(self):

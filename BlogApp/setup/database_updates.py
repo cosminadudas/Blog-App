@@ -22,7 +22,7 @@ VALUES
 ('admin',
 'user@yahoo.com',
 current_timestamp,
-current_timestamp)"""
+current_timestamp) ON CONFLICT DO NOTHING"""
 
 queries = [POSTS_TABLE, USERS_TABLE, ADMIN_USER]
 

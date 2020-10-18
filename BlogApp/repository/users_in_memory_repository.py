@@ -20,8 +20,7 @@ class UsersInMemoryRepository(UsersInterface):
         self.users.insert(0, new_user)
 
 
-    def edit(self, user_id, new_name, new_email, new_password):
-        user_to_edit = self.get_user_by_id(user_id)
+    def edit(self, user_to_edit, new_name, new_email, new_password):
         if user_to_edit is not None:
             user_to_edit.name = new_name
             user_to_edit.email = new_email

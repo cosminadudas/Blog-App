@@ -25,7 +25,7 @@ class UsersInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def edit(self, user_id, new_name, new_email, new_password):
+    def edit(self, user_to_edit, new_name, new_email, new_password):
         raise NotImplementedError
 
 

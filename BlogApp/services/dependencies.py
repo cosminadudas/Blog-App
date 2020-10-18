@@ -11,14 +11,14 @@ from setup.database_config import DatabaseConfig
 from services.authentication import Authentication
 
 def configure_production(binder):
-    binder.bind(UsersInterface, to=UsersDatabaseRepository, scope=request)
+    binder.bind(UsersInterface, to=UsersDatabaseRepository, scope=singleton)
     binder.bind(BlogPostsInterface, to=BlogPostsDatabaseRepository, scope=request)
     binder.bind(DatabaseConfig, to=DatabaseConfig, scope=request)
     binder.bind(Authentication, to=Authentication, scope=singleton)
 
 
 def configure_testing(binder):
-    binder.bind(UsersInterface, to=UsersInMemoryRepository, scope=request)
+    binder.bind(UsersInterface, to=UsersInMemoryRepository, scope=singleton)
     binder.bind(BlogPostsInterface, to=BlogPostsInMemoryRepository, scope=request)
     binder.bind(DatabaseConfig, to=Mock(DatabaseConfig), scope=request)
     binder.bind(Authentication, to=Authentication, scope=singleton)

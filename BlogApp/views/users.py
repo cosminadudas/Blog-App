@@ -10,6 +10,22 @@ from views.decorators.setup_required import setup_required
 users_blueprint = Blueprint('users_blueprint', __name__, url_prefix='/users')
 
 @inject
+@users_blueprint.route('/first_login_setup/<int:user_id>', methods=["GET", "POST"])
+@setup_required
+def first_login_setup(users: UsersInterface, user_id):
+    user_to_edit = users.get_user_by_id(user_id)
+    if request.method == "GET":
+        return render_template('first_login_form.html')
+    new_email = request.form['email']
+    new_password = request.form['new_password']
+    confirm_password = request.form['confirm_password']
+    if new_password == confirm_password:
+        users.edit(user_to_edit, user_to_edit.name, new_email, new_password)
+        return redirect(url_for('users_blueprint.view_user', user_id=user_to_edit.user_id))
+    return None
+
+
+@inject
 @users_blueprint.route('/add', methods=["GET", "POST"])
 @setup_required
 @admin_required
@@ -30,15 +46,16 @@ def add_user(users: UsersInterface):
 @admin_or_owner_required
 def edit_user(users: UsersInterface, user_id):
     user_to_edit = users.get_user_by_id(user_id)
-    if request.method == "POST":
-        new_name = request.form['name']
-        new_email = request.form['email']
-        new_password = request.form['new_password']
-        confirm_password = request.form['confirm_password']
-        if new_password == confirm_password:
-            users.edit(user_id, new_name, new_email, new_password)
-            return redirect(url_for('users_blueprint.view_user', user_id=user_to_edit.user_id))
-    return render_template('edit_user.html', user_to_edit=user_to_edit)
+    if request.method == "GET":
+        return render_template('edit_user.html', user_to_edit=user_to_edit)
+    new_name = request.form['name']
+    new_email = request.form['email']
+    new_password = request.form['new_password']
+    confirm_password = request.form['confirm_password']
+    if new_password == confirm_password:
+        users.edit(user_to_edit, new_name, new_email, new_password)
+        return redirect(url_for('users_blueprint.view_user', user_id=user_to_edit.user_id))
+    return None
 
 
 @inject
