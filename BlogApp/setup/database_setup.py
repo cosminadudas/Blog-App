@@ -21,12 +21,12 @@ class DatabaseSetup():
         conn = psycopg2.connect(user=db_credentials.user,
                                 password=db_credentials.password,
                                 database=db_credentials.database_name)
+        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = conn.cursor()
         for query in queries:
             cur.execute(query)
-        conn.commit()
-        self.credentials.update_version()
         conn.close()
+        self.credentials.update_version()
 
 
     def connect(self):
@@ -50,6 +50,10 @@ class DatabaseSetup():
         cur = conn.cursor()
         try:
             cur.execute("CREATE DATABASE {}".format(db_credentials.database_name))
+            conn.close()
+            if not self.is_updated():
+                self.update()
         except psycopg2.DatabaseError:
-            pass
-        conn.close()
+            conn.close()
+            if not self.is_updated():
+                self.update()

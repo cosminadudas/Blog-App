@@ -1,4 +1,16 @@
-﻿def test_add_user_route_when_config_file_and_admin_exists(is_config):
+﻿def test_first_login_setup_route_when_config_file_exists_and_user_has_no_password(is_config):
+    response = is_config.post('/login', data=dict(username_or_email='ion',
+                                                  password=''), follow_redirects=True)
+    assert b'Username' in response.data
+
+
+def test_first_login_setup_route_when_config_file_not_exist_and_user_has_no_password(is_not_config):
+    response = is_not_config.post('/login', data=dict(username_or_email='ion',
+                                                      password=''), follow_redirects=True)
+    assert b'Database' in response.data
+
+
+def test_add_user_route_when_config_file_and_admin_exists(is_config):
     is_config.post('/login', data=dict(username_or_email='admin',
                                        password='admin'), follow_redirects=True)
     response = is_config.post('users/add', data=dict(name='david',

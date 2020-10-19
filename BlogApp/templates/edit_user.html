@@ -8,11 +8,17 @@
 
 
 {% block body %}
+<h3 class="error">{{error}}</h3>
 <form action="{{ url_for('users_blueprint.edit_user', user_id = user_to_edit['user_id']) }}" method="POST">
+    {% if user_to_edit.name == 'admin' %}
+    <p>Username: admin</p>
+    <input style="display:none;" type="text" id="name" name="name" maxlength="30" value={{user_to_edit.name}}><br><br />
+    {% else %}
     <label for="name">Name:</label><br />
-    <input type="text" id="name" class="form" name="name" maxlength="30" value="{{user_to_edit.name}}"><br><br />
+    <input type="text" id="name" class="form" name="name" maxlength="30" value={{user_to_edit.name}}><br><br />
+    {% endif %}
     <label for="email">Email:</label><br />
-    <input type="text" id="email" class="form" name="email" value="{{ user_to_edit.email }}"><br><br />
+    <input type="text" id="email" class="form" name="email" value={{ user_to_edit.email }}><br><br />
     <label for="new_password">New password:</label><br />
     <input type="password" id="new_password" class="form" name="new_password"><br><br>
     <label for="confirm_password">Confirm password:</label><br />

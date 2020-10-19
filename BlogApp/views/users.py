@@ -1,3 +1,4 @@
+from exceptions import UserAlreadyExists
 from flask import Blueprint, request, redirect, url_for, render_template
 from injector import inject
 from repository.users_interface import UsersInterface
@@ -35,7 +36,10 @@ def add_user(users: UsersInterface):
         new_user.name = request.form['name']
         new_user.email = request.form['email']
         new_user.password = request.form['password']
-        users.add(new_user)
+        try:
+            users.add(new_user)
+        except UserAlreadyExists:
+            return render_template('create_user.html', error="This user already exists! Try again!")
         return redirect(url_for('users_blueprint.view_user', user_id=new_user.user_id))
     return render_template('create_user.html')
 
@@ -53,7 +57,12 @@ def edit_user(users: UsersInterface, user_id):
     new_password = request.form['new_password']
     confirm_password = request.form['confirm_password']
     if new_password == confirm_password:
-        users.edit(user_to_edit, new_name, new_email, new_password)
+        try:
+            users.edit(user_to_edit, new_name, new_email, new_password)
+        except UserAlreadyExists:
+            return render_template('edit_user.html',
+                                   user_to_edit=user_to_edit,
+                                   error="This user already exists! Try again!")
         return redirect(url_for('users_blueprint.view_user', user_id=user_to_edit.user_id))
     return None
 

@@ -42,4 +42,10 @@ user_seven = User(7,
                   '63882F335C4129769C7821EE0B1831E3B49EFBD5D954F9FE35845F29341FC64F')
 
 
-users = [user_one, user_two, user_three, user_four, user_five, user_six, user_seven]
+user_eight = User(8,
+                  'ion',
+                  'user@yahoo.com',
+                  '')
+
+
+users = [user_one, user_two, user_three, user_four, user_five, user_six, user_seven, user_eight]

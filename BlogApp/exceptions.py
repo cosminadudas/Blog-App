@@ -3,3 +3,6 @@ class LoginError(BaseException):
 
 class UserNotSetupError(BaseException):
     pass
+
+class UserAlreadyExists(BaseException):
+    pass

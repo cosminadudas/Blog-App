@@ -47,3 +47,11 @@ class UsersInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def get_user_by_name_or_email(self, name_or_email):
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def verify_user_already_exist(self, user):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def are_credentials_unavailable(self, user_to_edit, new_name, new_email):
+        raise NotImplementedError

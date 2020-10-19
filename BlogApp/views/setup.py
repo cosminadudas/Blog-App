@@ -18,8 +18,6 @@ def db_setup(database_config: DatabaseConfig):
         database_config.save_credentials(database_credentials)
         setup = DatabaseSetup()
         setup.create_database()
-        if not setup.is_updated():
-            setup.update()
         return redirect('/home')
     return render_template('setup_db.html')
     

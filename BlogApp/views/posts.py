@@ -41,7 +41,7 @@ def add_post(blog_posts: BlogPostsInterface):
 @login_required
 def edit_post(blog_posts: BlogPostsInterface, post_id):
     post_to_edit = blog_posts.get_post_by_id(post_id)
-    if post_to_edit.owner != session['id'] and session['username'] != 'admin':
+    if post_to_edit.owner != session['username'] and session['username'] != 'admin':
         return abort(403)
     if request.method == "POST":
         new_title = request.form['title']
@@ -57,7 +57,7 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
 @login_required
 def delete_post(blog_posts: BlogPostsInterface, post_id):
     post_to_delete = blog_posts.get_post_by_id(post_id)
-    if post_to_delete.owner != session['id'] and session['username'] != 'admin':
+    if post_to_delete.owner != session['username'] and session['username'] != 'admin':
         return abort(403)
     blog_posts.delete(post_id)
     return redirect(url_for('blog_blueprint.index'))
