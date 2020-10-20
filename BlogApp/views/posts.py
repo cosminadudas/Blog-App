@@ -5,6 +5,7 @@ from views.decorators.setup_required import setup_required
 from views.decorators.authorization import login_required
 from models.blog_post import BlogPost
 from repository.blog_posts_interface import BlogPostsInterface
+from repository.users_interface import UsersInterface
 
 
 blog_blueprint = Blueprint('blog_blueprint', __name__)
@@ -15,8 +16,10 @@ blog_blueprint = Blueprint('blog_blueprint', __name__)
 @blog_blueprint.route('/home')
 @blog_blueprint.route('/posts')
 @setup_required
-def index(blog_posts: BlogPostsInterface):
-    return render_template('list_posts.html', posts=blog_posts.get_all_posts())
+def index(blog_posts: BlogPostsInterface, users: UsersInterface):
+    return render_template('list_posts.html',
+                           users=users.get_all_users(),
+                           posts=blog_posts.get_all_posts())
 
 @inject
 @blog_blueprint.route('/add', methods=["GET", "POST"])

@@ -16,6 +16,11 @@
     background-color: antiquewhite;
     color: darkred;
 }
+
+select {
+    border: 1px solid black;
+}
+
 .form {
     border: 1px solid black;
 }

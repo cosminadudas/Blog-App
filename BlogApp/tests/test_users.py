@@ -1,12 +1,23 @@
-﻿def test_first_login_setup_route_when_config_file_exists_and_user_has_no_password(is_config):
-    response = is_config.post('/login', data=dict(username_or_email='ion',
-                                                  password=''), follow_redirects=True)
-    assert b'Username' in response.data
+﻿def test_first_login_setup_get_route_without_login_attempt_when_config_file_exists(is_config):
+    response = is_config.get('/users/first_login_setup/1', follow_redirects=True)
+    assert b'405' in response.data
 
 
-def test_first_login_setup_route_when_config_file_not_exist_and_user_has_no_password(is_not_config):
-    response = is_not_config.post('/login', data=dict(username_or_email='ion',
-                                                      password=''), follow_redirects=True)
+def test_first_login_setup_post_route_without_login_attempt_when_config_file_exists(is_config):
+    response = is_config.post('/users/first_login_setup/1',
+                              data=dict(email='admin@yahoo.com',
+                                        password='admin',
+                                        confirm_password='admin'),
+                              follow_redirects=True)
+    assert b'400' in response.data
+
+
+def test_first_login_setup_route_when_config_file_not_exist(is_not_config):
+    response = is_not_config.post('/users/first_login_setup/1',
+                                  data=dict(email='admin@yahoo.com',
+                                            password='admin',
+                                            confirm_password='admin'),
+                                  follow_redirects=True)
     assert b'Database' in response.data
 
 

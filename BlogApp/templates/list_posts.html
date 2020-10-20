@@ -11,6 +11,17 @@
 {% if 'username' in session: %}
 <a href="{{ url_for('blog_blueprint.add_post') }}" class="bigger button">Add post</a>
 {% endif %}
+
+<br />
+<p>Filter posts by user:</p>
+<select>
+    {% for user in users %}
+    <option value="{{user.name}}">{{user.name}}</option>
+    {% endfor %}
+</select>
+
+<a href="#" class="bigger button">View posts</a>
+
 <div id="posts">
     {% if posts != None %}
     {% for post in posts %}

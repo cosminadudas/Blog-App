@@ -22,6 +22,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         self.database.close()
         return posts
 
+
     def get_post_by_id(self, post_id):
         self.database.connect()
         cur = self.database.conn.cursor()

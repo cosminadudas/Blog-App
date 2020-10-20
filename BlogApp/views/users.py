@@ -11,12 +11,10 @@ from views.decorators.setup_required import setup_required
 users_blueprint = Blueprint('users_blueprint', __name__, url_prefix='/users')
 
 @inject
-@users_blueprint.route('/first_login_setup/<int:user_id>', methods=["GET", "POST"])
+@users_blueprint.route('/first_login_setup/<int:user_id>', methods=["POST"])
 @setup_required
 def first_login_setup(users: UsersInterface, user_id):
     user_to_edit = users.get_user_by_id(user_id)
-    if request.method == "GET":
-        return render_template('first_login_form.html')
     new_email = request.form['email']
     new_password = request.form['new_password']
     confirm_password = request.form['confirm_password']
