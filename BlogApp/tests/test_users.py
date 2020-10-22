@@ -5,17 +5,17 @@
 
 def test_first_login_setup_post_route_without_login_attempt_when_config_file_exists(is_config):
     response = is_config.post('/users/first_login_setup/1',
-                              data=dict(email='admin@yahoo.com',
-                                        password='admin',
+                              data=dict(new_email='admin@yahoo.com',
+                                        new_password='admin',
                                         confirm_password='admin'),
                               follow_redirects=True)
-    assert b'400' in response.data
+    assert b'403' in response.data
 
 
 def test_first_login_setup_route_when_config_file_not_exist(is_not_config):
     response = is_not_config.post('/users/first_login_setup/1',
-                                  data=dict(email='admin@yahoo.com',
-                                            password='admin',
+                                  data=dict(new_email='admin@yahoo.com',
+                                            new_password='admin',
                                             confirm_password='admin'),
                                   follow_redirects=True)
     assert b'Database' in response.data

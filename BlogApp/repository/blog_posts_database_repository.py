@@ -23,6 +23,22 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         return posts
 
 
+    def get_all_posts_by_username(self, username):
+        self.database.connect()
+        cur = self.database.conn.cursor()
+        cur.execute("""SELECT posts.id, posts.title, posts.content,
+        users.name
+        FROM posts INNER JOIN users ON posts.owner=users.id
+        WHERE users.name=%s
+        ORDER BY posts.id DESC """, ((username,)))
+        entries = cur.fetchall()
+        user_posts = []
+        for post_data in entries:
+            post = BlogPost(int(post_data[0]), post_data[3], post_data[1], post_data[2])
+            user_posts.append(post)
+        self.database.close()
+        return user_posts
+
     def get_post_by_id(self, post_id):
         self.database.connect()
         cur = self.database.conn.cursor()

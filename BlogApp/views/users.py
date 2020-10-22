@@ -1,5 +1,5 @@
 from exceptions import UserAlreadyExists
-from flask import Blueprint, request, redirect, url_for, render_template
+from flask import Blueprint, request, redirect, url_for, render_template, abort
 from injector import inject
 from repository.users_interface import UsersInterface
 from models.user import User
@@ -15,6 +15,8 @@ users_blueprint = Blueprint('users_blueprint', __name__, url_prefix='/users')
 @setup_required
 def first_login_setup(users: UsersInterface, user_id):
     user_to_edit = users.get_user_by_id(user_id)
+    if user_to_edit.password != '':
+        return abort(403)
     new_email = request.form['email']
     new_password = request.form['new_password']
     confirm_password = request.form['confirm_password']

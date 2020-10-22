@@ -14,13 +14,13 @@
 
 <br />
 <p>Filter posts by user:</p>
-<select>
+<select id="filter">
     {% for user in users %}
     <option value="{{user.name}}">{{user.name}}</option>
     {% endfor %}
 </select>
 
-<a href="#" class="bigger button">View posts</a>
+<button onclick="GoToUserPostsPath()" class="bigger button">View posts</button>
 
 <div id="posts">
     {% if posts != None %}
@@ -39,4 +39,10 @@
     {% endif %}
 </div>
 
+<script>
+    function GoToUserPostsPath() {
+        var user = document.getElementById('filter').value;
+        window.location.assign(`/home?user=${user}`);
+    }
+</script>
 {% endblock %}

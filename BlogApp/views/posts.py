@@ -17,9 +17,14 @@ blog_blueprint = Blueprint('blog_blueprint', __name__)
 @blog_blueprint.route('/posts')
 @setup_required
 def index(blog_posts: BlogPostsInterface, users: UsersInterface):
+    if request.args.get('user') is None:
+        return render_template('list_posts.html',
+                               users=users.get_all_users(),
+                               posts=blog_posts.get_all_posts())
     return render_template('list_posts.html',
                            users=users.get_all_users(),
-                           posts=blog_posts.get_all_posts())
+                           posts=blog_posts.get_all_posts_by_username(request.args.get('user')))
+
 
 @inject
 @blog_blueprint.route('/add', methods=["GET", "POST"])

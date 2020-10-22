@@ -14,6 +14,11 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
+    def get_all_posts_by_username(self, username):
+        raise NotImplementedError
+
+
+    @abc.abstractmethod
     def get_all_posts(self):
         raise NotImplementedError
 

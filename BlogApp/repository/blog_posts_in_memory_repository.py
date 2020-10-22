@@ -13,6 +13,14 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
         return self.posts
 
 
+    def get_all_posts_by_username(self, username):
+        user_posts = []
+        for post in posts:
+            if post.owner == username:
+                user_posts.append(post)
+
+        return user_posts
+
     def get_post_by_id(self, post_id):
         for post in self.posts:
             if post.post_id == post_id:

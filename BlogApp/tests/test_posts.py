@@ -1,9 +1,16 @@
-
 def test_index_route_when_config_file_exists(is_config):
     result_one = is_config.get('/home')
     assert b'post 1' in result_one.data
     result_two = is_config.get('/posts')
     assert b'post 1' in result_two.data
+
+
+def test_index_route_when_config_file_exists_and_filter_is_activated(is_config):
+    response = is_config.get('/home?user=ion')
+    assert b'ion' in response.data
+    assert b'post 4' in response.data
+    assert b'post 3' in response.data
+    assert b'post 5' not in response.data
 
 
 def test_add_post_route_when_config_file_and_admin_or_owner_exist(is_config):
