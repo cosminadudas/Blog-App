@@ -15,6 +15,8 @@
 <br />
 <p>Filter posts by user:</p>
 <select id="filter">
+    <option>{{query}}</option>
+    <option value="All">All</option>
     {% for user in users %}
     <option value="{{user.name}}">{{user.name}}</option>
     {% endfor %}
@@ -39,10 +41,44 @@
     {% endif %}
 </div>
 
+<div>
+    {% if pagination.page_number != None and pagination.page_number != pagination.first_page: %}
+    <button onclick="GoToPage('Previous')" id="button-left" class="button">Previous</button>
+    {% endif %}
+    {% if pagination.page_number != None and pagination.page_number != pagination.last_page: %}
+    <button onclick="GoToPage('Next')" id="button-right" class="button">Next</button>
+    {% endif %}
+</div>
+
 <script>
     function GoToUserPostsPath() {
         var user = document.getElementById('filter').value;
-        window.location.assign(`/home?user=${user}`);
+        if (user == "All") {
+            window.location.assign('/home');
+        }
+        else {
+            window.location.assign(`/home?page=0&user=${user}`);
+        }
+    }
+
+    function GoToPage(page_direction) {
+        var url = new URLSearchParams(window.location.search);
+        var current_page = url.get("page");
+        var user = url.get("user");
+        var request_page = current_page
+        if (page_direction == 'Next') {
+            request_page++;
+        }
+        else if (page_direction == 'Previous') {
+            request_page--;
+        }
+
+        if (user == null) {
+            window.location.assign(`/home?page=${request_page}`);
+        }
+        else {
+            window.location.assign(`/home?page=${request_page}&user=${user}`);
+        }
     }
 </script>
 {% endblock %}

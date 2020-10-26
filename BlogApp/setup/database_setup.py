@@ -9,7 +9,7 @@ class DatabaseSetup():
     def __init__(self):
         self.conn = None
         self.credentials = DatabaseConfig()
-        self.latest_version = 2
+        self.latest_version = 3
 
 
     def is_updated(self):

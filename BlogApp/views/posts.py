@@ -4,6 +4,7 @@ from injector import inject
 from views.decorators.setup_required import setup_required
 from views.decorators.authorization import login_required
 from models.blog_post import BlogPost
+from models.pagination import Pagination
 from repository.blog_posts_interface import BlogPostsInterface
 from repository.users_interface import UsersInterface
 
@@ -17,13 +18,25 @@ blog_blueprint = Blueprint('blog_blueprint', __name__)
 @blog_blueprint.route('/posts')
 @setup_required
 def index(blog_posts: BlogPostsInterface, users: UsersInterface):
-    if request.args.get('user') is None:
-        return render_template('list_posts.html',
-                               users=users.get_all_users(),
-                               posts=blog_posts.get_all_posts())
+    pagination = Pagination(0, 1)
+    count_posts = blog_posts.count(request.args.get('user'))
+    if count_posts == 0:
+        pagination.last_page = 0
+    elif count_posts % pagination.limit != 0:
+        pagination.last_page = int(count_posts/pagination.limit)
+    else:
+        pagination.last_page = int(count_posts/pagination.limit - 1)
+    current_page = request.args.get('page')
+    if current_page is not None:
+        if int(current_page) < 0 or int(current_page) > pagination.last_page:
+            pagination.page_number = 0
+        else:
+            pagination.page_number = int(request.args.get('page'))
     return render_template('list_posts.html',
                            users=users.get_all_users(),
-                           posts=blog_posts.get_all_posts_by_username(request.args.get('user')))
+                           posts=blog_posts.get_all_posts(request.args.get('user'), pagination),
+                           query=request.args.get('user'),
+                           pagination=pagination)
 
 
 @inject

@@ -1,5 +1,6 @@
 import abc
 from models.blog_post import BlogPost
+from models.pagination import Pagination
 
 class BlogPostsInterface(metaclass=abc.ABCMeta):
     @classmethod
@@ -14,12 +15,7 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def get_all_posts_by_username(self, username):
-        raise NotImplementedError
-
-
-    @abc.abstractmethod
-    def get_all_posts(self):
+    def get_all_posts(self, user, pagination: Pagination):
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -27,7 +23,7 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def count(self):
+    def count(self, user):
         raise NotImplementedError
 
 

@@ -39,6 +39,9 @@
     <Compile Include="models\database_credentials.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\pagination.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\user.py">
       <SubType>Code</SubType>
     </Compile>

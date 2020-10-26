@@ -1,5 +1,6 @@
 from datetime import datetime
 from models.blog_post import BlogPost
+from models.pagination import Pagination
 from repository.demo_posts import posts
 from repository.blog_posts_interface import BlogPostsInterface
 
@@ -9,17 +10,24 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
         self.posts = posts
 
 
-    def get_all_posts(self):
-        return self.posts
+    def get_all_posts(self, user, pagination: Pagination):
+        all_posts = []
+        if user is not None:
+            for post in self.posts:
+                if post.owner == user:
+                    all_posts.append(post)
+        else:
+            all_posts = self.posts
+
+        posts = []
+        start_index = int(pagination.limit * (pagination.page_number))
+        i = start_index
+        while i < len(all_posts) and i < start_index + pagination.limit:
+            posts.append(all_posts[i])
+            i += 1
+        return posts
 
 
-    def get_all_posts_by_username(self, username):
-        user_posts = []
-        for post in posts:
-            if post.owner == username:
-                user_posts.append(post)
-
-        return user_posts
 
     def get_post_by_id(self, post_id):
         for post in self.posts:
@@ -28,12 +36,18 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
         return None
 
 
-    def count(self):
-        return len(self.posts)
+    def count(self, user):
+        if user is None:
+            return len(self.posts)
+        count = 0
+        for post in self.posts:
+            if post.owner == user:
+                count += 1
+        return count
 
 
     def add(self, new_post: BlogPost):
-        new_post.post_id = self.count() + 1
+        new_post.post_id = len(self.posts) + 1
         self.posts.insert(0, new_post)
 
 
