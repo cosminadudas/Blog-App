@@ -20,7 +20,7 @@ blog_blueprint = Blueprint('blog_blueprint', __name__)
 def index(blog_posts: BlogPostsInterface, users: UsersInterface):
     pagination = Pagination(0, 1)
     count_posts = blog_posts.count(request.args.get('user'))
-    if count_posts == 0:
+    if count_posts == 0 or count_posts < 5:
         pagination.last_page = 0
     elif count_posts % pagination.limit != 0:
         pagination.last_page = int(count_posts/pagination.limit)

@@ -35,6 +35,25 @@ def test_index_route_when_config_file_exists_and_filter_is_activated(is_config):
     assert b'post 5' not in response.data
 
 
+def test_first_page_of_index_route_when_filter_activated_and_are_less_than_five_posts(is_config):
+    response = is_config.get('/home?user=ion', follow_redirects=True)
+    assert b'Next' not in response.data
+    assert b'Previous' not in response.data
+
+
+def test_first_page_of_index_route_when_filter_activated_and_are_more_than_five_posts(is_config):
+    response = is_config.get('/home?user=alex', follow_redirects=True)
+    assert b'Next' in response.data
+    assert b'Previous' not in response.data
+
+
+def test_first_page_of_index_route_when_filter_is_not_activated(is_config):
+    response = is_config.get('/home', follow_redirects=True)
+    assert b'Next' in response.data
+    assert b'Previous' not in response.data
+
+
+
 def test_second_page_of_index_route_when_config_file_exists_and_filter_is_activated(is_config):
     response = is_config.get('/home?page=1&user=alex')
     assert b'post 10' in response.data
@@ -43,6 +62,16 @@ def test_second_page_of_index_route_when_config_file_exists_and_filter_is_activa
     assert b'post 13' in response.data
     assert b'post 14' in response.data
     assert b'Next' in response.data
+    assert b'Previous' in response.data
+
+
+def test_third_page_of_index_route_when_filter_activated_and_are_less_than_five_posts(is_config):
+    response = is_config.get('/home?page=2&user=alex')
+    assert b'post 15' in response.data
+    assert b'post 16' in response.data
+    assert b'post 17' in response.data
+    assert b'post 18' in response.data
+    assert b'Next' not in response.data
     assert b'Previous' in response.data
 
 

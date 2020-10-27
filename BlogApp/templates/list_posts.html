@@ -15,10 +15,14 @@
 <br />
 <p>Filter posts by user:</p>
 <select id="filter">
-    <option>{{query}}</option>
+    {% if query != None: %}
+    <option style="background-color:lightgray;" value="{{ query }}">{{ query }}</option>
+    {% endif %}
     <option value="All">All</option>
     {% for user in users %}
-    <option value="{{user.name}}">{{user.name}}</option>
+    {% if query != user.name %}
+    <option id="{{user.name}}" value="{{user.name}}">{{user.name}}</option>
+    {% endif %}
     {% endfor %}
 </select>
 
@@ -43,10 +47,10 @@
 
 <div>
     {% if pagination.page_number != None and pagination.page_number != pagination.first_page: %}
-    <button onclick="GoToPage('Previous')" id="button-left" class="button">Previous</button>
+    <button onclick="GoToPage('P')" id="button-left" class="button">Previous</button>
     {% endif %}
     {% if pagination.page_number != None and pagination.page_number != pagination.last_page: %}
-    <button onclick="GoToPage('Next')" id="button-right" class="button">Next</button>
+    <button onclick="GoToPage('N')" id="button-right" class="button">Next</button>
     {% endif %}
 </div>
 
@@ -59,6 +63,7 @@
         else {
             window.location.assign(`/home?page=0&user=${user}`);
         }
+
     }
 
     function GoToPage(page_direction) {
@@ -66,10 +71,10 @@
         var current_page = url.get("page");
         var user = url.get("user");
         var request_page = current_page
-        if (page_direction == 'Next') {
+        if (page_direction == 'N') {
             request_page++;
         }
-        else if (page_direction == 'Previous') {
+        else if (page_direction == 'P') {
             request_page--;
         }
 

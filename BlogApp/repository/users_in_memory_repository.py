@@ -1,6 +1,7 @@
 from exceptions import UserAlreadyExists
 from datetime import datetime
 from repository.users_interface import UsersInterface
+from repository.blog_posts_in_memory_repository import BlogPostsInMemoryRepository
 from repository.demo_users import users
 from models.user import User
 from services.password_manager import PasswordManager
@@ -37,7 +38,11 @@ class UsersInMemoryRepository(UsersInterface):
 
 
     def delete(self, user_id):
+        blog_posts = BlogPostsInMemoryRepository()
         user_to_delete = self.get_user_by_id(user_id)
+        for post in blog_posts.posts:
+            if post.owner == user_to_delete.name:
+                blog_posts.delete(post.post_id)
         self.users.remove(user_to_delete)
 
 

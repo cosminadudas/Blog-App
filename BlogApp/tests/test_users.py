@@ -89,6 +89,8 @@ def test_delete_user_route_when_config_file_and_admin_exists(is_config):
     response = is_config.get('users/delete/5',
                              follow_redirects=True)
     assert b'david' in response.data
+    response_two = is_config.get('users/home')
+    assert b'david' not in response_two.data
 
 
 def test_delete_user_route_when_config_file_exist_and_user_not_admin(is_config):
