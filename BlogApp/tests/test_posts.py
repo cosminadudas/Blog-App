@@ -70,7 +70,6 @@ def test_third_page_of_index_route_when_filter_activated_and_are_less_than_five_
     assert b'post 15' in response.data
     assert b'post 16' in response.data
     assert b'post 17' in response.data
-    assert b'post 18' in response.data
     assert b'Next' not in response.data
     assert b'Previous' in response.data
 
@@ -91,7 +90,6 @@ def test_add_post_route_when_config_file_and_admin_or_owner_exist(is_config):
         password='cosmina'), follow_redirects=True)
     response = is_config.post('/add', data=dict(
         title="Post 3",
-        owner="Cosmina",
         content="This is the third post"), follow_redirects=True)
     assert b'Post 3' in response.data
 

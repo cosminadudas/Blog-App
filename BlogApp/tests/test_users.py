@@ -1,4 +1,16 @@
-﻿def test_first_login_setup_get_route_without_login_attempt_when_config_file_exists(is_config):
+﻿def test_edit_user_edits_posts_owner_of_that_user(is_config):
+    is_config.post('/login', data=dict(username_or_email='admin',
+                                       password='admin'), follow_redirects=True)
+    is_config.post('users/edit/9', data=dict(name='mirciulica',
+                                             email='mirciulica@yahoo.com',
+                                             new_password='mircea',
+                                             confirm_password='mircea'),
+                   follow_redirects=True)
+    response = is_config.get('/home?page=0&user=mirciulica')
+    assert b'post 18' in response.data
+
+
+def test_first_login_setup_get_route_without_login_attempt_when_config_file_exists(is_config):
     response = is_config.get('/users/first_login_setup/1', follow_redirects=True)
     assert b'405' in response.data
 

@@ -43,16 +43,18 @@ def index(blog_posts: BlogPostsInterface, users: UsersInterface):
 @blog_blueprint.route('/add', methods=["GET", "POST"])
 @setup_required
 @login_required
-def add_post(blog_posts: BlogPostsInterface):
+def add_post(blog_posts: BlogPostsInterface, users: UsersInterface):
     if request.method == "POST":
         new_post = BlogPost(0, '', '', '')
         new_post.owner = session['id']
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.created_at = datetime.now()
-        blog_posts.add(new_post)
-        return redirect(url_for('blog_blueprint.view_post',
-                                post_id=new_post.post_id))
+        for user in users.get_all_users():
+            if new_post.owner == user.user_id:
+                blog_posts.add(new_post)
+                return redirect(url_for('blog_blueprint.view_post',
+                                        post_id=new_post.post_id))
     return render_template('create_post.html')
 
 

@@ -17,7 +17,7 @@ post_fourteen = BlogPost(14, 'alex', 'post 14', 'This is post')
 post_fifthteen = BlogPost(15, 'alex', 'post 15', 'This is post')
 post_sixteen = BlogPost(16, 'alex', 'post 16', 'This is post')
 post_seventeen = BlogPost(17, 'alex', 'post 17', 'This is post')
-post_eighteen = BlogPost(18, 'alex', 'post 18', 'This is post')
+post_eighteen = BlogPost(18, 'mircea', 'post 18', 'This is post')
 posts = [post_one, post_two, post_three, post_four, post_five,
          post_six, post_seven, post_eight, post_nine, post_ten,
          post_eleven, post_twelve, post_thirteen, post_fourteen,
