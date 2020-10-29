@@ -1,6 +1,7 @@
 import abc
 from models.user import User
 
+
 class UsersInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
@@ -18,31 +19,25 @@ class UsersInterface(metaclass=abc.ABCMeta):
                 callable(subclass.get_user_by_name_or_email) or
                 NotImplemented)
 
-
     @abc.abstractmethod
     def add(self, new_user: User):
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def edit(self, user_to_edit, new_name, new_email, new_password):
         raise NotImplementedError
 
-
     @abc.abstractmethod
     def delete(self, user_id):
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def get_all_users(self):
         raise NotImplementedError
 
-
     @abc.abstractmethod
     def get_user_by_id(self, user_id):
         raise NotImplementedError
-
 
     @abc.abstractmethod
     def get_user_by_name_or_email(self, name_or_email):

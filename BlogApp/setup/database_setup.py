@@ -4,17 +4,15 @@ from setup.database_config import DatabaseConfig
 from setup.database_updates import queries
 
 
-class DatabaseSetup():
+class DatabaseSetup:
 
     def __init__(self):
         self.conn = None
         self.credentials = DatabaseConfig()
         self.latest_version = 3
 
-
     def is_updated(self):
         return self.credentials.get_version() == self.latest_version
-
 
     def update(self):
         db_credentials = self.credentials.load_credentials()
@@ -28,7 +26,6 @@ class DatabaseSetup():
         conn.close()
         self.credentials.update_version()
 
-
     def connect(self):
         database_credentials = self.credentials.load_credentials()
         self.conn = psycopg2.connect(
@@ -41,7 +38,6 @@ class DatabaseSetup():
         if self.conn is not None:
             self.conn.commit()
             self.conn.close()
-
 
     def create_database(self):
         db_credentials = self.credentials.load_credentials()

@@ -1,12 +1,12 @@
 from setup.config import Config
 from models.database_credentials import DatabaseCredentials
 
+
 class DatabaseConfig(Config):
 
     def __init__(self):
         self.section = 'postgresql'
         super().__init__()
-
 
     def get_version(self):
         data = super().load(self.section)
@@ -17,12 +17,10 @@ class DatabaseConfig(Config):
 
         return int(data['version'])
 
-
     def update_version(self):
         data = super().load(self.section)
         updated_version = int(data['version']) + 1
         super().update(self.section, 'version', updated_version)
-
 
     def load_credentials(self):
         data = super().load(self.section)
@@ -30,7 +28,6 @@ class DatabaseConfig(Config):
                                                    data['password'],
                                                    data['database'])
         return database_credentials
-
 
     def save_credentials(self, database_setup: DatabaseCredentials):
         credentials = {
