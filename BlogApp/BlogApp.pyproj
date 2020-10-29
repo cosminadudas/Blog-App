@@ -36,6 +36,9 @@
     <Compile Include="exceptions.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\blog_posts_db.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="models\database_credentials.py">
       <SubType>Code</SubType>
     </Compile>
@@ -43,6 +46,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="models\user.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="models\users_db.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\demo_users.py">
