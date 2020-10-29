@@ -53,7 +53,6 @@ def test_first_page_of_index_route_when_filter_is_not_activated(is_config):
     assert b'Previous' not in response.data
 
 
-
 def test_second_page_of_index_route_when_config_file_exists_and_filter_is_activated(is_config):
     response = is_config.get('/home?page=1&user=alex')
     assert b'post 10' in response.data
