@@ -8,9 +8,9 @@ class UsersDb(Base):
     __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String)
-    email = Column(String)
-    password = Column(String)
+    name = Column(String(30), unique=True, nullable=False)
+    email = Column(String(150), unique=True)
+    password = Column(String(20))
     created_at = Column(Date)
     modified_at = Column(Date)
 
