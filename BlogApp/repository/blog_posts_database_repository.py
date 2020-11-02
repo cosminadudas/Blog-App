@@ -79,6 +79,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         self.database.session.commit()
 
 
+
     def edit(self, post_id, new_title, new_content):
         post = self.database.session.query(BlogPostDb).filter_by(id=post_id).first()
         post.title = new_title

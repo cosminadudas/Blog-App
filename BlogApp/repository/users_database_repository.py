@@ -1,4 +1,5 @@
 from datetime import datetime
+from sqlalchemy import desc
 from exceptions import UserAlreadyExists
 from repository.users_interface import UsersInterface
 from models.user import User
@@ -41,8 +42,7 @@ class UsersDatabaseRepository(UsersInterface):
         self.database.session.execute("DELETE FROM users WHERE id = %s", (user_id,))
 
     def get_all_users(self):
-        self.database.session.execute("SELECT * FROM users ORDER BY id DESC")
-        entries = self.database.session.query(UserDb).all()
+        entries = self.database.session.query(UserDb).order_by(desc(UserDb.id)).all()
         users = []
         for user_data in entries:
             user = User(int(user_data.id), user_data.name, user_data.email, user_data.password)
@@ -50,9 +50,8 @@ class UsersDatabaseRepository(UsersInterface):
         return users
 
     def get_user_by_id(self, user_id):
-        self.database.session.execute("SELECT * FROM users WHERE ID = %s", (user_id,))
-        entry = self.database.session.query(UserDb).first()
-        user = User(int(entry[0]), entry[1], entry[2], entry[3])
+        entry = self.database.session.query(UserDb).filter_by(id=user_id).first()
+        user = User(int(entry.id), entry.name, entry.email, entry.password)
         return user
 
     def get_user_by_name_or_email(self, name_or_email):
