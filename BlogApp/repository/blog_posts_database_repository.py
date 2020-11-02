@@ -1,6 +1,9 @@
 from datetime import datetime
+from sqlalchemy import desc, select, join
 from models.blog_post import BlogPost
 from models.pagination import Pagination
+from models.blog_post_db import BlogPostDb
+from models.user_db import UserDb
 from repository.blog_posts_interface import BlogPostsInterface
 from setup.database_setup import DatabaseSetup
 
@@ -10,73 +13,79 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         self.database = DatabaseSetup()
 
     def get_all_posts(self, user, pagination: Pagination):
-        self.database.connect()
-        cur = self.database.conn.cursor()
-        command = """SELECT posts.id, posts.title, posts.content,
-        users.name
-        FROM posts INNER JOIN users ON posts.owner=users.id """
-        if user is not None:
-            command += "WHERE users.name='" + str(user) + "'"
-        command += ' ORDER BY posts.id DESC LIMIT '
-        command += str(pagination.limit)
-        command += " OFFSET " + str(pagination.page_number * pagination.limit)
-        cur.execute(command)
-        entries = cur.fetchall()
+        limit_number = pagination.limit
+        skipped_number = pagination.page_number * pagination.limit
+        entries = []
+        if user is None:
+            entries = self.database.session.query(select([BlogPostDb.id,
+                                                          BlogPostDb.title,
+                                                          BlogPostDb.content,
+                                                          UserDb.name])
+                                                  .select_from(join(UserDb,
+                                                                    BlogPostDb,
+                                                                    UserDb.id == BlogPostDb.owner))
+                                                  .order_by(desc(BlogPostDb.id)).limit(limit_number)
+                                                  .offset(skipped_number).alias('a')).all()
+        else:
+            entries = self.database.session.query(select([BlogPostDb.id,
+                                                          BlogPostDb.title,
+                                                          BlogPostDb.content,
+                                                          UserDb.name])
+                                                  .where(UserDb.name == user)
+                                                  .select_from(join(UserDb,
+                                                                    BlogPostDb,
+                                                                    UserDb.id == BlogPostDb.owner))
+                                                  .order_by(desc(BlogPostDb.id)).limit(limit_number)
+                                                  .offset(skipped_number).alias('a')).all()
         posts = []
         for post_data in entries:
-            post = BlogPost(int(post_data[0]), post_data[3], post_data[1], post_data[2])
+            post = BlogPost(int(post_data.id), post_data.name, post_data.title, post_data.content)
             posts.append(post)
-        self.database.close()
         return posts
 
+    def count(self, user):
+        if user is None:
+            count = self.database.session.query(BlogPostDb).count()
+        elif user is not None:
+            count = self.database.session.query(select(['*'])
+                                                .select_from(join(UserDb,
+                                                                  BlogPostDb,
+                                                                  UserDb.id == BlogPostDb.owner))
+                                                .where(UserDb.name == user)
+                                                .alias('a')).count()
+        return int(count)
 
     def get_post_by_id(self, post_id):
-        self.database.connect()
-        cur = self.database.conn.cursor()
-        cur.execute("""SELECT posts.id, posts.title, posts.content,
-        users.name
-        FROM posts INNER JOIN users ON posts.owner=users.id WHERE posts.id = %s""", ((post_id,)))
-        entry = cur.fetchone()
-        post = BlogPost(int(entry[0]), entry[3], entry[1], entry[2])
-        self.database.close()
+        entry = self.database.session.query(select([BlogPostDb.id,
+                                                    BlogPostDb.title,
+                                                    BlogPostDb.content,
+                                                    UserDb.name])
+                                            .select_from(join(UserDb,
+                                                              BlogPostDb,
+                                                              UserDb.id == BlogPostDb.owner))
+                                            .where(BlogPostDb.id == str(post_id))
+                                            .alias('a')).first()
+        post = BlogPost(int(entry.id), entry.name, entry.title, entry.content)
         return post
 
 
-    def count(self, user):
-        command = "SELECT COUNT(title) FROM posts"
-        if user is not None:
-            command += " JOIN users ON posts.owner=users.id"
-            command += " WHERE users.name='{}'".format(user)
-        self.database.connect()
-        cur = self.database.conn.cursor()
-        cur.execute(command)
-        count = cur.fetchall()[0][0]
-        return int(count)
-
-
     def add(self, new_post: BlogPost):
-        self.database.connect()
-        cur = self.database.conn.cursor()
         new_post.created_at = datetime.now()
-        cur.execute("""INSERT INTO posts (OWNER, TITLE, CONTENT, CREATED_AT)
-        VALUES (%s, %s, %s, %s)""", (
-            new_post.owner, new_post.title, new_post.content, new_post.created_at))
-        cur.execute("SELECT ID FROM posts WHERE title=%s", (new_post.title,))
-        new_post.post_id = int(cur.fetchone()[0])
-        self.database.close()
+        post_to_add = BlogPostDb(new_post.owner,
+                                 new_post.title,
+                                 new_post.content,
+                                 new_post.created_at)
+        self.database.session.add(post_to_add)
+        self.database.session.commit()
 
 
     def edit(self, post_id, new_title, new_content):
-        self.database.connect()
-        cur = self.database.conn.cursor()
-        cur.execute("""UPDATE posts SET TITLE = %s, CONTENT = %s,
-        MODIFIED_AT = %s WHERE ID = %s""", (
-            new_title, new_content, datetime.now(), post_id))
-        self.database.close()
-
+        post = self.database.session.query(BlogPostDb).filter_by(id=post_id).first()
+        post.title = new_title
+        post.content = new_content
+        post.modified_at = datetime.datetime.now()
+        self.database.session.commit()
 
     def delete(self, post_id):
-        self.database.connect()
-        cur = self.database.conn.cursor()
-        cur.execute("DELETE FROM posts WHERE ID = %s", ((post_id,)))
-        self.database.close()
+        self.database.session.query(BlogPostDb).filter_by(id=post_id).delete()
+        self.database.session.commit()

@@ -55,7 +55,8 @@ enable=use-symbolic-message-instead,useless-supression,fixme
 disable=
     missing-docstring,
     too-few-public-methods,
-    redefined-outer-name
+    redefined-outer-name,
+    unused-argument
 
 [REPORTS]
 
@@ -172,7 +173,7 @@ ignored-modules=
 
 # List of classes names for which member attributes should not be checked
 # (useful for classes with attributes dynamically set).
-ignored-classes=SQLObject, optparse.Values, thread._local, _thread._local
+ignored-classes=SQLObject, optparse.Values, thread._local, _thread._local, scoped_session
 
 # List of members which are set dynamically and missed by pylint inference
 # system, and so shouldn't trigger E1101 when accessed. Python regular

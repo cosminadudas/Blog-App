@@ -49,7 +49,7 @@
     {% if pagination.page_number != None and pagination.page_number != pagination.first_page: %}
     <button onclick="GoToPage('P')" id="button-left" class="button">Previous</button>
     {% endif %}
-    {% if pagination.page_number != None and pagination.page_number != pagination.last_page: %}
+    {% if pagination.page_number != None and pagination.page_number != pagination.last_page and pagination.last_page != 0: %}
     <button onclick="GoToPage('N')" id="button-right" class="button">Next</button>
     {% endif %}
 </div>
