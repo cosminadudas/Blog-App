@@ -77,6 +77,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                                  new_post.created_at)
         self.database.session.add(post_to_add)
         self.database.session.commit()
+        new_post.post_id = self.database.session.query(BlogPostDb).filter_by(title=new_post.title).first().id
 
 
 

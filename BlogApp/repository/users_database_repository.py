@@ -24,23 +24,26 @@ class UsersDatabaseRepository(UsersInterface):
                              new_user.created_at)
         self.database.session.add(user_to_add)
         self.database.session.commit()
+        new_user.user_id = self.database.session.query(UserDb).filter_by(name=new_user.name).first().id
 
     def edit(self, user_to_edit: User, new_name, new_email, new_password):
         if self.are_credentials_unavailable(user_to_edit, new_name, new_email):
             raise UserAlreadyExists
+        user = self.database.session.query(UserDb).filter_by(id=user_to_edit.user_id).first()
         hashed_new_password = PasswordManager.hash(new_password)
         if new_password == "":
-            self.database.session.execute("""UPDATE users SET name = %s,
-            email = %s WHERE id = %s""", (
-                new_name, new_email, user_to_edit.user_id))
+            user.name = new_name
+            user.email = new_email
         else:
-            self.database.session.execute("""UPDATE users SET
-            name = %s, email = %s, 
-            password = %s WHERE id = %s""", (
-                new_name, new_email, hashed_new_password, user_to_edit.user_id))
+            user.name = new_name
+            user.email = new_email
+            user.password = hashed_new_password
+        user.modified_at = datetime.now()
+        self.database.session.commit()
 
     def delete(self, user_id):
-        self.database.session.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        self.database.session.query(UserDb).filter_by(id=user_id).delete()
+        self.database.session.commit()
 
     def get_all_users(self):
         entries = self.database.session.query(UserDb).order_by(desc(UserDb.id)).all()
