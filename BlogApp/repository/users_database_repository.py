@@ -17,12 +17,13 @@ class UsersDatabaseRepository(UsersInterface):
         if self.verify_user_already_exist(new_user):
             raise UserAlreadyExists
         hashed_password = PasswordManager.hash(new_user.password)
-        self.database.session.execute("""INSERT INTO users (name, email, password)
-        VALUES (%s, %s, %s)""", (
-            new_user.name, new_user.email, hashed_password))
         new_user.created_at = datetime.now()
-        self.database.session.execute("SELECT id FROM users WHERE name=%s", (new_user.name,))
-        new_user.user_id = int(self.database.session.query(UserDb).first()[0])
+        user_to_add = UserDb(new_user.name,
+                             new_user.email,
+                             hashed_password,
+                             new_user.created_at)
+        self.database.session.add(user_to_add)
+        self.database.session.commit()
 
     def edit(self, user_to_edit: User, new_name, new_email, new_password):
         if self.are_credentials_unavailable(user_to_edit, new_name, new_email):
