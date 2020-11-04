@@ -21,6 +21,10 @@ select {
     border: 1px solid black;
 }
 
+.image {
+    width: 20%;
+    height: auto;
+}
 .form {
     border: 1px solid black;
 }

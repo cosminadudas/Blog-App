@@ -51,12 +51,13 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
         self.posts.insert(0, new_post)
 
 
-    def edit(self, post_id, new_title, new_content):
+    def edit(self, post_id, new_title, new_content, new_image):
         post_to_edit = self.get_post_by_id(post_id)
         if post_to_edit is not None:
             post_to_edit.title = new_title
             post_to_edit.content = new_content
             post_to_edit.modified_at = datetime.now()
+            post_to_edit.image = new_image
 
 
     def delete(self, post_id):

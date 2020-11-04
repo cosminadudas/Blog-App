@@ -36,9 +36,6 @@
     <Compile Include="exceptions.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\blog_post_db.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="models\database_credentials.py">
       <SubType>Code</SubType>
     </Compile>
@@ -48,10 +45,19 @@
     <Compile Include="models\user.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="models\user_db.py">
+    <Compile Include="repository\blog_posts_users_relation.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\demo_users.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\models\blog_post_db.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\models\user_db.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="repository\models\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="repository\users_database_repository.py">
@@ -162,8 +168,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="models\" />
+    <Folder Include="repository\models\" />
     <Folder Include="services\" />
     <Folder Include="setup\" />
+    <Folder Include="static\images\" />
     <Folder Include="tests\" />
     <Folder Include="repository\" />
     <Folder Include="views\" />

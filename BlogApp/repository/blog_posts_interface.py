@@ -33,7 +33,7 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
 
 
     @abc.abstractmethod
-    def edit(self, post_id, new_title, new_content):
+    def edit(self, post_id, new_title, new_content, new_image):
         raise NotImplementedError
 
     @abc.abstractmethod

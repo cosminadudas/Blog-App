@@ -17,9 +17,7 @@ class DatabaseConfig(Config):
 
         return int(data['version'])
 
-    def update_version(self):
-        data = super().load(self.section)
-        updated_version = int(data['version']) + 1
+    def update_version(self, updated_version):
         super().update(self.section, 'version', updated_version)
 
     def load_credentials(self):

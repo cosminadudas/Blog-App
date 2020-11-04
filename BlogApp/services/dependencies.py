@@ -13,7 +13,7 @@ from services.authentication import Authentication
 def configure_production(binder):
     binder.bind(UsersInterface, to=UsersDatabaseRepository, scope=singleton)
     binder.bind(BlogPostsInterface, to=BlogPostsDatabaseRepository, scope=singleton)
-    binder.bind(DatabaseConfig, to=DatabaseConfig, scope=request)
+    binder.bind(DatabaseConfig, to=DatabaseConfig, scope=singleton)
     binder.bind(Authentication, to=Authentication, scope=singleton)
 
 

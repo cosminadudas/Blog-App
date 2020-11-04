@@ -8,7 +8,9 @@
 
 
 {% block body %}
-<form action="{{ url_for('blog_blueprint.edit_post', post_id = post_to_edit['post_id']) }}" method="POST">
+<form action="{{ url_for('blog_blueprint.edit_post', post_id = post_to_edit['post_id']) }}" method="POST" enctype="multipart/form-data">
+    <label for="image">Upload image:</label><br />
+    <input type="file" name="image" class="button" id="image" /><br /><br />
     <label for="title">Title:</label><br />
     <input type="text" id="title" class="form" name="title" maxlength="30" value=" {{post_to_edit.title}}"><br><br />
     <label for="content">Content:</label><br />

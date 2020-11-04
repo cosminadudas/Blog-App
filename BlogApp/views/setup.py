@@ -17,7 +17,9 @@ def db_setup(database_config: DatabaseConfig):
                                                    request.form['database'])
         database_config.save_credentials(database_credentials)
         setup = DatabaseSetup()
-        setup.create_database()
+        setup.create_database(database_credentials)
+        if not setup.is_updated():
+            setup.update()
         return redirect('/home')
     return render_template('setup_db.html')
     
