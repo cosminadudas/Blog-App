@@ -88,7 +88,7 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
                     image = image.filename
         new_title = request.form['title']
         new_content = request.form['content']
-        blog_posts.edit(post_id, new_title, new_content, image.filename)
+        blog_posts.edit(post_id, new_title, new_content, image)
         return redirect(url_for('blog_blueprint.view_post', post_id=post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 
