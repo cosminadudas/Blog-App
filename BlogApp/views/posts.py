@@ -50,10 +50,9 @@ def add_post(blog_posts: BlogPostsInterface, users: UsersInterface):
         new_post = BlogPost(0, '', '', '', '')
         if request.files:
             image = request.files["image"]
-            if not isinstance(image, str):
-                if image.filename != '':
-                    image.save(os.path.join('./static/images', image.filename))
-                    new_post.image = image.filename
+            if image.filename != '':
+                image.save(os.path.join('./static/images', image.filename))
+                new_post.image = image.filename
             else:
                 new_post.image = 'default.png'
         else:
@@ -82,10 +81,9 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
         image = ''
         if request.files:
             image = request.files["image"]
-            if not isinstance(image, str):
-                if image.filename != '':
-                    image.save(os.path.join('./static/images', image.filename))
-                    image = image.filename
+            if image.filename != '':
+                image.save(os.path.join('./static/images', image.filename))
+                image = image.filename
         new_title = request.form['title']
         new_content = request.form['content']
         blog_posts.edit(post_id, new_title, new_content, image)
