@@ -1,17 +1,15 @@
 from exceptions import UserAlreadyExists
 from datetime import datetime
-from injector import inject
 from repository.users_interface import UsersInterface
-from repository.blog_posts_interface import BlogPostsInterface
 from repository.demo_users import users
+from repository.demo_posts import posts
 from models.user import User
 from services.password_manager import PasswordManager
 
 
 class UsersInMemoryRepository(UsersInterface):
 
-    @inject
-    def __init__(self, posts: BlogPostsInterface):
+    def __init__(self):
         self.users = users
         self.posts = posts
 
@@ -27,7 +25,7 @@ class UsersInMemoryRepository(UsersInterface):
 
     def edit(self, user_to_edit, new_name, new_email, new_password):
         if user_to_edit is not None:
-            for post in self.posts.posts:
+            for post in self.posts:
                 if post.owner == user_to_edit.name:
                     post.owner = new_name
             if self.are_credentials_unavailable(user_to_edit, new_name, new_email):
@@ -42,9 +40,9 @@ class UsersInMemoryRepository(UsersInterface):
 
     def delete(self, user_id):
         user_to_delete = self.get_user_by_id(user_id)
-        for post in self.posts.posts:
+        for post in self.posts:
             if post.owner == user_to_delete.name:
-                self.posts.delete(post.post_id)
+                self.posts.remove(post.post_id)
         self.users.remove(user_to_delete)
 
     def get_all_users(self):

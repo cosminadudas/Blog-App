@@ -1,13 +1,22 @@
 from datetime import datetime
+from injector import inject
 from models.blog_post import BlogPost
 from models.pagination import Pagination
-from repository.demo_posts import posts
 from repository.blog_posts_interface import BlogPostsInterface
 
 class BlogPostsInMemoryRepository(BlogPostsInterface):
 
-    def __init__(self):
-        self.posts = posts
+    @inject
+    def __init__(self, users):
+        self.users = users
+        self.posts = self.users.posts
+
+
+    def verify_if_owner_is_user(self, owner):
+        for user in self.users.get_all_users():
+            if owner == user.user_id:
+                return True
+        return False
 
 
     def get_all_posts(self, user, pagination: Pagination):
@@ -47,8 +56,9 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
 
 
     def add(self, new_post: BlogPost):
-        new_post.post_id = len(self.posts) + 1
-        self.posts.insert(0, new_post)
+        if self.verify_if_owner_is_user(new_post.owner):
+            new_post.post_id = len(self.posts) + 1
+            self.posts.insert(0, new_post)
 
 
     def edit(self, post_id, new_title, new_content, new_image):

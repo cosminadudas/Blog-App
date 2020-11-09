@@ -6,11 +6,19 @@ from repository.models.blog_post_db import BlogPostDb
 from repository.models.user_db import UserDb
 from repository.blog_posts_interface import BlogPostsInterface
 from setup.database_setup import DatabaseSetup
+from services.image_manager import ImageManager
 
 class BlogPostsDatabaseRepository(BlogPostsInterface):
 
-    def __init__(self):
+    def __init__(self, users):
         self.database = DatabaseSetup()
+        self.users = users
+
+    def verify_if_owner_is_user(self, owner):
+        for user in self.users.get_all_users():
+            if owner == user.user_id:
+                return True
+        return False
 
     def get_all_posts(self, user, pagination: Pagination):
         limit_number = pagination.limit
@@ -70,19 +78,25 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
 
 
     def add(self, new_post: BlogPost):
-        new_post.created_at = datetime.now()
-        session = self.database.get_session()
-        post_to_add = BlogPostDb(new_post.owner,
-                                 new_post.title,
-                                 new_post.content,
-                                 new_post.created_at,
-                                 new_post.image)
-        session.add(post_to_add)
-        session.commit()
-        command = session.query(BlogPostDb)
-        new_post.post_id = command.filter_by(title=new_post.title).first().id
-
-
+        if self.verify_if_owner_is_user(new_post.owner):
+            if new_post.image is not None and new_post.image.filename != '':
+                if ImageManager.verify_image_already_exists(new_post.image.filename):
+                    ImageManager.rename_image(new_post.image)
+                ImageManager.save_image(new_post.image)
+                new_post.image = new_post.image.filename
+            else:
+                new_post.image = 'default.png'
+            new_post.created_at = datetime.now()
+            session = self.database.get_session()
+            post_to_add = BlogPostDb(new_post.owner,
+                                     new_post.title,
+                                     new_post.content,
+                                     new_post.created_at,
+                                     new_post.image)
+            session.add(post_to_add)
+            session.commit()
+            command = session.query(BlogPostDb)
+            new_post.post_id = command.filter_by(title=new_post.title).first().id
 
     def edit(self, post_id, new_title, new_content, new_image):
         session = self.database.get_session()
@@ -90,11 +104,18 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         post.title = new_title
         post.content = new_content
         post.modified_at = datetime.now()
-        if new_image != '':
-            post.image = new_image
+        if new_image.filename != '':
+            if ImageManager.verify_image_already_exists(new_image.filename):
+                ImageManager.rename_image(new_image)
+            if new_image.filename != '':
+                ImageManager.delete_image(post.image)
+                ImageManager.save_image(new_image)
+            post.image = new_image.filename
         session.commit()
 
     def delete(self, post_id):
         session = self.database.get_session()
+        post = self.get_post_by_id(post_id)
+        ImageManager.delete_image(post.image)
         session.query(BlogPostDb).filter_by(id=post_id).delete()
         session.commit()

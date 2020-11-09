@@ -12,7 +12,6 @@ def test_index_route_when_config_file_exists(is_config):
 
 def test_second_page_of_index_route_when_filter_is_not_activated_and_config_file_exists(is_config):
     response = is_config.get('/home?page=1')
-    assert b'post 5' in response.data
     assert b'post 6' in response.data
     assert b'post 7' in response.data
     assert b'post 8' in response.data

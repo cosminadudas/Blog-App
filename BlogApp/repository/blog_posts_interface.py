@@ -13,6 +13,9 @@ class BlogPostsInterface(metaclass=abc.ABCMeta):
                 callable(subclass.delete) or
                 NotImplemented)
 
+    @abc.abstractmethod
+    def verify_if_owner_is_user(self, owner):
+        raise NotImplementedError
 
     @abc.abstractmethod
     def get_all_posts(self, user, pagination: Pagination):

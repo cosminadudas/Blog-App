@@ -45,9 +45,6 @@
     <Compile Include="models\user.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="repository\blog_posts_users_relation.py">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="repository\demo_users.py">
       <SubType>Code</SubType>
     </Compile>
@@ -73,6 +70,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\authentication.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\image_manager.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\password_manager.py">
