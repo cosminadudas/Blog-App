@@ -1,4 +1,5 @@
 from datetime import datetime
+from exceptions import FormatFileNotAccepted
 from sqlalchemy import desc, select, join
 from models.blog_post import BlogPost
 from models.pagination import Pagination
@@ -45,6 +46,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                             post_data.title,
                             post_data.content,
                             post_data.image)
+            post.image = "./static/images/" + post.image
             posts.append(post)
         return posts
 
@@ -74,12 +76,15 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                               .where(BlogPostDb.id == str(post_id))
                               .alias('a')).first()
         post = BlogPost(int(entry.id), entry.name, entry.title, entry.content, entry.image)
+        post.image = "/static/images/" + str(post.image)
         return post
 
 
     def add(self, new_post: BlogPost):
         if self.verify_if_owner_is_user(new_post.owner):
             if new_post.image is not None and new_post.image.filename != '':
+                if not ImageManager.verify_format(new_post.image.filename):
+                    raise FormatFileNotAccepted
                 if ImageManager.verify_image_already_exists(new_post.image.filename):
                     ImageManager.rename_image(new_post.image)
                 ImageManager.save_image(new_post.image)
@@ -96,7 +101,9 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
             session.add(post_to_add)
             session.commit()
             command = session.query(BlogPostDb)
-            new_post.post_id = command.filter_by(title=new_post.title).first().id
+            post = command.filter_by(title=new_post.title).first()
+            new_post.post_id = post.id
+            session.commit()
 
     def edit(self, post_id, new_title, new_content, new_image):
         session = self.database.get_session()
@@ -105,6 +112,8 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         post.content = new_content
         post.modified_at = datetime.now()
         if new_image.filename != '':
+            if not ImageManager.verify_format(new_image.filename):
+                raise FormatFileNotAccepted
             if ImageManager.verify_image_already_exists(new_image.filename):
                 ImageManager.rename_image(new_image)
             if new_image.filename != '':

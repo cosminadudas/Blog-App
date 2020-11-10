@@ -4,6 +4,9 @@ __pycache__/
 *$py.class
 .vs
 .idea
+*.png
+*.jpeg
+*.jpg
 *.pyproj.user
 # C extensions
 *.so

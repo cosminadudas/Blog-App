@@ -19,3 +19,10 @@ class ImageManager:
     def rename_image(image):
         image.filename = '0' + image.filename
         image.name = '0' + image.name
+
+    @staticmethod
+    def verify_format(filename):
+        allowed_formats = ['jpg', 'jpeg', 'png']
+        if filename.split('.')[1] in allowed_formats:
+            return True
+        return False

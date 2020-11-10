@@ -1,3 +1,5 @@
+import io
+
 def test_index_route_when_config_file_exists(is_config):
     result_one = is_config.get('/home')
     assert b'post 1' in result_one.data
@@ -88,7 +90,8 @@ def test_add_post_route_when_config_file_and_admin_or_owner_exist(is_config):
         password='cosmina'), follow_redirects=True)
     response = is_config.post('/add', data=dict(
         title="Post 3",
-        content="This is the third post"), follow_redirects=True)
+        content="This is the third post",
+        image=(io.BytesIO(b'image'), 'image.jpg')), follow_redirects=True)
     assert b'Post 3' in response.data
 
 
@@ -104,7 +107,8 @@ def test_edit_post_route_when_config_file_and_admin_or_owner_exist(is_config):
         password='cosmina'), follow_redirects=True)
     response = is_config.post('/edit/2',
                               data=dict(title='updated',
-                                        content='This is the second post'),
+                                        content='This is the second post',
+                                        image=(io.BytesIO(b'image'), 'image.jpg')),
                               follow_redirects=True)
     assert b'updated' in response.data
 

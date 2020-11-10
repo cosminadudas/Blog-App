@@ -9,7 +9,7 @@
 {% block body %}
 
 <h1>{{ post.title }}</h1>
-<img src="{{ url_for('static', filename='images/'+post.image) }}" class ="image" alt="post image" />
+<img src="{{ post.image }}" class ="image" alt="post image" />
 <p>
     By {{ post.owner }} on {{ post.created_at.day }}/{{post.created_at.month}}/{{post.created_at.year}}
 </p>

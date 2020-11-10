@@ -1,4 +1,5 @@
 from datetime import datetime
+from exceptions import FormatFileNotAccepted
 from flask import Blueprint, request, redirect, url_for, render_template, session, abort
 from injector import inject
 from views.decorators.setup_required import setup_required
@@ -52,7 +53,11 @@ def add_post(blog_posts: BlogPostsInterface):
         new_post.title = request.form['title']
         new_post.content = request.form['content']
         new_post.created_at = datetime.now()
-        blog_posts.add(new_post)
+        try:
+            blog_posts.add(new_post)
+        except FormatFileNotAccepted:
+            return render_template('create_post.html',
+                                   error='File format not accepted. Try again with new file!')
         return redirect(url_for('blog_blueprint.view_post',
                                 post_id=new_post.post_id))
     return render_template('create_post.html')
@@ -72,7 +77,12 @@ def edit_post(blog_posts: BlogPostsInterface, post_id):
             image = request.files["image"]
         new_title = request.form['title']
         new_content = request.form['content']
-        blog_posts.edit(post_id, new_title, new_content, image)
+        try:
+            blog_posts.edit(post_id, new_title, new_content, image)
+        except FormatFileNotAccepted:
+            return render_template('edit_post.html',
+                                   post_to_edit=post_to_edit,
+                                   error='File format not accepted. Try again with new file!')
         return redirect(url_for('blog_blueprint.view_post', post_id=post_to_edit.post_id))
     return render_template('edit_post.html', post_to_edit=post_to_edit)
 

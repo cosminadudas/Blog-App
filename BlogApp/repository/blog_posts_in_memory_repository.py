@@ -1,4 +1,5 @@
 from datetime import datetime
+import base64
 from injector import inject
 from models.blog_post import BlogPost
 from models.pagination import Pagination
@@ -58,6 +59,9 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
     def add(self, new_post: BlogPost):
         if self.verify_if_owner_is_user(new_post.owner):
             new_post.post_id = len(self.posts) + 1
+            image = new_post.image.read()
+            image = base64.b64encode(image).decode('ascii')
+            new_post.image = 'data:image/png;base64, ' + image
             self.posts.insert(0, new_post)
 
 
@@ -67,7 +71,9 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
             post_to_edit.title = new_title
             post_to_edit.content = new_content
             post_to_edit.modified_at = datetime.now()
-            post_to_edit.image = new_image
+            image = new_image.read()
+            image = base64.b64encode(image).decode('ascii')
+            post_to_edit.image = 'data:image/png;base64, ' + image
 
 
     def delete(self, post_id):

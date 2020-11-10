@@ -6,3 +6,6 @@ class UserNotSetupError(BaseException):
 
 class UserAlreadyExists(BaseException):
     pass
+
+class FormatFileNotAccepted(BaseException):
+    pass
