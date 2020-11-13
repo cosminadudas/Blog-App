@@ -4,6 +4,7 @@ from views.posts import blog_blueprint
 from views.setup import setup_blueprint
 from views.login import login_blueprint
 from views.users import users_blueprint
+from views.statistics import statistics_blueprint
 from services.dependencies import configure_production
 from setup.database_setup import DatabaseSetup
 
@@ -14,6 +15,7 @@ app.register_blueprint(setup_blueprint)
 app.register_blueprint(login_blueprint)
 app.register_blueprint(blog_blueprint)
 app.register_blueprint(users_blueprint)
+app.register_blueprint(statistics_blueprint)
 
 
 @app.teardown_appcontext

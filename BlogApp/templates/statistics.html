@@ -1,0 +1,23 @@
+﻿{% extends 'base.html' %}
+
+{% block head %}
+<title>Statistics</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}" />
+{% endblock %}
+
+
+{% block body %}
+
+<h1>All statistics</h1>
+    {% for statistic in user_statistics: %}
+<div class="statistic">
+    <p class="user">User: {{statistic.user}}</p>
+    
+    {% for month in statistic.active_months: %}
+    {{month[0]}}{{month[1]}}
+    {% endfor %}
+    <hr style="color:black;"/>
+    
+</div> 
+    {% endfor %}   
+{%  endblock %}

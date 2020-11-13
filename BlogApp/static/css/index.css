@@ -12,6 +12,22 @@
     margin: 20px;
 }
 
+.user {
+    margin: auto;
+    color: #F08080;
+    text-decoration: none;
+    font-size: 30px;
+    font-family: Brush Script MT;
+}
+
+.statistic {
+    width: 320px;
+    padding: 10px;
+    border: 5px solid #F08080;
+    align-self: center;
+    margin: auto;
+}
+
 .error {
     background-color: antiquewhite;
     color: darkred;

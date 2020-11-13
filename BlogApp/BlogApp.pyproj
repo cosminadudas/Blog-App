@@ -45,6 +45,9 @@
     <Compile Include="models\user.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="models\statistics.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="repository\demo_users.py">
       <SubType>Code</SubType>
     </Compile>
@@ -72,10 +75,19 @@
     <Compile Include="services\authentication.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\image_manager.py">
+    <Compile Include="services\image_manager_database.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\image_manager_interface.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\image_manager_in_memory.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\password_manager.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="services\user_statistics.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\__init__.py">
@@ -135,6 +147,9 @@
     <Compile Include="tests\test_setup.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_statistics.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_users.py">
       <SubType>Code</SubType>
     </Compile>
@@ -157,6 +172,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\setup.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="views\statistics.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="views\users.py">
@@ -193,6 +211,7 @@
     <Content Include="templates\list_users.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\setup_db.html" />
+    <Content Include="templates\statistics.html" />
     <Content Include="templates\view_post.html" />
     <Content Include="templates\view_user.html" />
   </ItemGroup>

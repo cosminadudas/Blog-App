@@ -1,5 +1,6 @@
 import io
 
+
 def test_index_route_when_config_file_exists(is_config):
     result_one = is_config.get('/home')
     assert b'post 1' in result_one.data
@@ -155,6 +156,7 @@ def test_delete_post_route_when_config_file_exists_and_user_not_exist(is_config)
 def test_view_post_route_when_config_file_exists(is_config):
     response = is_config.get('/view/2')
     assert b'updated' in response.data
+    assert b'img' in response.data
 
 
 def test_index_route_when_config_file_not_exist(is_not_config):

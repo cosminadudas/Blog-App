@@ -12,6 +12,7 @@
         <a class="active" href="{{ url_for('blog_blueprint.index') }}">Home</a>
         {% if session['username'] == 'admin' %}
         <a href="{{ url_for('users_blueprint.view_all_users') }}">Users</a>
+        <a href="{{ url_for('statistics_blueprint.view_statistics') }}">Statistics</a>
         {% endif %}
         <a href="{{ url_for('blog_blueprint.index') }}">Posts</a>
         <a href="#contact">Contact</a>
