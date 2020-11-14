@@ -75,13 +75,13 @@
     <Compile Include="services\authentication.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\image_manager_database.py">
+    <Compile Include="repository\image_manager_database.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\image_manager_interface.py">
+    <Compile Include="repository\image_manager_interface.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="services\image_manager_in_memory.py">
+    <Compile Include="repository\image_manager_in_memory.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="services\password_manager.py">

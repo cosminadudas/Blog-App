@@ -1,6 +1,6 @@
 import base64
 from exceptions import FormatFileNotAccepted
-from services.image_manager_interface import ImageManagerInterface
+from repository.image_manager_interface import ImageManagerInterface
 
 class ImageManagerInMemory(ImageManagerInterface):
     def __init__(self):

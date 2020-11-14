@@ -7,8 +7,8 @@ from models.pagination import Pagination
 from repository.models.blog_post_db import BlogPostDb
 from repository.models.user_db import UserDb
 from repository.blog_posts_interface import BlogPostsInterface
+from repository.image_manager_interface import ImageManagerInterface
 from setup.database_setup import DatabaseSetup
-from services.image_manager_interface import ImageManagerInterface
 
 class BlogPostsDatabaseRepository(BlogPostsInterface):
 
@@ -52,7 +52,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                             post_data.title,
                             post_data.content,
                             post_data.image)
-            post.image = "./static/images/" + post.image
+            post.image = self.image_manager.images_path + post.image
             posts.append(post)
         return posts
 
@@ -82,7 +82,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                               .where(BlogPostDb.id == str(post_id))
                               .alias('a')).first()
         post = BlogPost(int(entry.id), entry.name, entry.title, entry.content, entry.image)
-        post.image = "/static/images/" + str(post.image)
+        post.image = self.image_manager.images_path[1:] + str(post.image)
         return post
 
 
@@ -104,6 +104,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
             if new_post.image is not None and post.image != '':
                 try:
                     self.image_manager.save_image(new_post.image)
+                    new_post.image = post.image
                 except:
                     post = session.query(BlogPostDb).filter_by(id=new_post.post_id).first()
                     session.delete(post)
@@ -121,8 +122,9 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
         post.modified_at = datetime.now()
         if new_image.filename != '':
             try:
+                old_image = post.image
                 post.image = self.image_manager.rename_image(new_image, post.id)
-                self.image_manager.edit_image(new_image, post.image)
+                self.image_manager.edit_image(new_image, old_image)
             except FormatFileNotAccepted:
                 raise FormatFileNotAccepted
         session.commit()

@@ -4,7 +4,7 @@ from injector import inject
 from models.blog_post import BlogPost
 from models.pagination import Pagination
 from repository.blog_posts_interface import BlogPostsInterface
-from services.image_manager_interface import ImageManagerInterface
+from repository.image_manager_interface import ImageManagerInterface
 
 IMAGE = """data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNby
 blAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU5ErkJggg=="""
