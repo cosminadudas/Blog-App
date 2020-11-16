@@ -138,6 +138,9 @@
     <Compile Include="tests\conftest.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\test_api.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="tests\test_login.py">
       <SubType>Code</SubType>
     </Compile>

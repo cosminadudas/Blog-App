@@ -7,17 +7,20 @@ class ImageManagerDatabase(ImageManagerInterface):
     def __init__(self):
         self.source = os
         self.allowed_formats = ['JPG', 'JPEG', 'PNG']
-        self.images_path = "./static/images/"
+        self.path = "./static/images/"
+
+    def get_image_path(self, post):
+        return self.path + post
 
     def save_image(self, new_image):
         if not self.verify_format(new_image.filename):
             raise FormatFileNotAccepted
-        new_image.save(self.source.path.join(self.images_path, new_image.filename))
+        new_image.save(self.source.path.join(self.path, new_image.filename))
 
     def delete_image(self, filename):
         filename = filename.split('/')[-1]
         if str(filename) != 'default.png' and self.verify_image_already_exists(filename):
-            self.source.remove(self.images_path + str(filename))
+            self.source.remove(self.path + str(filename))
 
     def edit_image(self, new_image, old_image):
         if not self.verify_format(new_image.filename):
@@ -26,7 +29,7 @@ class ImageManagerDatabase(ImageManagerInterface):
         self.save_image(new_image)
 
     def verify_image_already_exists(self, filename):
-        return self.source.path.exists(self.images_path + str(filename))
+        return self.source.path.exists(self.path + str(filename))
 
     def rename_image(self, image, post_id):
         if image.filename == '':

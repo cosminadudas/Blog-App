@@ -52,7 +52,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                             post_data.title,
                             post_data.content,
                             post_data.image)
-            post.image = self.image_manager.images_path + post.image
+            post.image = self.image_manager.get_image_path(str(post.image))
             posts.append(post)
         return posts
 
@@ -82,7 +82,7 @@ class BlogPostsDatabaseRepository(BlogPostsInterface):
                               .where(BlogPostDb.id == str(post_id))
                               .alias('a')).first()
         post = BlogPost(int(entry.id), entry.name, entry.title, entry.content, entry.image)
-        post.image = self.image_manager.images_path[1:] + str(post.image)
+        post.image = self.image_manager.get_image_path(str(post.image))[1:]
         return post
 
 

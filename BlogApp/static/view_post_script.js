@@ -1,4 +1,4 @@
-function ViewPost(post_id, post, user) {
+function ViewPost(post_id, user) {
     fetch("/API/post/" + post_id)
         .then(blog => blog.json())
         .then(post => {
