@@ -48,7 +48,7 @@ class BlogPostsInMemoryRepository(BlogPostsInterface):
 
     def get_post_by_id(self, post_id):
         for post in self.posts:
-            if post.post_id == post_id:
+            if str(post.post_id) == str(post_id):
                 return post
         return None
 

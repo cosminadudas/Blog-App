@@ -93,7 +93,7 @@ def test_add_post_route_when_config_file_and_admin_or_owner_exist(is_config):
         title="Post 3",
         content="This is the third post",
         image=(io.BytesIO(b'image'), 'image.jpg')), follow_redirects=True)
-    assert b'Post 3' in response.data
+    assert b'ViewPost' in response.data
 
 
 def test_add_post_route_when_config_file_exists_and_user_not_exist(is_config):
@@ -111,7 +111,7 @@ def test_edit_post_route_when_config_file_and_admin_or_owner_exist(is_config):
                                         content='This is the second post',
                                         image=(io.BytesIO(b'image'), 'image.jpg')),
                               follow_redirects=True)
-    assert b'updated' in response.data
+    assert b'ViewPost' in response.data
 
 
 def test_edit_post_route_when_config_file_exists_and_user_not_exist(is_config):
@@ -155,8 +155,7 @@ def test_delete_post_route_when_config_file_exists_and_user_not_exist(is_config)
 
 def test_view_post_route_when_config_file_exists(is_config):
     response = is_config.get('/view/2')
-    assert b'updated' in response.data
-    assert b'img' in response.data
+    assert b'ViewPost' in response.data
 
 
 def test_index_route_when_config_file_not_exist(is_not_config):
