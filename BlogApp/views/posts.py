@@ -103,6 +103,5 @@ def delete_post(blog_posts: BlogPostsInterface, post_id):
 @blog_blueprint.route('/view/<int:post_id>')
 @setup_required
 def view_post(blog_posts: BlogPostsInterface, post_id):
-    post_to_view = blog_posts.get_post_by_id(post_id)
     return render_template('view_post.html',
-                           post=post_to_view)
+                           post_id=post_id)

@@ -156,6 +156,9 @@
     <Compile Include="tests\__init__.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="views\api.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="views\decorators\authorization.py">
       <SubType>Code</SubType>
     </Compile>
@@ -201,6 +204,7 @@
   <ItemGroup>
     <Content Include="static\css\index.css" />
     <Content Include="static\css\main.css" />
+    <Content Include="static\view_post_script.js" />
     <Content Include="templates\base.html" />
     <Content Include="templates\create_post.html" />
     <Content Include="templates\create_user.html" />
